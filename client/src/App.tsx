@@ -1,12 +1,14 @@
 import './App.css';
-import Header from './cocmponents/Header/Header';
+import Banner from './components/Banner/Banner';
+import Menu from './components/Menu/Menu';
 
 function App() {
-  return (
-    <div className="App">
-        <Header />
-    </div>
-  );
+    return (
+        <div className="App">
+            <Menu />
+            <Banner />
+        </div>
+    );
 }
 
 export default App;

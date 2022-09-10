@@ -47,6 +47,9 @@ table {
 	border-spacing: 0;
 }
 
+
+
+
 @tailwind base;
 
 @layer base {
@@ -54,8 +57,21 @@ table {
 		font-size: 15px;
 	}
 
+	img {
+		max-width: 100%;
+	}
+
 	input, button {
 		outline: none;
 		max-width: 100%;
 	}
-}
+
+	.container__responsive {
+		@apply lg:container;
+	}
+} 
+
+
+    .popup-overlay {
+ 	    background: #000000b8;
+    }
