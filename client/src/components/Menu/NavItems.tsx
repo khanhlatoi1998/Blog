@@ -1,4 +1,4 @@
-import { Item } from "../../constans/Type/Type";
+import { Item } from "../../common/Type/index";
 
 interface Props {
     item: Item;

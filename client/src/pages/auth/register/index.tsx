@@ -1,16 +1,23 @@
 import { AiOutlineClose } from "react-icons/ai";
+import { useSelector, useDispatch } from 'react-redux';
+import { showModal } from "../../../config/store/slider";
 
-interface Props {
-    closeModal: Function;
-}
 
-const Register: React.FC<Props> = (props) => {
-    const { closeModal } = props;
+const Register: React.FC = (props) => {
+    const dispath = useDispatch();
+    
+    const clickClosePopup = () => {
+        dispath(showModal('closePopup'));
+    };
+
+    const clickShowPoppup = (e : string) => {
+        dispath(showModal(e));
+    };
 
     return (
         <div className="p-6 bg-login text-color_01 w-500">
             <div className="text-right">
-                <span className="cursor-pointer p-2" onClick={() => closeModal(false)}>
+                <span className="cursor-pointer p-2" onClick={() => clickClosePopup()}>
                     <AiOutlineClose className="text-2xl mr-0 ml-auto inline" />
                 </span>
             </div>
@@ -29,7 +36,7 @@ const Register: React.FC<Props> = (props) => {
 
                     <button className="w-full mt-12 py-4 bg-color_01 text-color_02 hover:bg-color_04">REGISTER</button>
 
-                    <div className="mt-12 py-4 text-center cursor-pointer border border-solid border-transparent hover:border-color_06">ĐĂNG NHẬP</div>
+                    <div onClick={() => clickShowPoppup('showLogin')} className="mt-12 py-4 text-center cursor-pointer border border-solid border-transparent hover:border-color_06">ĐĂNG NHẬP</div>
                 </div>
 
             </form>

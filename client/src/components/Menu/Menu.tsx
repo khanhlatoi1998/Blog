@@ -1,6 +1,10 @@
 import { useState } from "react";
+
+import { useSelector, useDispatch } from 'react-redux';
+import { showModal } from "../../config/store/slider";
+
 import { AiOutlineDown, AiOutlineSearch, AiOutlineMenu } from "react-icons/ai";
-import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
+
 import Popup from "reactjs-popup";
 import Login from "../../pages/auth/login";
 import Register from "../../pages/auth/register";
@@ -20,9 +24,16 @@ const items = [
 
 
 const Menu = () => {
-    const [open, setOpen] = useState<boolean>(false);
-    const closeModal = (o: any) => setOpen(false);
+    const dispath = useDispatch();
+    let modalPopup: string = useSelector((state: any) => state.showModal.status);
+    
+    const clickShowPoppup = (e : string) => {
+        dispath(showModal(e));
+    };
 
+    const clickClosePopup = () => {
+        dispath(showModal('closePopup'));
+    }
 
     return (
         <header className="z-50 fixed inset-x-0">
@@ -48,22 +59,22 @@ const Menu = () => {
                                 <button
                                     type="button"
                                     className="px-4 py-1 border-r border-solid border-color_05_border hover:text-color_04"
-                                    onClick={() => setOpen(o => !o)}
+                                    onClick={() => clickShowPoppup('showLogin')}
                                 >
                                     Đăng nhập
                                 </button>
-                                <Popup open={open} closeOnDocumentClick onClose={closeModal}>
-                                    <Login closeModal={closeModal} />
+                                <Popup open={modalPopup !== 'showLogin' ? false : true} closeOnDocumentClick onClose={modalPopup === 'showLogin' ? () => clickClosePopup() : () => {}}>
+                                    <Login />
                                 </Popup>
 
                                 <button
-                                    onClick={() => setOpen(o => !o)}
                                     className="px-4 py-1 hover:text-color_04"
+                                    onClick={() => clickShowPoppup('showRegister')}
                                 >
                                     Đăng ký
                                 </button>
-                                <Popup open={open} closeOnDocumentClick onClose={closeModal}>
-                                    <Register closeModal={closeModal} />
+                                <Popup open={modalPopup !== 'showRegister' ? false : true} closeOnDocumentClick onClose={modalPopup === 'showRegister' ? () => clickClosePopup() : () => {}}>
+                                    <Register />
                                 </Popup>
                             </div>
                         </div>

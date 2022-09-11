@@ -3,3 +3,8 @@ export interface Item {
     icon: JSX.Element;
     active?: boolean;
 }
+
+export interface ModalPopup {
+    status: string;
+    payload?: any;
+}
