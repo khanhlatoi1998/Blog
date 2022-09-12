@@ -8,3 +8,10 @@ export interface ModalPopup {
     status: string;
     payload?: any;
 }
+
+export interface FavoriteLocationType {
+    id: number;
+    title: string;
+    image: string;
+    link: string;
+}
