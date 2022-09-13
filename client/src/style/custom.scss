@@ -1,3 +1,15 @@
 .popup-overlay {
 	background: #000000b8;
 }
+
+.swiper-button-prev, .swiper-button-next {
+	display: none !important;
+}
+
+.swiper {
+	&:hover {
+		.swiper-button-prev, .swiper-button-next {
+			display: flex !important;
+		}
+	}
+}

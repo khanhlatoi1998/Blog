@@ -10,17 +10,17 @@ import FavoriteLocation from "./FavoriteLocation";
 
 const listFavorite: FavoriteLocationType[] = [
     { id: 1, title: 'NHA TRANG', image: './Images/favorite/dat-lat.jpg', link: '' },
-    { id: 2, title: 'NHA TRANG', image: './Images/favorite/dat-lat.jpg', link: '' },
-    { id: 3, title: 'NHA TRANG', image: './Images/favorite/dat-lat.jpg', link: '' },
-    { id: 4, title: 'NHA TRANG', image: './Images/favorite/dat-lat.jpg', link: '' },
-    { id: 5, title: 'NHA TRANG', image: './Images/favorite/dat-lat.jpg', link: '' },
-    { id: 6, title: 'NHA TRANG', image: './Images/favorite/dat-lat.jpg', link: '' },
+    { id: 2, title: 'GIA LAI', image: './Images/favorite/gia-lai.jpg', link: '' },
+    { id: 3, title: 'HỘI AN', image: './Images/favorite/hoi-an.jpg', link: '' },
+    { id: 4, title: 'HUẾ', image: './Images/favorite/hue.jpg', link: '' },
+    { id: 5, title: 'NHA TRANG', image: './Images/favorite/nha-trang.jpg', link: '' },
+    { id: 6, title: 'VŨNG TÀU', image: './Images/favorite/vung-tau.jpg', link: '' },
 ];
 
 const ListFavoriteLocation = () => {
     return (
         <section className="">
-            <div className="container__responsive">
+            <div className="container__responsive px-12">
                 <div className="text-center">
                     <h1 className="font-bold text-xl">Những Địa Điểm Được Yêu Thích Nhất</h1>
                 </div>

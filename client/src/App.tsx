@@ -7,6 +7,7 @@ import Menu from './components/Menu/Menu';
 import Info from './pages/info/Info';
 import TopView from './pages/topview/TopView';
 import ListFavoriteLocation from './pages/favorite-location/ListFavoriteLocation';
+import ListHandBook from './pages/handbook/ListHandBook';
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
             <Info />
             <ListFavoriteLocation />
             <TopView />
+            <ListHandBook />
         </div>
     );
 }

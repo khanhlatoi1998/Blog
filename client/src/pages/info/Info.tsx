@@ -1,7 +1,7 @@
 const Info = () => {
     return (
         <section className="py-10">
-            <div className="container__responsive">
+            <div className="container__responsive px-12">
                 <div className="overflow-hidden">
                     <div className="text-center">
                         <h1 className="heading__brand">TRAVEL BLOG</h1>
