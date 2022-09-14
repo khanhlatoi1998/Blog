@@ -38,7 +38,7 @@ const Menu = () => {
     return (
         <header className="z-50 fixed inset-x-0">
             <nav className="">
-                <div className="px-12 bg-color_01 shadow-header">
+                <div className="lg:px-12 px-6 bg-color_01 shadow-header">
                     <div className="flex flex-row items-center justify-between">
                         <div className="lg:hidden py-2 px-4 hover:cursor-pointer">
                             <AiOutlineMenu style={{ fontSize: "25px" }} />

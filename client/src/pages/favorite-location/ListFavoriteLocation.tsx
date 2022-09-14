@@ -19,8 +19,8 @@ const listFavorite: FavoriteLocationType[] = [
 
 const ListFavoriteLocation = () => {
     return (
-        <section className="">
-            <div className="container__responsive px-12">
+        <section className="pb-4">
+            <div className="container__responsive lg:px-12 px-6">
                 <div className="text-center">
                     <h1 className="font-bold text-xl">Những Địa Điểm Được Yêu Thích Nhất</h1>
                 </div>
