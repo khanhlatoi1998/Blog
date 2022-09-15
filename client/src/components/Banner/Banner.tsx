@@ -1,4 +1,4 @@
-import SearchForm from "../SearchForm/SearchForm";
+import SearchForm from "../search/SearchForm";
 
 const Banner = () => {
     return (

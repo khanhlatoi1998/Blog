@@ -1,5 +1,6 @@
 import "swiper/css/navigation";
 import "swiper/css";
+import 'swiper/css/bundle';
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
@@ -28,6 +29,7 @@ const ListFavoriteLocation = () => {
                     <Swiper
                         slidesPerView={4}
                         spaceBetween={30}
+                        slidesPerGroup={4}
                         navigation={true}
                         autoplay={{
                             delay: 3000

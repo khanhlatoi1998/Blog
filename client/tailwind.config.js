@@ -18,9 +18,11 @@ module.exports = {
                 color_06: '#ffffff54',
                 color_07: '#ff4747',
                 color_08: '#0000008c',
-                color_09: '#222',
+                color_09: '#222222',
                 color_10: '#ffffff26',
-                color_11: '#8d8d8d'
+                color_11: '#8d8d8d',
+                color_12: '#5472d2',
+                color_13: '#ff7358'
             },
 
             fontSize: {

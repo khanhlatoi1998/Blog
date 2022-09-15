@@ -1,3 +1,6 @@
+$color-01: #ffbf35;
+
+
 .popup-overlay {
 	background: #000000b8;
 }
@@ -11,5 +14,16 @@
 		.swiper-button-prev, .swiper-button-next {
 			display: flex !important;
 		}
+	}
+}
+
+.swiper-pagination {
+	position: static !important;
+	margin-top: 20px;
+	span {
+		width: 40px;
+		height: 7px;
+		border-radius: 0;
+		background-color: #000;
 	}
 }
