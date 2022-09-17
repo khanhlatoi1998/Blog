@@ -6,7 +6,8 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                balor: ["ass"],
+                lobster:['Lobster'],
+                dancing: [ 'Dancing Script', 'cursive']
             },
 
             colors: {
@@ -18,7 +19,7 @@ module.exports = {
                 color_06: '#ffffff54',
                 color_07: '#ff4747',
                 color_08: '#0000008c',
-                color_09: '#222222',
+                color_09: '#191b26',
                 color_10: '#ffffff26',
                 color_11: '#8d8d8d',
                 color_12: '#5472d2',

@@ -21,22 +21,41 @@ const listFavorite: FavoriteLocationType[] = [
 const ListFavoriteLocation = () => {
     return (
         <section className="pb-4">
-            <div className="container__responsive lg:px-12 px-6">
+            <div className="container__responsive lg:px-12 px-4">
                 <div className="text-center">
-                    <h1 className="font-bold text-xl">Những Địa Điểm Được Yêu Thích Nhất</h1>
+                    <h1 className="font-bold sm:text-xl text:lg">Những Địa Điểm Được Yêu Thích Nhất</h1>
                 </div>
                 <div className="mt-8">
                     <Swiper
-                        slidesPerView={4}
-                        spaceBetween={30}
-                        slidesPerGroup={4}
+                        slidesPerView={2}
+                        spaceBetween={20}
+                        slidesPerGroup={2}
                         navigation={true}
                         autoplay={{
                             delay: 3000
                         }}
                         pagination={{
-                            clickable: true
+                            clickable: true,
+                            enabled: false
                         }}
+                        breakpoints={{
+                            500: {
+                                slidesPerView: 3,
+                                spaceBetween: 30,
+                                slidesPerGroup: 3,
+                                pagination: {
+                                  enabled: true
+                                }
+                              },
+                            1024: {
+                              slidesPerView: 4,
+                              spaceBetween: 30,
+                              slidesPerGroup: 4,
+                              pagination: {
+                                enabled: true
+                              }
+                            },
+                          }}
                         modules={[Pagination, Navigation, Autoplay]}
                         className="mySwiper"
                     >

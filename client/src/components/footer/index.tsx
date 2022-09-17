@@ -4,8 +4,8 @@ import { FaFacebookF, FaInstagram, FaYoutube } from 'react-icons/fa';
 const Footer = () => {
     return (
         <footer className="bg-color_09 mt-8">
-            <div className="container__responsive lg:px-12 px-6">
-                <div className="py-12">
+            <div className="container__responsive lg:px-12 px-4">
+                <div className="py-12 sm:block hidden">
                     <div className="grid grid-cols-3">
                         <div className="px-2">
                             <div className="flex py-4 cursor-pointer">
@@ -132,29 +132,29 @@ const Footer = () => {
                     </div>
                 </div>
                 <div className="py-12 border-t border-solid border-color_10 text  text-color_11">
-                    <div className="grid grid-cols-2 gap-12">
+                    <div className="grid sm:grid-cols-2 grid-cols-1 gap-12">
                         <div className="pr-8 flex flex-col justify-between">
-                            <p className="text-color_01 text-2xl">VỀ CHÚNG TÔI</p>
+                            <p className="text-color_01 sm:text-2xl text-xl">VỀ CHÚNG TÔI</p>
                             <p className="mt-4"><span className="text-color_01 font-medium">Travelblog.vn</span> - Nơi chia sẻ kinh nghiệm du lịch, phượt và trải nghiệm thú vị trên những cung đường phiêu du.</p>
-                            <p className="mt-4">Liên hệ chúng tôi:<span className="text-color_04"> wecheckinvn@gmail.com</span>  </p>
+                            <p className="mt-4">Liên hệ chúng tôi:<span className="text-color_04"> travelblog@gmail.com</span>  </p>
                         </div>
                         <div className="flex flex-col justify-between">
                             <div>
-                                <p className="text-color_01 text-2xl ">THEO DÕI CHÚNG TÔI</p>
+                                <p className="text-color_01 sm:text-2xl text-xl">THEO DÕI CHÚNG TÔI</p>
                             </div>
                             <div className="flex flex-col">
                                 <div className="flex flex-row flex-wrap gap-8 mt-6">
-                                    <div className="w-[50px] h-[50px] flex items-center justify-center bg-[#ffffff08] border border-solid border-color_10 hover:text-color_12">
+                                    <div className="w-[40px] h-[40px] flex items-center justify-center bg-[#ffffff08] border border-solid border-color_10 hover:text-color_12">
                                         <a href="">
                                             <FaFacebookF />
                                         </a>
                                     </div>
-                                    <div className="w-[50px] h-[50px] flex items-center justify-center bg-[#ffffff08] border border-solid border-color_10 hover:text-color_12">
+                                    <div className="w-[40px] h-[40px] flex items-center justify-center bg-[#ffffff08] border border-solid border-color_10 hover:text-color_12">
                                         <a href="">
                                             <FaInstagram />
                                         </a>
                                     </div>
-                                    <div className="w-[50px] h-[50px] flex items-center justify-center bg-[#ffffff08] border border-solid border-color_10 hover:text-color_12">
+                                    <div className="w-[40px] h-[40px] flex items-center justify-center bg-[#ffffff08] border border-solid border-color_10 hover:text-color_12">
                                         <a href="">
                                             <FaYoutube />
                                         </a>

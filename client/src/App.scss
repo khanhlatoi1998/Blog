@@ -47,6 +47,7 @@ table {
 	border-spacing: 0;
 }
 
+
 @tailwind base;
 
 @layer base {
@@ -87,7 +88,7 @@ table {
 
 		.heading__main {
 			@apply text-color_07;
-			@apply text-2xl;
+			@apply sm:text-2xl text-xl;
 			@apply font-bold;
 			@apply pb-4;
 			@apply relative;
@@ -135,19 +136,33 @@ table {
 
 	}
 
-	.content__ellipsis {
+	%ellipsis {
 		display: -webkit-box;
-		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
 
+	.content__ellipsis {
+		-webkit-line-clamp: 2;
+		@extend %ellipsis;
+
+		@media only screen and (max-width: 640px) {
+			display: none;
+		}
+	}
+
+	.content__ellipsis--title {
+		-webkit-line-clamp: 2;
+		@extend %ellipsis;
+	}
+
 	.content__ellipsis--3 {
-		display: -webkit-box;
 		-webkit-line-clamp: 3;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-		text-overflow: ellipsis;
+		@extend %ellipsis;
+
+		@media only screen and (max-width: 640px) {
+			display: none;
+		}
 	}
 } 
