@@ -1,9 +1,10 @@
+import ReactPaginate from "react-paginate";
 import Entertainment from "./Entertainment";
 
 
 const ListEntertainment = () => {
     return (
-        <section className="pt-12">
+        <section className="sm:pt-4">
             <div className="container__responsive lg:px-12 px-4">
                 <div className="heading__block">
                     <h1 className="heading__main">ĐỊA ĐIỂM VUI CHƠI</h1>
@@ -15,6 +16,21 @@ const ListEntertainment = () => {
                     <Entertainment />
                     <Entertainment />
                     <Entertainment />
+                </div>
+                <div>
+                    <ReactPaginate
+                        breakLabel="..."
+                        nextLabel=">"
+                        previousLabel="<"
+                        className="flex justify-end gap-1 text-sm"
+                        pageLinkClassName="px-2 py-[2px] rounded-sm"
+                        activeLinkClassName="bg-color_04"
+                        previousLinkClassName="px-2 py-1"
+                        nextLinkClassName="px-2 py-1"
+                        pageRangeDisplayed={3}
+                        marginPagesDisplayed={2}
+                        pageCount={40}
+                    />
                 </div>
             </div>
         </section>

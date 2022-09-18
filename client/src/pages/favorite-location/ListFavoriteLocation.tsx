@@ -10,7 +10,7 @@ import { FavoriteLocationType } from "../../common/Type";
 import FavoriteLocation from "./FavoriteLocation";
 
 const listFavorite: FavoriteLocationType[] = [
-    { id: 1, title: 'NHA TRANG', image: './Images/favorite/dat-lat.jpg', link: '' },
+    { id: 1, title: 'ĐÀ LẠT', image: './Images/favorite/dat-lat.jpg', link: '' },
     { id: 2, title: 'GIA LAI', image: './Images/favorite/gia-lai.jpg', link: '' },
     { id: 3, title: 'HỘI AN', image: './Images/favorite/hoi-an.jpg', link: '' },
     { id: 4, title: 'HUẾ', image: './Images/favorite/hue.jpg', link: '' },

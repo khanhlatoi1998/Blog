@@ -53,6 +53,10 @@ table {
 @layer base {
 	body {
 		font-size: 17px;
+
+		@media only screen and (max-width: 640px) {
+			font-size: 15px;
+		}		
 	}
 
 	img {

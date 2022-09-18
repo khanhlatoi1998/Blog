@@ -23,7 +23,7 @@ const items = [
 ]
 
 
-const Menu = () => {
+const Header = () => {
     const dispath = useDispatch();
     const [open, setOpen] = useState<boolean>(false);
 
@@ -92,4 +92,4 @@ const Menu = () => {
     );
 };
 
-export default Menu;
+export default Header;

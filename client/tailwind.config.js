@@ -23,7 +23,9 @@ module.exports = {
                 color_10: '#ffffff26',
                 color_11: '#8d8d8d',
                 color_12: '#5472d2',
-                color_13: '#ff7358'
+                color_13: '#ff7358',
+                color_14: '#f8f8f8',
+                color_15: '#f7941d',
             },
 
             fontSize: {
@@ -37,11 +39,13 @@ module.exports = {
             backgroundImage: {
                 'banner': "url('../public/Images/banner.jpg')",
                 'login': 'linear-gradient(45deg,rgba(0,69,130,.8) 0%,rgba(38,134,146,.8) 100%)',
+                'instagram': 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%)'
             },
 
             boxShadow: {
                 'input': "0 0 5px 1px #0000001c",
-                'header': "1px 0 10px 1px #0000001c"
+                'header': "1px 0 10px 1px #0000001c",
+                'around': "0 0 10px 0 rgb(0 0 0 / 12%)",
             },
 
             width: {

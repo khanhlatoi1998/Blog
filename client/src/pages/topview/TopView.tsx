@@ -1,6 +1,6 @@
 const TopView = () => {
     return (
-        <section className="py-10 mt-4">
+        <section className="py-10 sm:mt-4">
             <div className="container__responsive lg:px-12 px-4">
                 <div className="heading__block">
                     <h1 className="heading__main">TOP 5 BÀI VIẾT XEM NHIỀU NHẤT TRONG THÁNG </h1>
