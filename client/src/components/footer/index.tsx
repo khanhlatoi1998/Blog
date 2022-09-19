@@ -17,7 +17,7 @@ const Footer = () => {
                                 <div className="flex-1 flex flex-col justify-center">
                                     <div className="pl-4">
                                         <h3 className="font-medium text-[16px] pb-1 relative text-color_11 hover:text-color_04">Top 10 Quán ăn ngon ở Nha Trang đã sưu tầm rất lâu rồi</h3>
-                                        <p className=" text-[14px] text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">Khanh</span> 09/14/2022</p>
+                                        <p className=" text-[14px] text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">Name</span> 09/14/2022</p>
                                     </div>
                                 </div>
                             </div>
@@ -30,7 +30,7 @@ const Footer = () => {
                                 <div className="flex-1 flex flex-col justify-center">
                                     <div className="pl-4">
                                         <h3 className="font-medium text-[16px] pb-1 relative text-color_11 hover:text-color_04">Top 10 Quán ăn ngon ở Nha Trang đã sưu tầm rất lâu rồi</h3>
-                                        <p className=" text-[14px]  text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">Khanh</span> 09/14/2022</p>
+                                        <p className=" text-[14px]  text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">Name</span> 09/14/2022</p>
                                     </div>
                                 </div>
                             </div>
@@ -43,7 +43,7 @@ const Footer = () => {
                                 <div className="flex-1 flex flex-col justify-center">
                                     <div className="pl-4">
                                         <h3 className="font-medium text-[16px] pb-1 relative text-color_11 hover:text-color_04">Top 10 Quán ăn ngon ở Nha Trang đã sưu tầm rất lâu rồi</h3>
-                                        <p className=" text-[14px]  text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">Khanh</span> 09/14/2022</p>
+                                        <p className=" text-[14px]  text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">Name</span> 09/14/2022</p>
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@ const Footer = () => {
                                 <div className="flex-1 flex flex-col justify-center">
                                     <div className="pl-4">
                                         <h3 className="font-medium text-[16px] pb-1 relative text-color_11 hover:text-color_04">Top 10 Quán ăn ngon ở Nha Trang đã sưu tầm rất lâu rồi</h3>
-                                        <p className=" text-[14px]  text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">Khanh</span> 09/14/2022</p>
+                                        <p className=" text-[14px]  text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">Name</span> 09/14/2022</p>
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +71,7 @@ const Footer = () => {
                                 <div className="flex-1 flex flex-col justify-center">
                                     <div className="pl-4">
                                         <h3 className="font-medium text-[16px] pb-1 relative text-color_11 hover:text-color_04">Top 10 Quán ăn ngon ở Nha Trang đã sưu tầm rất lâu rồi</h3>
-                                        <p className=" text-[14px]  text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">Khanh</span> 09/14/2022</p>
+                                        <p className=" text-[14px]  text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">Name</span> 09/14/2022</p>
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +84,7 @@ const Footer = () => {
                                 <div className="flex-1 flex flex-col justify-center">
                                     <div className="pl-4">
                                         <h3 className="font-medium text-[16px] pb-1 relative text-color_11 hover:text-color_04">Top 10 Quán ăn ngon ở Nha Trang đã sưu tầm rất lâu rồi</h3>
-                                        <p className=" text-[14px]  text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">Khanh</span> 09/14/2022</p>
+                                        <p className=" text-[14px]  text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">Name</span> 09/14/2022</p>
                                     </div>
                                 </div>
                             </div>

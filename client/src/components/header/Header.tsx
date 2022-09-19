@@ -38,7 +38,7 @@ const Header = () => {
     }
 
     return (
-        <header className="z-50 fixed inset-x-0">
+        <header className="z-50 relative inset-x-0">
             <nav className="">
                 <div className="lg:px-12 px-4 bg-color_01 shadow-header">
                     <div className="flex flex-row items-center justify-between">

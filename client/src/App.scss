@@ -169,4 +169,17 @@ table {
 			display: none;
 		}
 	}
+
+	.items-post + .items-post {
+		@apply border-t;
+		@apply 	border-t border-gray-300;
+		@apply border-dotted;
+	
+	}
+
+	.items-category + .items-category {
+		@apply border-t;
+		@apply 	border-t border-gray-300;
+		@apply border-dotted;
+	}
 } 
