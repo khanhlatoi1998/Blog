@@ -1,30 +1,77 @@
 import ReactPaginate from "react-paginate";
 import { useEffect, useRef, useState } from "react";
 
+import { StyleSidebarType } from "../../common/Type";
 
 const Sidebar = () => {
     const [scroll, setScroll] = useState<number>(0);
     const refContainer = useRef<any>();
+    const refElement = useRef<any>();
 
-    const screenHeight = window.innerHeight;
+    let style: Object = {
+        position: 'static',
+        top: 'auto',
+        bottom: 'auto',
+    };
+
+    let prevScrollpos: number = window.pageYOffset;
 
     const onScrollStyleFixed = () => {
         if (window.innerWidth >= 1024) {
-            const getOffset: number = refContainer?.current?.offsetTop;
-            const scroll: number = window.pageYOffset;
+            const getOffsetTop: number = refContainer.current.offsetTop;
+            const screenHeight = window.innerHeight;
+            const heightElement: number = refElement.current.offsetHeight;
+            const currentScrollPos: number = window.pageYOffset;
 
-            console.log('offset: ', getOffset)
-            console.log('scroll: ', scroll)
+            let getInitialHidden = getOffsetTop - screenHeight;
+            let getScrollToBottomElement = heightElement + getInitialHidden + 32; // 32px margin-bottom 
+            let getFixedHidden = heightElement - screenHeight; // if result < 0 is not hidden 
+            let getTopPos = currentScrollPos - getOffsetTop - screenHeight + getFixedHidden; 
+
+            if (prevScrollpos > currentScrollPos) {
+                let newStyle: StyleSidebarType = {
+                    position: 'absolute',
+                    top: `${getTopPos}px`,
+                    bottom: 'auto',
+                    width: 'auto'
+                };
+
+                Object.assign(refElement.current.style, newStyle);
+            } else {
+                if (currentScrollPos >= getScrollToBottomElement) {
+                    let newStyle: StyleSidebarType = {
+                        position: 'fixed',
+                        top: 'auto',
+                        bottom: '0',
+                        width: window.innerWidth >= 1280 ? '370px' : '285px'
+                    };
+    
+                    Object.assign(refElement.current.style, newStyle);
+                }
+            }
+
+            prevScrollpos = currentScrollPos;
+
+            console.log('getInitialHidden', getInitialHidden);
+            console.log('getScrollToBottomElement', getScrollToBottomElement);
+
+
+            console.log('screenHeight: ', screenHeight)
+            console.log('getOffsetTop: ', getOffsetTop)
+            console.log('heightElement: ', heightElement)
+            console.log('currentScrollPos: ', currentScrollPos)
+            console.log('getTopPos: ', getTopPos)
+            console.log("###########")
         }
     };
-    
+
     useEffect(() => {
         window.addEventListener('scroll', onScrollStyleFixed);
     }, []);
-    
+
     return (
-        <div className="relative w-full lg:w-1/3 lg:pl-6 mt-8 lg:mt-0" ref={refContainer}>
-            <div className="mb-28">
+        <div className="relative w-full lg:w-1/3 lg:pl-6 lg:pb-20 mt-8 lg:mt-0" ref={refContainer}>
+            <div className="mb-8" style={style} ref={refElement}>
                 <div className="p-4 shadow-around bg-color_01">
                     <h3 className="font-bold pb-2 border-b-[2px] border-solid border-color_15">BÀI VIẾT XEM NHIỀU</h3>
                     <div className="mt-2 flex flex-col">

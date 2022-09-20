@@ -15,3 +15,10 @@ export interface FavoriteLocationType {
     image: string;
     link: string;
 }
+
+export interface StyleSidebarType {
+    position: string;
+    top: string | number;
+    bottom: string | number;
+    width?: string;
+};
