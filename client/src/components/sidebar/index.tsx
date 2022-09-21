@@ -12,56 +12,110 @@ const Sidebar = () => {
         position: 'static',
         top: 'auto',
         bottom: 'auto',
+        width: 'auto'
     };
 
-    let prevScrollpos: number = window.pageYOffset;
+    let prevScrollPos: number = window.pageYOffset;
+
+    let checkPrevScrollWhenFixed = 0;
+    let checkScrollWhenAbsolute = 0;
+    let getScrollPosWhenFixed = 0;
+    
+
+    const styleSideOnScroll = (position: string, getTopPos: number | string, bottom: string | number, width: any) => {
+        let newStyle: StyleSidebarType = {
+            position: position,
+            top: getTopPos,
+            bottom: bottom,
+            width: width !== 'auto' ? (window.innerWidth >= 1280 ? width : '285px') : 'auto'
+        };
+
+        Object.assign(refElement.current.style, newStyle);
+    }
 
     const onScrollStyleFixed = () => {
         if (window.innerWidth >= 1024) {
             const getOffsetTop: number = refContainer.current.offsetTop;
-            const screenHeight = window.innerHeight;
+            const screenHeight: number = window.innerHeight;
             const heightElement: number = refElement.current.offsetHeight;
             const currentScrollPos: number = window.pageYOffset;
 
-            let getInitialHidden = getOffsetTop - screenHeight;
-            let getScrollToBottomElement = heightElement + getInitialHidden + 32; // 32px margin-bottom 
-            let getFixedHidden = heightElement - screenHeight; // if result < 0 is not hidden 
-            let getTopPos = currentScrollPos - getOffsetTop - screenHeight + getFixedHidden; 
+            let getInitialHidden: number = getOffsetTop - screenHeight;
+            let getScrollToBottomElement: number = heightElement + getInitialHidden + 32; // 32px margin-bottom 
+            let getFixedHidden: number = heightElement - screenHeight; // if result < 0 is not hidden 
+            let getTopPos: number = currentScrollPos - getScrollToBottomElement;
 
-            if (prevScrollpos > currentScrollPos) {
+            if (heightElement <= screenHeight) {
+
                 let newStyle: StyleSidebarType = {
-                    position: 'absolute',
-                    top: `${getTopPos}px`,
+                    position: 'sticky',
+                    top: `32px`,
                     bottom: 'auto',
                     width: 'auto'
                 };
 
                 Object.assign(refElement.current.style, newStyle);
             } else {
-                if (currentScrollPos >= getScrollToBottomElement) {
-                    let newStyle: StyleSidebarType = {
-                        position: 'fixed',
-                        top: 'auto',
-                        bottom: '0',
-                        width: window.innerWidth >= 1280 ? '370px' : '285px'
-                    };
-    
-                    Object.assign(refElement.current.style, newStyle);
+                if (prevScrollPos > currentScrollPos) {
+                    if (checkPrevScrollWhenFixed === 0) {
+                        let newStyle: StyleSidebarType = {
+                            position: 'absolute',
+                            top: `${getTopPos}px`,
+                            bottom: 'auto',
+                            width: 'auto'
+                        };
+
+                        Object.assign(refElement.current.style, newStyle);
+
+                        getScrollPosWhenFixed = currentScrollPos;
+
+                        checkPrevScrollWhenFixed = 1;
+                    }
+
+                    if (getScrollPosWhenFixed - currentScrollPos >= getFixedHidden + 32 + 32) { // 32px margin bottom 32px margin top
+                        let newStyle: StyleSidebarType = {
+                            position: 'fixed',
+                            top: '32px',
+                            bottom: 'auto',
+                            width: window.innerWidth >= 1280 ? '370px' : '285px'
+                        };
+
+                        Object.assign(refElement.current.style, newStyle);
+                    }
+                } else {
+                    if (checkPrevScrollWhenFixed === 0) {
+                        if (currentScrollPos >= getScrollToBottomElement) {
+                            let newStyle: StyleSidebarType = {
+                                position: 'fixed',
+                                top: 'auto',
+                                bottom: '0',
+                                width: window.innerWidth >= 1280 ? '370px' : '285px'
+                            };
+
+                            Object.assign(refElement.current.style, newStyle);
+
+                            styleSideOnScroll('fixed', 'auto', 0, '370px');
+                        }
+                    } else {
+                        console.log(33)
+                    }
                 }
             }
 
-            prevScrollpos = currentScrollPos;
-
-            console.log('getInitialHidden', getInitialHidden);
-            console.log('getScrollToBottomElement', getScrollToBottomElement);
 
 
-            console.log('screenHeight: ', screenHeight)
-            console.log('getOffsetTop: ', getOffsetTop)
-            console.log('heightElement: ', heightElement)
-            console.log('currentScrollPos: ', currentScrollPos)
-            console.log('getTopPos: ', getTopPos)
-            console.log("###########")
+            prevScrollPos = currentScrollPos;
+
+            // console.log('getInitialHidden', getInitialHidden);
+            // console.log('getScrollToBottomElement', getScrollToBottomElement);
+
+
+            // console.log('screenHeight: ', screenHeight)
+            // console.log('getOffsetTop: ', getOffsetTop)
+            // console.log('heightElement: ', heightElement)
+            // console.log('currentScrollPos: ', currentScrollPos)
+            // console.log('getTopPos: ', getTopPos)
+            // console.log("###########")
         }
     };
 
