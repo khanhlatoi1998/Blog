@@ -12,21 +12,22 @@ const Sidebar = () => {
         position: 'static',
         top: 'auto',
         bottom: 'auto',
-        width: 'auto'
+        width: 'auto',
     };
 
     let prevScrollPos: number = window.pageYOffset;
 
-    let checkPrevScrollWhenFixed = 0;
-    let checkScrollWhenAbsolute = 0;
+    let checkFixed = 0;
+    let checkAbsolute = 0;
     let getScrollPosWhenFixed = 0;
-    
+    let checkScrolBottomContainer: any = 0;
+    let newTopPos = 0;
 
-    const styleSideOnScroll = (position: string, getTopPos: number | string, bottom: string | number, width: any) => {
+    const styleSidebarOnScroll = (position: string, getTopPos: number | string, bottom: string | number, width: any) => {
         let newStyle: StyleSidebarType = {
             position: position,
-            top: getTopPos,
-            bottom: bottom,
+            top: getTopPos !== 'auto' ? `${getTopPos}px` : 'auto',
+            bottom: bottom !== 'auto' ? `${bottom}px` : 'auto',
             width: width !== 'auto' ? (window.innerWidth >= 1280 ? width : '285px') : 'auto'
         };
 
@@ -38,6 +39,7 @@ const Sidebar = () => {
             const getOffsetTop: number = refContainer.current.offsetTop;
             const screenHeight: number = window.innerHeight;
             const heightElement: number = refElement.current.offsetHeight;
+            const heightContainer: number = refContainer.current.offsetHeight;
             const currentScrollPos: number = window.pageYOffset;
 
             let getInitialHidden: number = getOffsetTop - screenHeight;
@@ -46,63 +48,60 @@ const Sidebar = () => {
             let getTopPos: number = currentScrollPos - getScrollToBottomElement;
 
             if (heightElement <= screenHeight) {
-
-                let newStyle: StyleSidebarType = {
-                    position: 'sticky',
-                    top: `32px`,
-                    bottom: 'auto',
-                    width: 'auto'
-                };
-
-                Object.assign(refElement.current.style, newStyle);
+                styleSidebarOnScroll('sticky', '32px', 'auto', 'auto');
             } else {
                 if (prevScrollPos > currentScrollPos) {
-                    if (checkPrevScrollWhenFixed === 0) {
-                        let newStyle: StyleSidebarType = {
-                            position: 'absolute',
-                            top: `${getTopPos}px`,
-                            bottom: 'auto',
-                            width: 'auto'
-                        };
+                    if (checkFixed === 1) {
+                        checkScrolBottomContainer === 1 ? getTopPos = newTopPos : getTopPos = getOffsetTop;
 
-                        Object.assign(refElement.current.style, newStyle);
+                        styleSidebarOnScroll('absolute', getTopPos, 'auto', 'auto');
 
                         getScrollPosWhenFixed = currentScrollPos;
 
-                        checkPrevScrollWhenFixed = 1;
+                        checkAbsolute = 1;
                     }
 
-                    if (getScrollPosWhenFixed - currentScrollPos >= getFixedHidden + 32 + 32) { // 32px margin bottom 32px margin top
-                        let newStyle: StyleSidebarType = {
-                            position: 'fixed',
-                            top: '32px',
-                            bottom: 'auto',
-                            width: window.innerWidth >= 1280 ? '370px' : '285px'
-                        };
-
-                        Object.assign(refElement.current.style, newStyle);
+                    if (checkFixed === 0 &&  getScrollPosWhenFixed - currentScrollPos >= getFixedHidden + 32 + 32) { // 32px margin bottom 32px margin top
+                        styleSidebarOnScroll('fixed', 32, 'auto', '370px');
                     }
+
+                    if (currentScrollPos - getOffsetTop + 32 <= 0) {
+                        styleSidebarOnScroll('static', 'auto', 'auto', 'auto');
+                    }
+
+                    if (checkFixed === 1) {
+                        checkFixed = 0;
+                    } 
+                    checkScrolBottomContainer = 0;
+                    // if (checkScrolBottomContainer === 1) {
+                    // } 
+
+                    // checkScrolBottomContainer === 1 ? checkScrolBottomContainer = 0 : checkScrolBottomContainer = 1;
+
                 } else {
-                    if (checkPrevScrollWhenFixed === 0) {
-                        if (currentScrollPos >= getScrollToBottomElement) {
-                            let newStyle: StyleSidebarType = {
-                                position: 'fixed',
-                                top: 'auto',
-                                bottom: '0',
-                                width: window.innerWidth >= 1280 ? '370px' : '285px'
-                            };
+                    if (currentScrollPos >= getScrollToBottomElement && currentScrollPos < heightContainer + getOffsetTop - screenHeight - 80) {
+                        styleSidebarOnScroll('fixed', 'auto', 0, '370px');
+                        checkFixed = 1;
+                    }
+                    if (currentScrollPos >= heightContainer + getOffsetTop - screenHeight - 80 && checkScrolBottomContainer === 0) {
+                        console.log(getTopPos);
 
-                            Object.assign(refElement.current.style, newStyle);
+                        newTopPos = heightContainer - heightElement - 80;
 
-                            styleSideOnScroll('fixed', 'auto', 0, '370px');
-                        }
+                        console.log('new', newTopPos)
+
+                        styleSidebarOnScroll('absolute', newTopPos, 'auto', '370px');
+
+                        checkScrolBottomContainer = 1;
+                    }
+                    if (checkFixed === 0) {
+
+                        // console.log('currentScrollPos', currentScrollPos);
+                        // console.log('getOffsetTop', heightContainer + getOffsetTop - screenHeight);
                     } else {
-                        console.log(33)
                     }
                 }
             }
-
-
 
             prevScrollPos = currentScrollPos;
 
