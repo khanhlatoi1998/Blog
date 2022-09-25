@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { Item } from "../../common/Type/index";
 
 interface Props {
@@ -6,12 +7,17 @@ interface Props {
 
 
 const Navitems: React.FC<Props> = (props) => {
-    const { label, icon, active } = props.item;
-    
+    const { label, icon, active, link } = props.item;
+
     return (
-        <li className="flex lg:justify-start justify-between items-censter lg:px-4 px-6 py-4 hover:text-color_04 text-sm cursor-pointer" >
-            <a href="/" className="flex justify-center items-center">{label}</a>
-            <span className="ml-3 mb-[2px] flex items-center">{icon}</span>   
+        <li className="" >
+            <NavLink to={link} className="block lg:px-4 px-6 py-4 hover:text-color_04 text-sm cursor-pointer">
+                <div className="flex justify-between items-center">
+                    <span  className="">{label}</span>
+                    <span className="ml-3 mb-[2px] flex items-center">{icon}</span>
+                </div>
+            </NavLink>
+
         </li>
     );
 }

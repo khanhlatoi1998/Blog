@@ -1,10 +1,9 @@
 import ReactPaginate from "react-paginate";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 import { StyleSidebarType } from "../../common/Type";
 
 const Sidebar = () => {
-    const [scroll, setScroll] = useState<number>(0);
     const refContainer = useRef<any>();
     const refElement = useRef<any>();
 
@@ -17,11 +16,12 @@ const Sidebar = () => {
 
     let prevScrollPos: number = window.pageYOffset;
 
-    let checkFixed = 0;
+    let checkScrollBtContainer = 0;
+    let checkFixedTop = 0;
+    let checkFixedBottom = 0;
     let checkAbsolute = 0;
-    let getScrollPosWhenFixed = 0;
-    let checkScrolBottomContainer: any = 0;
-    let newTopPos = 0;
+    let checkStatic = 1;
+    let topWhenFixedTop = 0;
 
     const styleSidebarOnScroll = (position: string, getTopPos: number | string, bottom: string | number, width: any) => {
         let newStyle: StyleSidebarType = {
@@ -35,86 +35,106 @@ const Sidebar = () => {
     }
 
     const onScrollStyleFixed = () => {
+        // get top absolutee to set scroll  
+        // 3 case: scroll top, scroll middle, scroll bottom
+
         if (window.innerWidth >= 1024) {
             const getOffsetTop: number = refContainer.current.offsetTop;
             const screenHeight: number = window.innerHeight;
             const heightElement: number = refElement.current.offsetHeight;
             const heightContainer: number = refContainer.current.offsetHeight;
             const currentScrollPos: number = window.pageYOffset;
+            const space: number = 32;
 
             let getInitialHidden: number = getOffsetTop - screenHeight;
-            let getScrollToBottomElement: number = heightElement + getInitialHidden + 32; // 32px margin-bottom 
-            let getFixedHidden: number = heightElement - screenHeight; // if result < 0 is not hidden 
-            let getTopPos: number = currentScrollPos - getScrollToBottomElement;
+            let getScrollToBtElement: number = heightElement + getInitialHidden + space; // 32px margin-bottom 
+            let getScrollToBtContainer = heightContainer + getOffsetTop - screenHeight - 80 + space; // 80 margin-bottom
+            let getScrollHidden = heightElement - screenHeight + space + space; // 1 space when scroll bottom container, 1 space margin-top fixed
+            let getHiddenFixed = heightElement - screenHeight; // if result < 0 is not hidden
 
             if (heightElement <= screenHeight) {
-                styleSidebarOnScroll('sticky', '32px', 'auto', 'auto');
+                styleSidebarOnScroll('sticky', '32', 'auto', 'auto');
             } else {
                 if (prevScrollPos > currentScrollPos) {
-                    if (checkFixed === 1) {
-                        checkScrolBottomContainer === 1 ? getTopPos = newTopPos : getTopPos = getOffsetTop;
+                    if (checkScrollBtContainer === 1) {
+                        if (getScrollToBtContainer - currentScrollPos >= 0 && getScrollToBtContainer - currentScrollPos >= getScrollHidden) {
+                            styleSidebarOnScroll('fixed', 32, 'auto', '370px');
 
-                        styleSidebarOnScroll('absolute', getTopPos, 'auto', 'auto');
+                            checkFixedTop = 1;
+                            checkStatic = 0;
+                            checkScrollBtContainer = 0;
+                        }
+                    }
 
-                        getScrollPosWhenFixed = currentScrollPos;
+                    if (checkAbsolute === 1) {
+                        if (currentScrollPos < topWhenFixedTop + getOffsetTop - space) {
+                            styleSidebarOnScroll('fixed', 32, 'auto', '370px');
 
+                            checkFixedTop = 1;
+                            checkAbsolute = 0;
+                            checkFixedBottom = 0;
+                        }
+                    }
+
+                    if (checkFixedBottom === 1) {
+                        topWhenFixedTop = currentScrollPos - getOffsetTop - space - getHiddenFixed;
+                        styleSidebarOnScroll('absolute', topWhenFixedTop, 'auto', 'auto');
+
+                        checkAbsolute = 1;
+                        checkFixedBottom = 0;
+                        checkFixedTop = 0;
+                        checkStatic = 0;
+                    }
+
+                    if (currentScrollPos - getOffsetTop + space <= 0) {
+                        styleSidebarOnScroll('static', 'auto', 'auto', 'auto');
+
+                        checkScrollBtContainer = 0;
+                        checkFixedTop = 0;
+                        checkFixedBottom = 0;
+                        checkAbsolute = 0;
+                        checkStatic = 1;
+                    }
+                } else {
+                    if (checkStatic === 1) {
+                        if (currentScrollPos >= getScrollToBtElement && currentScrollPos < getScrollToBtContainer) {
+                            styleSidebarOnScroll('fixed', 'auto', '0', '370px');
+
+                            checkFixedBottom = 1;
+                        }
+                    }
+
+                    if (checkFixedTop === 1) {
+                        topWhenFixedTop = currentScrollPos - getOffsetTop + space;
+                        styleSidebarOnScroll('absolute', topWhenFixedTop, 'auto', 'auto');
+
+                        checkFixedTop = 0;
+                        checkStatic = 0;
                         checkAbsolute = 1;
                     }
 
-                    if (checkFixed === 0 &&  getScrollPosWhenFixed - currentScrollPos >= getFixedHidden + 32 + 32) { // 32px margin bottom 32px margin top
-                        styleSidebarOnScroll('fixed', 32, 'auto', '370px');
+                    if (checkAbsolute === 1) {
+                        if (currentScrollPos > topWhenFixedTop + getOffsetTop + getHiddenFixed + space) {
+                            styleSidebarOnScroll('fixed', 'auto', '0', '370px');
+
+                            checkAbsolute = 0;
+                            checkFixedBottom = 1;
+                            checkFixedTop = 0;
+                        }
                     }
 
-                    if (currentScrollPos - getOffsetTop + 32 <= 0) {
-                        styleSidebarOnScroll('static', 'auto', 'auto', 'auto');
-                    }
+                    if (currentScrollPos >= getScrollToBtContainer) {
+                        let topWhenBottomContainer = heightContainer - heightElement - 80;
+                        styleSidebarOnScroll('absolute', topWhenBottomContainer, 'auto', 'auto');
 
-                    if (checkFixed === 1) {
-                        checkFixed = 0;
-                    } 
-                    checkScrolBottomContainer = 0;
-                    // if (checkScrolBottomContainer === 1) {
-                    // } 
-
-                    // checkScrolBottomContainer === 1 ? checkScrolBottomContainer = 0 : checkScrolBottomContainer = 1;
-
-                } else {
-                    if (currentScrollPos >= getScrollToBottomElement && currentScrollPos < heightContainer + getOffsetTop - screenHeight - 80) {
-                        styleSidebarOnScroll('fixed', 'auto', 0, '370px');
-                        checkFixed = 1;
-                    }
-                    if (currentScrollPos >= heightContainer + getOffsetTop - screenHeight - 80 && checkScrolBottomContainer === 0) {
-                        console.log(getTopPos);
-
-                        newTopPos = heightContainer - heightElement - 80;
-
-                        console.log('new', newTopPos)
-
-                        styleSidebarOnScroll('absolute', newTopPos, 'auto', '370px');
-
-                        checkScrolBottomContainer = 1;
-                    }
-                    if (checkFixed === 0) {
-
-                        // console.log('currentScrollPos', currentScrollPos);
-                        // console.log('getOffsetTop', heightContainer + getOffsetTop - screenHeight);
-                    } else {
+                        checkScrollBtContainer = 1;
+                        checkFixedBottom = 0;
+                        checkFixedTop = 0;
                     }
                 }
             }
 
             prevScrollPos = currentScrollPos;
-
-            // console.log('getInitialHidden', getInitialHidden);
-            // console.log('getScrollToBottomElement', getScrollToBottomElement);
-
-
-            // console.log('screenHeight: ', screenHeight)
-            // console.log('getOffsetTop: ', getOffsetTop)
-            // console.log('heightElement: ', heightElement)
-            // console.log('currentScrollPos: ', currentScrollPos)
-            // console.log('getTopPos: ', getTopPos)
-            // console.log("###########")
         }
     };
 
@@ -125,7 +145,7 @@ const Sidebar = () => {
     return (
         <div className="relative w-full lg:w-1/3 lg:pl-6 lg:pb-20 mt-8 lg:mt-0" ref={refContainer}>
             <div className="mb-8" style={style} ref={refElement}>
-                <div className="p-4 shadow-around bg-color_01">
+                <div className="p-4 shadow-around rounded bg-color_01">
                     <h3 className="font-bold pb-2 border-b-[2px] border-solid border-color_15">BÀI VIẾT XEM NHIỀU</h3>
                     <div className="mt-2 flex flex-col">
                         <div className="pt-4 pb-6 items-post border-dotted">
@@ -191,7 +211,7 @@ const Sidebar = () => {
                     </div>
                 </div>
 
-                <div className="mt-8 p-4 shadow-around bg-color_01">
+                <div className="mt-8 p-4 shadow-around rounded bg-color_01">
                     <h3 className="font-bold pb-2 border-b-[2px] border-solid border-color_15">CHUYÊN MỤC</h3>
                     <div className="pt-4 flex flex-col">
                         <ul>

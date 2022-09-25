@@ -9,17 +9,19 @@ import Popup from "reactjs-popup";
 import Login from "../../pages/auth/login";
 import Register from "../../pages/auth/register";
 import Navitems from "./NavItems";
+import { Item } from "../../common/Type";
+import { NavLink } from "react-router-dom";
 
 
 const defaultIconSize = '0.8rem';
 
 const items = [
-    { label: 'TRANG CHỦ', icon: <i></i>, active: true },
-    { label: 'ĐỊA ĐIỂM', icon: <AiOutlineDown size={defaultIconSize} />, active: true },
-    { label: 'ẨM THỰC', icon: <AiOutlineDown size={defaultIconSize} />, active: true },
-    { label: 'CẨM NANG', icon: <AiOutlineDown size={defaultIconSize} />, active: true },
-    { label: 'HOMESTAY', icon: <AiOutlineDown size={defaultIconSize} />, active: true },
-    { label: 'TOP LIST', icon: <AiOutlineDown size={defaultIconSize} />, active: true },
+    { link: '/', label: 'TRANG CHỦ', icon: <i></i>, active: true },
+    { link: '/dia-diem', label: 'ĐỊA ĐIỂM', icon: <AiOutlineDown size={defaultIconSize} />, active: true },
+    { link: '/am-thuc', label: 'ẨM THỰC', icon: <AiOutlineDown size={defaultIconSize} />, active: true },
+    { link: '/cam-nang', label: 'CẨM NANG', icon: <AiOutlineDown size={defaultIconSize} />, active: true },
+    { link: '/homestay', label: 'HOMESTAY', icon: <AiOutlineDown size={defaultIconSize} />, active: true },
+    { link: '/tinh', label: 'TỈNH THÀNH', icon: <AiOutlineDown size={defaultIconSize} />, active: true },
 ]
 
 
@@ -43,7 +45,7 @@ const Header = () => {
                 <div className="lg:px-12 px-4 bg-color_01 shadow-header">
                     <div className="flex flex-row items-center justify-between">
                         <div>
-                            <a className="mr-4 text-lg font-dancing font-bold" href="/">Travel Blog</a>
+                            <NavLink className="mr-4 text-lg font-dancing font-bold" to="/">Travel Blog</NavLink>
                         </div>
                         <div className="lg:hidden py-4 px-4 hover:cursor-pointer" onClick={() => setOpen(o => !o)}>
                             <AiOutlineMenu style={{ fontSize: "25px" }} />
@@ -52,7 +54,7 @@ const Header = () => {
                             <div className="flex-1 lg:order-1 order-2 lg:mt-0 mt-4">
                                 <ul className="flex lg:flex-row flex-col flex-1">
                                     {
-                                        items.map((item, index) => {
+                                        items.map((item: Item, index) => {
                                             return (
                                                 <Navitems item={item} key={index} />
                                             )

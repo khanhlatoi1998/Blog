@@ -5,7 +5,7 @@ const Social = () => {
     return (
         <div className="flex flex-wrap text-sm gap-4 text-color_01">
             <div className="flex gap-4">
-                <div className="cursor-pointer bg-[#516eab] py-3 px-3 rounded-sm flex items-center justify-between">
+                <div className="cursor-pointer bg-color_fb py-3 px-3 rounded-sm flex items-center justify-between">
                     <span className="lg:pr-2 lg:border-r border-solid border-color_03 "><FaFacebookF /></span>
                     <span className="pl-2 hidden lg:inline">Chia sẽ Facebook</span>
                 </div>
@@ -19,14 +19,14 @@ const Social = () => {
             </div>
             <div className="flex-1 flex gap-4">
                 <div className="flex items-center">
-                    <div className="cursor-pointer bg-sky-500 py-1 px-2 rounded-md flex items-center justify-between">
+                    <div className="cursor-pointer bg-color_17 py-1 px-2 rounded-md flex items-center justify-between">
                         <span className=" pr-2"><AiTwotoneLike /></span>
                         <span className="mr-2 text-xs">Thích</span>
                         <span>0</span>
                     </div>
                 </div>
                 <div className="flex items-center">
-                    <div className="cursor-pointer bg-sky-500 py-1 px-2 rounded-md flex items-center justify-between">
+                    <div className="cursor-pointer bg-color_17 py-1 px-2 rounded-md flex items-center justify-between">
                         <span className=" pr-2"><AiOutlineComment /></span>
                         <span className="mr-2 text-xs">Comment</span>
                         <span>0</span>

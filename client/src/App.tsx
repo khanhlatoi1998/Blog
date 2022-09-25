@@ -22,6 +22,7 @@ import ListBlogShare from './pages/blog-share/ListBlogShare';
 import Footer from './components/footer';
 import NotFound from './components/NotFound';
 import Detail from './pages/detail/Detail';
+import Category from './pages/category/Category';
 
 
 function App() {
@@ -31,41 +32,59 @@ function App() {
 
     return (
         <div className="App">
-            
-            <Routes>
-                <Route
-                    path="*"
-                    element={
-                        <>
-                            <Header />
-                            <Banner />
-                        </>
-                    }
-                />
-            </Routes>
-            <Routes>
-                <Route
-                    path="/"
-                    element={
-                        <>
-                            <Info />
-                            <ListFavoriteLocation />
-                            <TopView />
-                            <ListHandBook />
-                            <ListEntertainment />
-                            <ListEat />
-                            <ListAccommodation />
-                            <ListBlogShare />
-                        </>
-                    }
-                />
-            </Routes>
-            <Routes>
-                <Route path="detail" element={<Detail />} />
-            </Routes>
-            <Routes>
-                <Route path="*" element={<Footer />} />
-            </Routes>
+            <BrowserRouter >
+                <Header />
+                <Banner />
+                
+                <Routes>
+                    <Route
+                        path="/"
+                        element={
+                            <>
+                                <Info />
+                                <ListFavoriteLocation />
+                                <TopView />
+                                <ListHandBook />
+                                <ListEntertainment />
+                                <ListEat />
+                                <ListAccommodation />
+                                <ListBlogShare />
+                            </>
+                        }
+                    />
+                </Routes>
+                <Routes>
+                    <Route path="/detail" element={<Detail />} />
+
+                    <Route path="dia-diem" element={<Category />}>
+                    </Route>
+                    <Route path="dia-diem">
+                        <Route path=":detail" element={<Detail />} />
+                    </Route>
+                    <Route path="am-thuc" element={<Category />}> 
+                    </Route>
+                    <Route path="am-thuc">
+                        <Route path=":detail" element={<Detail />} />
+                    </Route>
+                    <Route path="cam-nang" element={<Category />}>
+                    </Route>
+                    <Route path="cam-nang">
+                        <Route path=":detail" element={<Detail />} />
+                    </Route>
+                    <Route path="homestay" element={<Category />}>
+                    </Route>
+                    <Route path="homestay">
+                        <Route path=":detail" element={<Detail />} />
+                    </Route>
+                    <Route path="tinh-thanh" element={<Category />}>
+                    </Route>
+                    <Route path="tinh-thanh">
+                        <Route path=":detail" element={<Detail />} />
+                    </Route>
+                </Routes>
+
+                <Footer />
+            </BrowserRouter>
         </div>
     );
 }
