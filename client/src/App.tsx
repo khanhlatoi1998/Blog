@@ -52,9 +52,14 @@ function App() {
                             </>
                         }
                     />
+                    <Route path=":category" element={<Category />} />
+                    <Route path="/detail" >
+                        <Route path=":id" element={<Detail />} />
+                    </Route>
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
                 <Routes>
-                    <Route path="/detail" element={<Detail />} />
+                    {/* <Route path="/detail" element={<Detail />} />
 
                     <Route path="dia-diem" element={<Category />}>
                     </Route>
@@ -80,7 +85,7 @@ function App() {
                     </Route>
                     <Route path="tinh-thanh">
                         <Route path=":detail" element={<Detail />} />
-                    </Route>
+                    </Route> */}
                 </Routes>
 
                 <Footer />

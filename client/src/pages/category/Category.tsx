@@ -1,77 +1,51 @@
-import { AiOutlineRight } from "react-icons/ai";
-import { NavLink, useParams } from "react-router-dom";
+import { useState } from "react";
+
+import { AiOutlineDown, AiOutlineRight } from "react-icons/ai";
+import { NavLink, useParams, useSearchParams } from "react-router-dom";
+
 import Sidebar from "../../components/sidebar";
 import ListPostCategory from "./ListPostCategory";
 import ListTopPostCategory from "./ListTopPostCategory";
 
 const Category = () => {
+    const [open, setOpen] = useState<boolean>(false);
 
-    const { dia } = useParams();
+    const { category } = useParams();
 
-    console.log(dia);
+    console.log(category);
+    const [searchParams] = useSearchParams();
+    console.log(searchParams.get('cate'));
 
 
     return (
         <section className="pt-8 lg:pb-12 lg:bg-color_14">
             <div className="container__responsive lg:px-12">
                 <div className="pb-8 lg:text-left text-center text-sm">
-                    <div ><NavLink to="/" className="text-color_13">Trang chủ </NavLink> <span className="opacity-50"> <AiOutlineRight className="inline"/> Cẩm nang</span></div>
-                    <h1 className="font-bold lg:text-3xl text-lg mt-1">CẨM NANG</h1>
+                    <div ><NavLink to="/" className="text-color_13">Trang chủ </NavLink> <span className="opacity-50"> <AiOutlineRight className="inline" /> Cẩm nang</span></div>
+                    <h1 className="font-bold lg:text-3xl text-lg mt-1"> <NavLink to="?tinh=1" >CẨM NANG</NavLink></h1>
                 </div>
                 <div>
-                    <p className="text-color_16 italic lg:px-0 px-4">Tổng hợp những homestay đẹp giá rẻ ở Việt Nam, tìm kiếm review đánh giá về homestay khách quan và đầy đủ nhất. Book phòng homestay online đơn giản dễ dàng nhất, được tư vấn miễn phí khi đặt phòng homestay trên wecheckin.vn</p>
+                    <p className="text-color_16 italic lg:px-0 px-4">Tổng hợp những homestay đẹp giá rẻ ở Việt Nam, tìm kiếm review đánh giá về homestay khách quan và đầy đủ nhất. Book phòng homestay online đơn giản dễ dàng nhất, được tư vấn miễn phí khi đặt phòng homestay trên travelblog.com</p>
                 </div>
-                <div className="">
-                    <select name="cars" id="cars" className="mt-4 border border-solid border-color_05_border bg-transparent px-2 text-sm py-1">
-                        <option value="volvo">TỈNH</option>
-                        <option value="saab">Dat Lat </option>
-                        <option value="mercedes">An Giang</option>
-                        <option value="audi">Audi</option>
-                        <option value="volvo">TỈNH</option>
-                        <option value="saab">Dat Lat </option>
-                        <option value="mercedes">An Giang</option>
-                        <option value="audi">Audi</option>
-                        <option value="volvo">TỈNH</option>
-                        <option value="saab">Dat Lat </option>
-                        <option value="mercedes">An Giang</option>
-                        <option value="audi">Audi</option>
-                        <option value="volvo">TỈNH</option>
-                        <option value="saab">Dat Lat </option>
-                        <option value="mercedes">An Giang</option>
-                        <option value="audi">Audi</option>
-                        <option value="volvo">TỈNH</option>
-                        <option value="saab">Dat Lat </option>
-                        <option value="mercedes">An Giang</option>
-                        <option value="audi">Audi</option>
-                        <option value="volvo">TỈNH</option>
-                        <option value="saab">Dat Lat </option>
-                        <option value="mercedes">An Giang</option>
-                        <option value="audi">Audi</option>
-                        <option value="volvo">TỈNH</option>
-                        <option value="saab">Dat Lat </option>
-                        <option value="mercedes">An Giang</option>
-                        <option value="audi">Audi</option>
-                        <option value="volvo">TỈNH</option>
-                        <option value="saab">Dat Lat </option>
-                        <option value="mercedes">An Giang</option>
-                        <option value="audi">Audi</option>
-                        <option value="volvo">TỈNH</option>
-                        <option value="saab">Dat Lat </option>
-                        <option value="mercedes">An Giang</option>
-                        <option value="audi">Audi</option>
-                        <option value="volvo">TỈNH</option>
-                        <option value="saab">Dat Lat </option>
-                        <option value="mercedes">An Giang</option>
-                        <option value="audi">Audi</option>
-                        <option value="volvo">TỈNH</option>
-                        <option value="saab">Dat Lat </option>
-                        <option value="mercedes">An Giang</option>
-                        <option value="audi">Audi</option>
-                        <option value="volvo">TỈNH</option>
-                        <option value="saab">Dat Lat </option>
-                        <option value="mercedes">An Giang</option>
-                        <option value="audi">Audi</option>
-                    </select>
+
+                <div className="text-sm mt-8 relative">
+                    <div onMouseOver={() => setOpen(true)} onMouseOut={() => setOpen(false)} className="open cursor-pointer inline-block px-3 py-2 border border-solid border-color_05_border">
+                        <div className="flex items-center">
+                            <span>Lọc</span>
+                            <AiOutlineDown className="ml-4" />
+                        </div>
+                    </div>
+                    <ul  onMouseOver={() => setOpen(true)} onMouseOut={() => setOpen(false)} className={`${open ? 'block' : 'hidden'} flex flex-col gap-1 absolute top-[100%] max-h-[500px] overflow-y-auto left-0 w-auto z-50 py-1 px-2 border border-solid border-color_02 bg-color_01`}>
+                        <li>
+                            <NavLink to="?tinh=an-giang">tinh dasd</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="?tinh=an-giang">tinh  </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="?tinh=an-giang">tinh dasd sdasds </NavLink>
+                        </li>
+                    </ul>
                 </div>
                 <div>
                     <ListTopPostCategory />
