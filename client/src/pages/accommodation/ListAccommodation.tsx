@@ -4,7 +4,7 @@ import Accommodation from "./Accommodation";
 
 const ListAccommodation = () => {
     return (
-        <section className="sm:pt-12">
+        <section className="pt-12">
             <div className="container__responsive lg:px-12 px-4">
                 <div className="heading__block">
                     <h1 className="heading__main">ĐỊA ĐIỂM LƯU TRÚ</h1>

@@ -3,7 +3,7 @@ import BlogShare from "./BlogShare";
 
 const ListBlogShare = () => {
     return (
-        <section className="sm:py-6">
+        <section className="pt-12 sm:pb-6">
             <div className="container__responsive lg:px-12 px-4">
                 <div className="heading__block">
                     <h1 className="heading__main">BLOG CHIA SẼ</h1>
@@ -21,7 +21,7 @@ const ListBlogShare = () => {
                                 breakLabel="..."
                                 nextLabel=">"
                                 previousLabel="<"
-                                className="flex justify-center max-w-[350px] gap-1 mx-auto text-sm mt-2"
+                                className="flex lg:justify-center justify-end  gap-1 mx-auto text-sm mt-2"
                                 pageLinkClassName="px-2 py-[2px] rounded-sm"
                                 activeLinkClassName="bg-color_04 text-color_01"
                                 previousLinkClassName="px-2 py-1"

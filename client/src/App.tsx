@@ -7,8 +7,6 @@ import {
     Route,
 } from "react-router-dom";
 
-
-
 import Banner from './components/banner/Banner';
 import Header from './components/header/Header';
 import Info from './pages/info/Info';
@@ -23,6 +21,7 @@ import Footer from './components/footer';
 import NotFound from './components/NotFound';
 import Detail from './pages/detail/Detail';
 import Category from './pages/category/Category';
+import AddPost from './pages/form/post/AddPost';
 
 
 function App() {
@@ -56,6 +55,7 @@ function App() {
                     <Route path="/detail" >
                         <Route path=":id" element={<Detail />} />
                     </Route>
+                    <Route path="/w" element={<AddPost />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
                 <Routes>

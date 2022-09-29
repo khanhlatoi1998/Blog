@@ -26,7 +26,7 @@ const ListHandBook = () => {
                                 breakLabel="..."
                                 nextLabel=">"
                                 previousLabel="<"
-                                className="flex justify-center max-w-[350px] gap-1 mx-auto text-sm mt-2"
+                                className="flex lg:justify-center justify-end gap-1 mx-auto text-sm mt-2"
                                 pageLinkClassName="px-2 py-[2px] rounded-sm"
                                 activeLinkClassName="bg-color_04"
                                 previousLinkClassName="px-2 py-1"

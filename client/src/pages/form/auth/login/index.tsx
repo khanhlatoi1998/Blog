@@ -1,6 +1,6 @@
 import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch } from 'react-redux';
-import { showModal } from "../../../config/store/slider";
+import { showModal } from "../../../../config/store/slider";
 
 const Login: React.FC = (props) => {
     const dispath = useDispatch();

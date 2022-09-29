@@ -1,6 +1,6 @@
 import { AiOutlineClose } from "react-icons/ai";
 import { useSelector, useDispatch } from 'react-redux';
-import { showModal } from "../../../config/store/slider";
+import { showModal } from "../../../../config/store/slider";
 
 
 const Register: React.FC = (props) => {

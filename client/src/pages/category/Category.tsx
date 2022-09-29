@@ -11,10 +11,9 @@ const Category = () => {
     const [open, setOpen] = useState<boolean>(false);
 
     const { category } = useParams();
-
-    console.log(category);
+    console.log('cate',category);
     const [searchParams] = useSearchParams();
-    console.log(searchParams.get('cate'));
+    console.log(searchParams.get('tinh'));
 
 
     return (
@@ -28,21 +27,21 @@ const Category = () => {
                     <p className="text-color_16 italic lg:px-0 px-4">Tổng hợp những homestay đẹp giá rẻ ở Việt Nam, tìm kiếm review đánh giá về homestay khách quan và đầy đủ nhất. Book phòng homestay online đơn giản dễ dàng nhất, được tư vấn miễn phí khi đặt phòng homestay trên travelblog.com</p>
                 </div>
 
-                <div className="text-sm mt-8 relative">
+                <div className="text-sm mt-8 relative lg:px-0 px-4">
                     <div onMouseOver={() => setOpen(true)} onMouseOut={() => setOpen(false)} className="open cursor-pointer inline-block px-3 py-2 border border-solid border-color_05_border">
                         <div className="flex items-center">
                             <span>Lọc</span>
                             <AiOutlineDown className="ml-4" />
                         </div>
                     </div>
-                    <ul  onMouseOver={() => setOpen(true)} onMouseOut={() => setOpen(false)} className={`${open ? 'block' : 'hidden'} flex flex-col gap-1 absolute top-[100%] max-h-[500px] overflow-y-auto left-0 w-auto z-50 py-1 px-2 border border-solid border-color_02 bg-color_01`}>
-                        <li>
+                    <ul  onMouseOver={() => setOpen(true)} onMouseOut={() => setOpen(false)} className={`${open ? 'block' : 'hidden'} flex flex-col gap-1 absolute top-[100%] lg:left-0 left-[20px] max-h-[500px] overflow-y-auto w-auto z-50 py-1 px-2 border border-solid border-color_02 bg-color_01`}>
+                        <li className="hover:text-color_04">
                             <NavLink to="?tinh=an-giang">tinh dasd</NavLink>
                         </li>
-                        <li>
+                        <li className="hover:text-color_04">
                             <NavLink to="?tinh=an-giang">tinh  </NavLink>
                         </li>
-                        <li>
+                        <li className="hover:text-color_04">
                             <NavLink to="?tinh=an-giang">tinh dasd sdasds </NavLink>
                         </li>
                     </ul>

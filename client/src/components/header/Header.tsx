@@ -6,11 +6,13 @@ import { showModal } from "../../config/store/slider";
 import { AiOutlineDown, AiOutlineSearch, AiOutlineMenu } from "react-icons/ai";
 
 import Popup from "reactjs-popup";
-import Login from "../../pages/auth/login";
-import Register from "../../pages/auth/register";
+// import Login from "../../pages/auth/login";
+// import Register from "../../pages/auth/register";
 import Navitems from "./NavItems";
 import { Item } from "../../common/Type";
 import { NavLink } from "react-router-dom";
+import Login from "../../pages/form/auth/login";
+import Register from "../../pages/form/auth/register";
 
 
 const defaultIconSize = '0.8rem';
@@ -82,7 +84,7 @@ const Header = () => {
                                         Đăng ký
                                     </button>
                                     <Popup open={modalPopup !== 'showRegister' ? false : true} closeOnDocumentClick onClose={modalPopup === 'showRegister' ? () => clickClosePopup() : () => { }}>
-                                        <Register />
+                                        <Register/>
                                     </Popup>
                                 </div>
                             </div>
