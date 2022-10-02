@@ -5,14 +5,15 @@ import Sidebar from "../../components/sidebar";
 
 const Detail = () => {
     const [searchParams] = useSearchParams();
-
-    return (
+    const params = useParams();
+    
+     return (
         <section className="lg:pt-8 lg:pb-12 bg-color_14">
             <div className="container__responsive lg:px-12">
                 <div className="flex flex-row  flex-wrap">
                     <Content />
                     {
-                        searchParams.get('getpost') ? <></> : <Sidebar />
+                        params.id === 'w' ? <></> : <Sidebar />
                     }
                     {/* <Sidebar /> */}
                 </div>

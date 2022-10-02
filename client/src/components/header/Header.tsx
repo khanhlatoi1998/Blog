@@ -1,18 +1,19 @@
 import { useState } from "react";
 
 import { useSelector, useDispatch } from 'react-redux';
-import { showModal } from "../../config/store/slider";
+import { showModal } from "../../config/store/sliderPopup";
 
-import { AiOutlineDown, AiOutlineSearch, AiOutlineMenu } from "react-icons/ai";
+import { AiOutlineDown, AiOutlineSearch, AiOutlineMenu, AiOutlineUser } from "react-icons/ai";
 
 import Popup from "reactjs-popup";
 // import Login from "../../pages/auth/login";
 // import Register from "../../pages/auth/register";
 import Navitems from "./NavItems";
 import { Item } from "../../common/Type";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Login from "../../pages/form/auth/login";
 import Register from "../../pages/form/auth/register";
+import { BsPencilSquare } from "react-icons/bs";
 
 
 const defaultIconSize = '0.8rem';
@@ -29,12 +30,15 @@ const items = [
 
 const Header = () => {
     const dispath = useDispatch();
+    const navigation = useNavigate();
     const [open, setOpen] = useState<boolean>(false);
 
     let modalPopup: string = useSelector((state: any) => state.showModal.status);
 
-    const clickShowPoppup = (e: string) => {
+    const clickShowPoppup = (e?: string) => {
         dispath(showModal(e));
+        // navigation('/w');
+
     };
 
     const clickClosePopup = () => {
@@ -64,7 +68,7 @@ const Header = () => {
                                     }
                                 </ul>
                             </div>
-                            <div className="lg:order-2 order-1 lg:py-0 py-4 lg:px-0 px-2 lg:bg-inherit bg-[#1f2231]">
+                            {/* <div className=" lg:order-2 order-1 lg:py-0 py-4 lg:px-0 px-2 lg:bg-inherit bg-[#1f2231]">
                                 <div className="text-sm flex flex-row">
                                     <button
                                         type="button"
@@ -87,7 +91,36 @@ const Header = () => {
                                         <Register/>
                                     </Popup>
                                 </div>
+                            </div> */}
+                            <div className="lg:order-2 order-1 lg:py-0 py-4 lg:px-0 px-2 lg:bg-inherit bg-[#1f2231]">
+                                <div className="text-sm flex flex-row">
+                                    <button
+                                        type="button"
+                                        className="lg:flex-auto flex-1 lg:font-normal font-medium px-4 py-1 border-r border-solid lg:border-color_05_border border-color_01 hover:text-color_04"
+                                        onClick={() => clickShowPoppup('showLogin')}
+                                    >
+                                         <BsPencilSquare className="mx-auto" />
+                                    </button>
+                                    <Popup open={modalPopup !== 'showLogin' ? false : true} closeOnDocumentClick onClose={modalPopup === 'showLogin' ? () => clickClosePopup() : () => { }}>
+                                        <Login />
+                                    </Popup>
+
+                                    <button
+                                        className="lg:flex-auto flex-1 lg:font-normal font-medium px-4 py-1 hover:text-color_04"
+                                        onClick={() => clickShowPoppup('showRegister')}
+                                    >
+                                        <AiOutlineUser className="mx-auto"/>
+                                    </button>
+                                    <Popup open={modalPopup !== 'showRegister' ? false : true} closeOnDocumentClick onClose={modalPopup === 'showRegister' ? () => clickClosePopup() : () => { }}>
+                                        <Register/>
+                                    </Popup>
+                                </div>
                             </div>
+
+                            {/* <div className="lg:order-3 order-1 flex px-2 flex-row gap-4 py-4">
+                                <BsPencilSquare />
+                                <AiOutlineUser />
+                            </div> */}
                         </div>
                     </div>
                 </div>

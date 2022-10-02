@@ -65,7 +65,11 @@ table {
 
 	input, button, select {
 		outline: none;
-		max-width: 100%;	
+		max-width: 100%;
+	}
+
+	[type = 'submit'] {
+		background: inherit;
 	}
 
 	a {

@@ -86,14 +86,14 @@ export const formats = [
 export const QuillToolbar = () => (
   <div id="toolbar">
     <span className="ql-formats">
-      <select className="ql-font" defaultValue="arial">
+      {/* <select className="ql-font" defaultValue="arial">
         <option value="arial">Arial</option>
         <option value="comic-sans">Comic Sans</option>
         <option value="courier-new">Courier New</option>
         <option value="georgia">Georgia</option>
         <option value="helvetica">Helvetica</option>
         <option value="lucida">Lucida</option>
-      </select>
+      </select> */}
       {/* <select className="ql-size" defaultValue="medium">
         <option value="extra-small">Size 1</option>
         <option value="small">Size 2</option>

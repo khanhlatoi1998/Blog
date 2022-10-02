@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { reducerShowModalPopup } from "./slider";
+import reducerShowModalPopup from "./sliderPopup";
+import  reducerCheckLogin  from "./sliderCheckLogin";
 
 
 const rootReducer = {
-    showModal: reducerShowModalPopup,  
+    showModal: reducerShowModalPopup,
+    checkLogin: reducerCheckLogin  
 };
 
 const store = configureStore({

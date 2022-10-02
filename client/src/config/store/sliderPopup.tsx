@@ -5,8 +5,7 @@ const initialStateModalPopup: ModalPopup = {
     status: '',
 }
 
-
-const showModalPopup = createSlice({
+const reducerShowModalPopup = createSlice({
     name: 'showModalPopup',
     initialState: initialStateModalPopup,
     reducers: {
@@ -23,7 +22,8 @@ const showModalPopup = createSlice({
 
 });
 
-const { reducer, actions } = showModalPopup;
+
+const { reducer, actions } = reducerShowModalPopup;
 export const { showModal } = actions;
-export const reducerShowModalPopup = reducer;
+export default reducer;
 

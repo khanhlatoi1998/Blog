@@ -25,10 +25,6 @@ import AddPost from './pages/form/post/AddPost';
 
 
 function App() {
-
-    const category = ['handbook', 'accommodation', 'eat', 'share', 'entertainment', 'location', 'destination'];
-
-
     return (
         <div className="App">
             <BrowserRouter >
