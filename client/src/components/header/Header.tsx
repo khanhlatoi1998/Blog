@@ -32,12 +32,16 @@ const Header = () => {
     const dispath = useDispatch();
     const navigation = useNavigate();
     const [open, setOpen] = useState<boolean>(false);
+    const checkLogin = useSelector((state: any) => state.checkLogin);
 
     let modalPopup: string = useSelector((state: any) => state.showModal.status);
 
     const clickShowPoppup = (e?: string) => {
-        dispath(showModal(e));
-        // navigation('/w');
+        if (checkLogin.auth === true) {
+            navigation('/w');
+        } else {
+            dispath(showModal(e));
+        }
 
     };
 
@@ -109,7 +113,7 @@ const Header = () => {
                                         className="lg:flex-auto flex-1 lg:font-normal font-medium px-4 py-1 hover:text-color_04"
                                         onClick={() => clickShowPoppup('showRegister')}
                                     >
-                                        <AiOutlineUser className="mx-auto"/>
+                                        <AiOutlineUser className={`mx-auto check ${checkLogin.auth ? 'text-color_04' : ''}`}/>
                                     </button>
                                     <Popup open={modalPopup !== 'showRegister' ? false : true} closeOnDocumentClick onClose={modalPopup === 'showRegister' ? () => clickClosePopup() : () => { }}>
                                         <Register/>

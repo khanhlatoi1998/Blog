@@ -16,7 +16,7 @@ import authApi from '../../../../api/authApi';
 interface Register {
     username: number | string;
     password: number | string;
-    passwordConfirmation: number | string;
+    passwordConfirmation?: number | string;
 };
 
 interface Message {
@@ -40,9 +40,6 @@ const initialValues: Register = {
 const Register: React.FC = (props) => {
     const dispath = useDispatch();
     const [loading, setLoading] = useState<boolean>(false);
-    const check = useSelector((state: any) => state.checkLogin);
-
-    console.log(check);
 
     const [message, setMessage] = useState<Message>({
         auth: false,
@@ -66,12 +63,14 @@ const Register: React.FC = (props) => {
     const submitRegister = async (values: Register) => {
         setLoading(true);
 
+        delete values['passwordConfirmation'];
+
         authApi.register(values).then((res: any) => {
             setLoading(false);
             setMessage(res);
             if (res.auth === true) {
                 dispath(showModal('closePopup'));
-                dispath(checkLogin(true));
+                dispath(checkLogin({auth: true}));
             }
         }).catch((err) => { console.log(err); })
     };
@@ -103,12 +102,14 @@ const Register: React.FC = (props) => {
                                     label="TÀI KHOẢN"
                                     placeholder=""
                                     component={InputFiled}
+                                    className="w-full px-4 py-1 bg-transparent border-b border-solid border-color_06"
                                 />
                                 <FastField
                                     name="password"
                                     label="MẬT KHẨU"
                                     type="password"
                                     placeholder=""
+                                    className="w-full px-4 py-1 bg-transparent border-b border-solid border-color_06"
                                     component={InputFiled}
                                 />
                                 <FastField
@@ -116,6 +117,7 @@ const Register: React.FC = (props) => {
                                     label="XÁC NHẬN MẬT KHẨU"
                                     type="password"
                                     placeholder=""
+                                    className="w-full px-4 py-1 bg-transparent border-b border-solid border-color_06"
                                     component={InputFiled}
                                 />
 

@@ -11,6 +11,7 @@ import * as yup from 'yup';
 import { showModal } from "../../../../config/store/sliderPopup";
 import InputFiled from "../../custom-fields/inputFields";
 import authApi from "../../../../api/authApi";
+import { checkLogin } from "../../../../config/store/sliderCheckLogin";
 
 interface Login {
     username: number | string;
@@ -64,6 +65,7 @@ const Login: React.FC = (props) => {
 
             if (res.auth === true) {
                 dispath(showModal('closePopup'));
+                dispath(checkLogin({auth: true}));
             }
 
         }).catch((err) => { })
@@ -95,12 +97,14 @@ const Login: React.FC = (props) => {
                                     label="TÀI KHOẢN"
                                     type="text"
                                     placeholder=""
+                                    className="w-full px-4 py-1 bg-transparent border-b border-solid border-color_06"
                                     component={InputFiled}
                                 />
                                 <FastField
                                     name="password"
                                     label="MẬT KHẨU"
                                     placeholder=""
+                                    className="w-full px-4 py-1 bg-transparent border-b border-solid border-color_06"
                                     component={InputFiled}
                                 />
 

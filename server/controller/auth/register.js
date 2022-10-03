@@ -8,7 +8,6 @@ export const register = async (req, res, next) => {
 
         const findAuth = collection.find({username: data.username}).toArray((err, result) => {
             if (result <= 0) {
-                delete data['passwordConfirmation'];
                 const insertAuth = collection.insertOne(data);
                 res.json({
                     auth: true,
