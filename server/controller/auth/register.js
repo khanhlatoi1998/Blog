@@ -6,8 +6,10 @@ export const register = async (req, res, next) => {
     try {
         let data = req.body.data;
 
-        const findAuth = collection.find({username: data.username}).toArray((err, result) => {
+        const findAuth = collection.find({ username: data.username }).toArray((err, result) => {
             if (result <= 0) {
+                // delete data['passwordConfirmation'];
+
                 const insertAuth = collection.insertOne(data);
                 res.json({
                     auth: true,
@@ -28,6 +30,6 @@ export const register = async (req, res, next) => {
         });
 
     } catch (error) {
-        
+
     }
 };

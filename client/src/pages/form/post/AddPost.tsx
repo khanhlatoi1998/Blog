@@ -1,18 +1,19 @@
-import { useState, useRef, useMemo, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 import uuid from 'react-uuid';
 import { useNavigate } from 'react-router-dom';
 import { Formik, FastField, Form } from 'formik';
 import * as yup from 'yup';
 
 
-import EditorToolbar, { modules, formats } from "./EditorToolbar";
 import postApi from '../../../api/postApi';
 import InputFiled from '../custom-fields/inputFields';
 import SelectField from '../custom-fields/SelectField';
 import { CATEGORY_OPTION, CONSCIOUS_OPTION } from '../../../common/Option';
+import { useDispatch, useSelector } from 'react-redux';
+import EditorFields from '../custom-fields/edittorFields';
+import { updateAuth } from '../../../config/store/sliderAuth';
+import { showModal } from '../../../config/store/sliderPopup';
 
 interface Post {
     conscious: string;
@@ -29,25 +30,45 @@ const initialValues: Post = {
 }
 
 const AddPost = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [state, setState] = useState<any>();
     const [post, setPost] = useState<any>([]);
-    const navigate = useNavigate();
+    const auth = useSelector((state: any) => state.auth);
+    const checkLogin = useSelector((state: any) => state.checkLogin);
+
 
     const handleChange = (value: any) => {
         setState(value);
     };
 
-    const addPost = (e: any) => {
-        e.preventDefault();
+    const addPost = (values: any) => {
         let id = uuid();
+        
+        if (checkLogin.auth === true) {
+            dispatch(updateAuth({
+                ...auth,
+                post: values
+                
+            }));
+        } else {
+            dispatch(showModal('showLogin'));
+        }
 
-        postApi.createPost(state);
+        // postApi.createPost({
+        //         ...auth,
+        //         post: values
+                
+        //     });
     };
 
+    console.log(auth);
+
     const validationSchema = yup.object().shape({
-        title: yup.string().required('vui lòng nhập tiêu đề').min(3, 'tiêu đề ít nhất 5 ký tự'),
-        conscious: yup.string().required('vui lòng nhập tỉnh thành'),
-        category: yup.string().required('vui lòng nhập thể loại'),
+        title: yup.string(), //.required('vui lòng nhập tiêu đề').min(3, 'tiêu đề ít nhất 5 ký tự'),
+        conscious: yup.string(), //.required('vui lòng nhập tỉnh thành'),
+        category: yup.string(), //.required('vui lòng nhập thể loại'),
+        content: yup.string() //.required('vui lòng nhập nội dung').min(3, 'nội dung ít nhất 30 ký tự'),
     });
 
     useEffect(() => {
@@ -56,8 +77,6 @@ const AddPost = () => {
         })
 
     }, []);
-
-    console.log(CONSCIOUS_OPTION)
 
     return (
         <section className="py-12 bg-color_14">
@@ -69,11 +88,10 @@ const AddPost = () => {
                     <Formik
                         initialValues={initialValues}
                         validationSchema={validationSchema}
-                        onSubmit={() => console.log(2)}
+                        onSubmit={addPost}
                     >
                         {formikProps => {
                             const { values, errors, touched, isSubmitting } = formikProps;
-                            console.log(touched);
 
                             return (
                                 <Form className="mt-10">
@@ -110,20 +128,28 @@ const AddPost = () => {
                                     />
 
                                     <div className='mt-4'>
-                                        <EditorToolbar />
-                                        <ReactQuill
-                                            theme="snow"
-                                            value={state}
-                                            onChange={handleChange}
-                                            modules={modules}
-                                            formats={formats}
+                                        <FastField
+                                            name="content"
+                                            label=""
+                                            type="text"
+                                            className=""
+
                                             placeholder="Nội dung"
-                                            className="bg-white" />
+                                            component={EditorFields}
+                                        />
                                     </div>
 
-                                    <div className="mt-8 text-right">
-                                        <button className="font-medium py-2 px-6 bg-white rounded-md">Huỷ</button>
-                                        <button className="font-medium bg-color_fb text-white mr-4 ml-2 py-2 px-4 rounded-md">Đăng bài</button>
+                                    <div className="mt-8 flex justify-end items-center gap-4 mr-4">
+                                        <div>
+                                            <div className="inline-block overflow-hidden bg-white rounded-md">
+                                                <button type="button" className="font-medium py-2 px-6">Huỷ</button>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div className="bg-color_fb text-white rounded-md inline-block overflow-hidden">
+                                                <button type="submit" className="font-medium py-2 px-4 ">Đăng bài</button>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div className="post__description" dangerouslySetInnerHTML={{ __html: state?.value }} />

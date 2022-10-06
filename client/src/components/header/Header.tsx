@@ -32,6 +32,7 @@ const Header = () => {
     const dispath = useDispatch();
     const navigation = useNavigate();
     const [open, setOpen] = useState<boolean>(false);
+    const [redirect, setRedirect] = useState<string>();
     const checkLogin = useSelector((state: any) => state.checkLogin);
 
     let modalPopup: string = useSelector((state: any) => state.showModal.status);
@@ -101,12 +102,12 @@ const Header = () => {
                                     <button
                                         type="button"
                                         className="lg:flex-auto flex-1 lg:font-normal font-medium px-4 py-1 border-r border-solid lg:border-color_05_border border-color_01 hover:text-color_04"
-                                        onClick={() => clickShowPoppup('showLogin')}
+                                        onClick={() => {clickShowPoppup('showLogin'); setRedirect('/w')}}
                                     >
                                          <BsPencilSquare className="mx-auto" />
                                     </button>
                                     <Popup open={modalPopup !== 'showLogin' ? false : true} closeOnDocumentClick onClose={modalPopup === 'showLogin' ? () => clickClosePopup() : () => { }}>
-                                        <Login />
+                                        <Login redirect={redirect}/>
                                     </Popup>
 
                                     <button

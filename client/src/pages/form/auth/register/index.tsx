@@ -17,6 +17,8 @@ interface Register {
     username: number | string;
     password: number | string;
     passwordConfirmation?: number | string;
+    permission: string;
+    listPost: Array<any>;
 };
 
 interface Message {
@@ -34,7 +36,9 @@ const override: CSSProperties = {
 const initialValues: Register = {
     username: '',
     password: '',
-    passwordConfirmation: ''
+    passwordConfirmation: '',
+    permission: 'user',
+    listPost: []
 };
 
 const Register: React.FC = (props) => {
@@ -55,15 +59,13 @@ const Register: React.FC = (props) => {
     };
 
     const validationSchema = yup.object().shape({
-        username: yup.string().required('vui lòng nhập tài khoản').min(6, 'nhập ít nhất 6 ký tự'),
-        password: yup.string().required('vui lòng nhập mật khẩu').min(6, 'nhập ít nhất 6 ký tự'),
+        username: yup.string().required('vui lòng nhập tài khoản').min(1, 'nhập ít nhất 6 ký tự'),
+        password: yup.string().required('vui lòng nhập mật khẩu').min(1, 'nhập ít nhất 6 ký tự'),
         passwordConfirmation: yup.string().required('vui lòng xác nhận mật khẩu').oneOf([yup.ref('password'), null], 'xác nhận mật khẩu không đúng'),
     });
 
     const submitRegister = async (values: Register) => {
         setLoading(true);
-
-        delete values['passwordConfirmation'];
 
         authApi.register(values).then((res: any) => {
             setLoading(false);

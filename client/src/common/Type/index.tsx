@@ -23,3 +23,10 @@ export interface StyleSidebarType {
     bottom: string | number;
     width?: string;
 };
+
+export interface AuthType {
+    username: number | string;
+    password: number | string;
+    post?: object;
+    permission?: string;
+};

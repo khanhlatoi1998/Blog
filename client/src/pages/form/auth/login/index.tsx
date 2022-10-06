@@ -4,7 +4,7 @@ import { BsInstagram } from "react-icons/bs";
 import { FaFacebookF } from "react-icons/fa";
 
 import BeatLoader from "react-spinners/BeatLoader";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form, Formik, FastField } from 'formik';
 import * as yup from 'yup';
 
@@ -12,12 +12,13 @@ import { showModal } from "../../../../config/store/sliderPopup";
 import InputFiled from "../../custom-fields/inputFields";
 import authApi from "../../../../api/authApi";
 import { checkLogin } from "../../../../config/store/sliderCheckLogin";
+import { Navigate, useNavigate } from "react-router-dom";
+import { AuthType } from "../../../../common/Type";
+import { updateAuth } from "../../../../config/store/sliderAuth";
 
-interface Login {
-    username: number | string;
-    password: number | string;
-};
-
+interface Props {
+    redirect: string | undefined;
+}
 interface Message {
     auth: boolean;
     message: string;
@@ -30,18 +31,20 @@ const override: CSSProperties = {
     textAlign: 'center'
 };
 
-const initialValues: Login = {
+const initialValues: AuthType = {
     username: '',
     password: '',
 };
 
-const Login: React.FC = (props) => {
+const Login: React.FC<Props> = (props) => {
+    const {redirect} = props;
     const dispath = useDispatch();
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState<boolean>(false);
     const [messageLogin, setMessageLogin] = useState<any>({
         auth: false,
         message: ''
     });
-    const [loading, setLoading] = useState<boolean>(false);
 
     const clickClosePopup = () => {
         dispath(showModal('closePopup'));
@@ -56,7 +59,7 @@ const Login: React.FC = (props) => {
         password: yup.string().required('vui lòng nhập mật khẩu'),
     });
 
-    const submitLogin = (values: Login) => {
+    const submitLogin = (values: AuthType) => {
         setLoading(true);
 
         authApi.login(values).then((res: any) => {
@@ -66,8 +69,12 @@ const Login: React.FC = (props) => {
             if (res.auth === true) {
                 dispath(showModal('closePopup'));
                 dispath(checkLogin({auth: true}));
+                dispath(updateAuth(values));
             }
 
+            if(redirect) {
+                navigate('w');
+            }
         }).catch((err) => { })
     }
 
