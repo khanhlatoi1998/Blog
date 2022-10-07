@@ -19,14 +19,18 @@ interface Post {
     conscious: string;
     category: string;
     title: string;
-    content: any
+    content: any;
+    like: number;
+    share: number;
 }
 
 const initialValues: Post = {
     conscious: '',
     category: '',
     title: '',
-    content: ''
+    content: '',
+    like: 0,
+    share: 0
 }
 
 const AddPost = () => {
@@ -44,25 +48,18 @@ const AddPost = () => {
 
     const addPost = (values: any) => {
         let id = uuid();
-        
+        let date = 'date';
+    
         if (checkLogin.auth === true) {
-            dispatch(updateAuth({
-                ...auth,
-                post: values
-                
-            }));
+            postApi.createPost({ 
+                ...auth, 
+                post: { ...values, id: id, createDate: date }
+            });
+            navigate(`/detail/w?get=${id}`);
         } else {
             dispatch(showModal('showLogin'));
         }
-
-        // postApi.createPost({
-        //         ...auth,
-        //         post: values
-                
-        //     });
     };
-
-    console.log(auth);
 
     const validationSchema = yup.object().shape({
         title: yup.string(), //.required('vui lòng nhập tiêu đề').min(3, 'tiêu đề ít nhất 5 ký tự'),
@@ -92,6 +89,7 @@ const AddPost = () => {
                     >
                         {formikProps => {
                             const { values, errors, touched, isSubmitting } = formikProps;
+                            console.log(values);
 
                             return (
                                 <Form className="mt-10">
@@ -153,7 +151,7 @@ const AddPost = () => {
                                     </div>
 
                                     <div className="post__description" dangerouslySetInnerHTML={{ __html: state?.value }} />
-                                    {
+                                    {/* {
                                         post?.map((item: any, index: any) => {
                                             return (
                                                 <div key={index}>
@@ -161,7 +159,7 @@ const AddPost = () => {
                                                 </div>
                                             )
                                         })
-                                    }
+                                    } */}
                                 </Form>
                             )
                         }}

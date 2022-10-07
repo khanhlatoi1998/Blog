@@ -24,11 +24,6 @@ export const register = async (req, res, next) => {
                 res.status(200);
             }
         });
-
-        const findAuth1 = collection.find({}).toArray((err, result) => {
-            console.log(result);
-        });
-
     } catch (error) {
 
     }

@@ -4,13 +4,21 @@ const collection = db.collection('blog');
 
 export const createPost = async (req, res, next) => {
     try {
-        const insertPost = collection.insertOne({content: req.body.data});
+        const data = req.body.data;
+        console.log(data);
+    
+        const addPost = collection.updateOne(
+            {username: data.username},
+            {
+                $push: {'listPost': data.post}
+            }
+        )
 
-        const findResult = collection.find({}).toArray((err, result) => {
-            res.send(result);
+        collection.find({username: data.username}).toArray((err, result) => {
+            // console.log(result[0]);
         });
 
-        console.log('insert')
+
 
     } catch (error) {
         

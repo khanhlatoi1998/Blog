@@ -10,6 +10,11 @@ const postApi = {
         let url = '/post';
         return axiosClient.post(url, { data });
     },
+
+    getId: (id: string | null) => {
+        let url = `/post/${id}`;
+        return axiosClient.get(url);
+    }
 };
 
 export default postApi;

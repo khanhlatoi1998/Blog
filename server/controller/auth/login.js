@@ -20,7 +20,6 @@ export const login = async (req, res, next) => {
                 res.status(200);
             }
         });
-        console.log(data);
 
     } catch (error) {
         
