@@ -3,7 +3,21 @@ import Comment from "../comment";
 import Social from "../social";
 import Writer from "../writer/writer";
 
-const Content = () => {
+interface Props {
+    post: {
+        content: string;
+        title: string;
+        conscious: string;
+        category: string;
+        like: number;
+        share: number
+    };
+}
+
+const Content: React.FC<Props> = (props) => {
+    const { post } = props;
+    console.log(post.content);
+
     return (
         <div className="w-full lg:w-2/3 bg-color_01 shadow-around rounded py-6 lg:px-6 px-4">
             <div>
@@ -11,8 +25,8 @@ const Content = () => {
             </div>
 
             <div>
-                <p className="mt-6 text-sm font-medium opacity-70">DU LỊCH PHÚ QUỐC, LƯU TRÚ PHÚ QUỐC</p>
-                <h1 className="font-bold text-xl lg:text-3xl mt-1">List Resort đẹp nhất ở Phú Quốc - Rất đáng để bạn tận hưởng 1 lần</h1>
+                <p className="mt-6 text-sm font-medium opacity-70 uppercase">DU LỊCH {post.conscious}, {post.category} {post.conscious}</p>
+                <h1 className="font-bold text-xl lg:text-3xl mt-1">{post.title}</h1>
                 <div className="mt-4 text-sm cursor-pointer">
                     Bởi
                     <span className="ml-1"> Nam134 </span>
@@ -108,7 +122,9 @@ const Content = () => {
                     <p className="mt-4">Đây là địa điểm đầu tiên bạn bắt gặp khi đặt chân đến chùa Tam Chúc. Bên trông nhà khách được bày trí rất trang nghiêm, xung quanh có rất nhiều bức tranh về đèn led giới thiệu về ngôi chùa.</p>
                     <p className="mt-4">Đây là địa điểm đầu tiên bạn bắt gặp khi đặt chân đến chùa Tam Chúc. Bên trông nhà khách được bày trí rất trang nghiêm, xung quanh có rất nhiều bức tranh về đèn led giới thiệu về ngôi chùa.</p>
                 </div> */}
-                
+
+                <div className="text-md mt-10" dangerouslySetInnerHTML={{ __html: post.content }} />
+
             </div>
 
             <div className="mt-8">
@@ -133,7 +149,7 @@ const Content = () => {
             </div>
 
             <Writer />
-            <Comment/>
+            <Comment />
         </div>
     );
 }

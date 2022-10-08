@@ -11,6 +11,7 @@ import { showModal } from "../../../../config/store/sliderPopup";
 import { checkLogin } from "../../../../config/store/sliderCheckLogin";
 import InputFiled from "../../custom-fields/inputFields";
 import authApi from '../../../../api/authApi';
+import { updateAuth } from "../../../../config/store/sliderAuth";
 
 
 interface Register {
@@ -44,6 +45,7 @@ const initialValues: Register = {
 const Register: React.FC = (props) => {
     const dispath = useDispatch();
     const [loading, setLoading] = useState<boolean>(false);
+    const auth = useSelector((state: any) => state.auth);
 
     const [message, setMessage] = useState<Message>({
         auth: false,
@@ -73,6 +75,8 @@ const Register: React.FC = (props) => {
             if (res.auth === true) {
                 dispath(showModal('closePopup'));
                 dispath(checkLogin({auth: true}));
+
+                dispath(updateAuth(values));
             }
         }).catch((err) => { console.log(err); })
     };

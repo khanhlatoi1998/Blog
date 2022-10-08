@@ -55,7 +55,7 @@ const AddPost = () => {
                 ...auth, 
                 post: { ...values, id: id, createDate: date }
             });
-            navigate(`/detail/w?get=${id}`);
+            navigate(`/w/get/${id}`);
         } else {
             dispatch(showModal('showLogin'));
         }
@@ -119,7 +119,7 @@ const AddPost = () => {
                                         name="title"
                                         label=""
                                         type="text"
-                                        className="mt-4 bg-white w-full rounded-md px-4 py-2"
+                                        className="bg-white w-full rounded-md px-4 py-2"
 
                                         placeholder="Tiêu đề"
                                         component={InputFiled}

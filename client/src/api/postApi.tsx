@@ -11,7 +11,7 @@ const postApi = {
         return axiosClient.post(url, { data });
     },
 
-    getId: (id: string | null) => {
+    getId: (id: string | null | undefined) => {
         let url = `/post/${id}`;
         return axiosClient.get(url);
     }

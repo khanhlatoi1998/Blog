@@ -22,6 +22,7 @@ import NotFound from './components/NotFound';
 import Detail from './pages/detail/Detail';
 import Category from './pages/category/Category';
 import AddPost from './pages/form/post/AddPost';
+import GetPost from './pages/form/post/GetPost';
 
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
                         <Route path=":id" element={<Detail />} />
                     </Route>
                     <Route path="/w" element={<AddPost />} />
+                    <Route path="/w/get/:id" element={<GetPost />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
                 <Routes>
