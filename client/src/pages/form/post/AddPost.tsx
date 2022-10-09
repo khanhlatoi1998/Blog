@@ -41,7 +41,6 @@ const AddPost = () => {
     const auth = useSelector((state: any) => state.auth);
     const checkLogin = useSelector((state: any) => state.checkLogin);
 
-
     const handleChange = (value: any) => {
         setState(value);
     };
@@ -89,7 +88,6 @@ const AddPost = () => {
                     >
                         {formikProps => {
                             const { values, errors, touched, isSubmitting } = formikProps;
-                            console.log(values);
 
                             return (
                                 <Form className="mt-10">
@@ -149,17 +147,6 @@ const AddPost = () => {
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div className="post__description" dangerouslySetInnerHTML={{ __html: state?.value }} />
-                                    {/* {
-                                        post?.map((item: any, index: any) => {
-                                            return (
-                                                <div key={index}>
-                                                    <div className="post__description" dangerouslySetInnerHTML={{ __html: item?.content }} />
-                                                </div>
-                                            )
-                                        })
-                                    } */}
                                 </Form>
                             )
                         }}

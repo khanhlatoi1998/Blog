@@ -23,6 +23,7 @@ import Detail from './pages/detail/Detail';
 import Category from './pages/category/Category';
 import AddPost from './pages/form/post/AddPost';
 import GetPost from './pages/form/post/GetPost';
+import EditPost from './pages/form/post/EditPost';
 
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
             <BrowserRouter >
                 <Header />
                 <Banner />
-                
+
                 <Routes>
                     <Route
                         path="/"
@@ -52,8 +53,11 @@ function App() {
                     <Route path="/detail" >
                         <Route path=":id" element={<Detail />} />
                     </Route>
-                    <Route path="/w" element={<AddPost />} />
-                    <Route path="/w/get/:id" element={<GetPost />} />
+                    <Route path="/w">
+                        <Route path="create" element={<AddPost />} />
+                        <Route path="get/:id" element={<GetPost />} />
+                        <Route path="edit/:id" element={<EditPost />} />
+                    </Route>
                     <Route path="*" element={<NotFound />} />
                 </Routes>
                 <Routes>

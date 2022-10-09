@@ -13,6 +13,9 @@ import InputFiled from "../../custom-fields/inputFields";
 import authApi from '../../../../api/authApi';
 import { updateAuth } from "../../../../config/store/sliderAuth";
 
+interface Props {
+    redirect: string | undefined;
+}
 
 interface Register {
     username: number | string;
@@ -42,7 +45,8 @@ const initialValues: Register = {
     listPost: []
 };
 
-const Register: React.FC = (props) => {
+const Register: React.FC<Props> = (props) => {
+    const { redirect } = props;
     const dispath = useDispatch();
     const [loading, setLoading] = useState<boolean>(false);
     const auth = useSelector((state: any) => state.auth);
@@ -74,7 +78,7 @@ const Register: React.FC = (props) => {
             setMessage(res);
             if (res.auth === true) {
                 dispath(showModal('closePopup'));
-                dispath(checkLogin({auth: true}));
+                dispath(checkLogin({ auth: true }));
 
                 dispath(updateAuth(values));
             }

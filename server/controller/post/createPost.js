@@ -13,13 +13,6 @@ export const createPost = async (req, res, next) => {
                 $push: {'listPost': data.post}
             }
         )
-
-        collection.find({username: data.username}).toArray((err, result) => {
-            // console.log(result[0]);
-        });
-
-
-
     } catch (error) {
         
     }

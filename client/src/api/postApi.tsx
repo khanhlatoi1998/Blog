@@ -3,7 +3,7 @@ import axiosClient from "./axiosApi";
 const postApi = {
     getAll: (params?: any) => {
         let url = '/getAllPost';
-        return axiosClient.get(url, {params});
+        return axiosClient.get(url, { params });
     },
 
     createPost: (data: Object) => {
@@ -14,7 +14,18 @@ const postApi = {
     getId: (id: string | null | undefined) => {
         let url = `/post/${id}`;
         return axiosClient.get(url);
-    }
+    },
+
+    updatePost: (data: Object) => {
+        let url = `/post/update`;
+        return axiosClient.put(url, { data });
+    },
+
+    deletePost: (id: string | null | undefined) => {
+        let url = `/post/delete`;
+        return axiosClient.post(url);
+    },
+
 };
 
 export default postApi;

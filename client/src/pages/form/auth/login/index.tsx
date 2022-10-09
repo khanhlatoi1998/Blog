@@ -73,7 +73,7 @@ const Login: React.FC<Props> = (props) => {
             }
 
             if(redirect) {
-                navigate('w');
+                navigate('w/create');
             }
         }).catch((err) => { })
     }

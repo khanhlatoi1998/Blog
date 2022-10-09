@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -26,6 +26,7 @@ const EditorFields: React.FC<any> = (props) => {
     const { errors, touched } = form;
     const showError = errors[name] && touched[name];
 
+
     const handleChange = (value: string) => {
         setContent(value);
         form.setFieldValue(name, value);
@@ -40,6 +41,7 @@ const EditorFields: React.FC<any> = (props) => {
                 modules={modules}
                 formats={formats}
 
+                value={value}
                 onChange={handleChange}
             />
             <input
@@ -52,7 +54,6 @@ const EditorFields: React.FC<any> = (props) => {
             />
 
             {showError ? <p className='text-sm text-[#ff7600]'>{errors[name]}</p> : <p className='text-sm opacity-0'>success</p>}
-            <div className="post__description" dangerouslySetInnerHTML={{ __html: content }} />
         </div>
     );
 

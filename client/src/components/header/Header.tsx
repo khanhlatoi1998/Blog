@@ -32,14 +32,14 @@ const Header = () => {
     const dispath = useDispatch();
     const navigation = useNavigate();
     const [open, setOpen] = useState<boolean>(false);
-    const [redirect, setRedirect] = useState<string>();
+    const [redirect, setRedirect] = useState<string>('');
     const checkLogin = useSelector((state: any) => state.checkLogin);
 
     let modalPopup: string = useSelector((state: any) => state.showModal.status);
 
     const clickShowPoppup = (e?: string) => {
         if (checkLogin.auth === true) {
-            navigation('/w');
+            navigation('/w/create');
         } else {
             dispath(showModal(e));
         }
@@ -102,7 +102,7 @@ const Header = () => {
                                     <button
                                         type="button"
                                         className="lg:flex-auto flex-1 lg:font-normal font-medium px-4 py-1 border-r border-solid lg:border-color_05_border border-color_01 hover:text-color_04"
-                                        onClick={() => {clickShowPoppup('showLogin'); setRedirect('/w')}}
+                                        onClick={() => {clickShowPoppup('showLogin'); setRedirect('/w/create')}}
                                     >
                                          <BsPencilSquare className="mx-auto" />
                                     </button>
@@ -117,7 +117,7 @@ const Header = () => {
                                         <AiOutlineUser className={`mx-auto check ${checkLogin.auth ? 'text-color_04' : ''}`}/>
                                     </button>
                                     <Popup open={modalPopup !== 'showRegister' ? false : true} closeOnDocumentClick onClose={modalPopup === 'showRegister' ? () => clickClosePopup() : () => { }}>
-                                        <Register/>
+                                        <Register redirect={redirect}/>
                                     </Popup>
                                 </div>
                             </div>
