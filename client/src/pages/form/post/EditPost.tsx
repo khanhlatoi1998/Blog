@@ -47,14 +47,15 @@ const EditPost = () => {
     };
 
     const addPost = (values: any) => {
-        let updateDate = 'date';
+        let date = new Date();
+        let updateDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 
         if (checkLogin.auth === true) {
             postApi.updatePost({
                 ...auth,
                 post: { ...values, updateDate: updateDate }
             });
-            // navigate(`/w/get/${id}`);
+            navigate(`/w/get/${id}`);
         } else {
             dispatch(showModal('showLogin'));
         }

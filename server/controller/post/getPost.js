@@ -20,11 +20,6 @@ export const getPost = async (req, res, next) => {
                 console.log(err);
             }
         });
-        const b = collection.find({}).toArray((err, result) => {
-            // console.log(result[1]);
-        });
-
-
     } catch (error) {
 
     }

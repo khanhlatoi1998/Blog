@@ -38,7 +38,7 @@ const Content: React.FC<Props> = (props) => {
                 <div>
                     <p className="pt-8 text-md">Hè đến rồi, mau mau” set up “ một buổi hẹn hò tụ tập bạn bè sau những ngày dài lê thê trên trường, công ty thôi. Nếu bạn không có bồ thì bạn đã có bè. Người yêu có thể không có nhưng nhất định phải có nhóm bạn để cùng nhau du hí mọi nơi. Cuối tuần, lại phải đau đầu chọn địa điểm gặp nhau, thật khó để quyết định. Giờ đây, bạn không phải lo nữa vì đã có Wecheckin gánh rồi, dưới đây sẽ là list các địa điểm lí tưởng tụ tập dành cho bạn.</p>
                 </div>
-                <div className="mt-8">
+                {/* <div className="mt-8">
                     <div className="px-4 py-4 rounded-sm border border-solid border-color_05_border inline-block">
                         <div>
                             <h3 className="font-bold text-lg">Nội dung chính của bài</h3>
@@ -66,7 +66,7 @@ const Content: React.FC<Props> = (props) => {
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 {/* <div className="text-md">
                     <h2 className="font-bold lg:text-2xl text-lg mt-10">1. Hồ điều hòa</h2>
                     <p className="mt-4">Đây là địa điểm đầu tiên bạn bắt gặp khi đặt chân đến chùa Tam Chúc. Bên trông nhà khách được bày trí rất trang nghiêm, xung quanh có rất nhiều bức tranh về đèn led giới thiệu về ngôi chùa.</p>

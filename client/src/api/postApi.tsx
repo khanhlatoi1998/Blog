@@ -2,7 +2,7 @@ import axiosClient from "./axiosApi";
 
 const postApi = {
     getAll: (params?: any) => {
-        let url = '/getAllPost';
+        let url = '/post/getAllPost';
         return axiosClient.get(url, { params });
     },
 
@@ -22,7 +22,7 @@ const postApi = {
     },
 
     deletePost: (id: string | null | undefined) => {
-        let url = `/post/delete`;
+        let url = `/post/delete/${id}`;
         return axiosClient.post(url);
     },
 

@@ -3,6 +3,7 @@ import { BsFillEyeFill } from "react-icons/bs";
 import { NavLink, useParams, useSearchParams } from "react-router-dom";
 
 import FadeLoader from "react-spinners/FadeLoader";
+import { date } from "yup";
 
 
 import postApi from "../../../api/postApi";
@@ -17,7 +18,10 @@ const GetPost = () => {
     const { id } = useParams();
 
     const deletePost = () => {
-        
+        console.log(id);
+        postApi.deletePost(id).then((data) => {
+            console.log(data);
+        });
     };
 
     useEffect(() => {
@@ -44,7 +48,7 @@ const GetPost = () => {
                                     {/* <div>
                                 <p className="pt-8 text-md">Hè đến rồi, mau mau” set up “ một buổi hẹn hò tụ tập bạn bè sau những ngày dài lê thê trên trường, công ty thôi. Nếu bạn không có bồ thì bạn đã có bè. Người yêu có thể không có nhưng nhất định phải có nhóm bạn để cùng nhau du hí mọi nơi. Cuối tuần, lại phải đau đầu chọn địa điểm gặp nhau, thật khó để quyết định. Giờ đây, bạn không phải lo nữa vì đã có Wecheckin gánh rồi, dưới đây sẽ là list các địa điểm lí tưởng tụ tập dành cho bạn.</p>
                             </div> */}
-                                    <div className="mt-8">
+                                    {/* <div className="mt-8">
                                         <div className="px-4 py-4 rounded-sm border border-solid border-color_05_border inline-block">
                                             <div>
                                                 <h3 className="font-bold text-lg">Nội dung chính của bài</h3>
@@ -72,22 +76,22 @@ const GetPost = () => {
                                                 </ul>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
 
                                     <div className="mt-10" dangerouslySetInnerHTML={{ __html: post.content }} />
 
                                 </div>
                                 <div className="mt-8 flex justify-start items-center gap-4 ml-4">
                                     <div>
-                                        <div className="inline-block overflow-hidden bg-white rounded-md shadow-around ">
-                                            <button type="button" className="font-medium ">
-                                                <NavLink className="py-2 px-6" to={`/w/edit/${id}`}>Sửa</NavLink>
+                                        <NavLink to={`/w/edit/${id}`} className="inline-block overflow-hidden bg-white rounded-md shadow-around ">
+                                            <button type="button" className="font-medium py-2 px-4">
+                                                Sửa
                                             </button>
-                                        </div>
+                                        </NavLink>
                                     </div>
                                     <div>
-                                        <div className="bg-color_fb text-white rounded-md inline-block overflow-hidden shadow-around ">
-                                            <button type="button" onClick={deletePost} className="font-medium py-2 px-4 ">Xoá</button>
+                                        <div onClick={deletePost} className="bg-color_fb text-white rounded-md inline-block overflow-hidden shadow-around ">
+                                            <button type="button" className="font-medium py-2 px-4 ">Xoá</button>
                                         </div>
                                     </div>
                                 </div>
