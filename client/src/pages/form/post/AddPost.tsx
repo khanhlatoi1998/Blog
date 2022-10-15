@@ -49,11 +49,13 @@ const AddPost = () => {
     const handleChange = (value: any) => {
     };
 
-    const addPost = (values: Post) => {
+    const addPost = async (values: Post) => {
         let id = uuid();
         let date = new Date();
         let createDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
         let updateDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+
+        await setBanner(values);
 
         if (checkLogin.auth === true) {
             postApi.createPost({
@@ -65,7 +67,6 @@ const AddPost = () => {
             dispatch(showModal('showLogin'));
         }
 
-        setBanner(values);
     };
 
     const validationSchema = yup.object().shape({
@@ -82,7 +83,6 @@ const AddPost = () => {
     }, []);
 
     const setBanner = async (values: Post) => {
-        let newContent = "";
         let HTML = values.content;
         const doc = new DOMParser().parseFromString(HTML, "text/html");
         const htmlSections: any = doc.querySelectorAll('body')[0];
@@ -92,45 +92,58 @@ const AddPost = () => {
         if (listImg.length > 0) {
             let firstImg = htmlSections.querySelectorAll('p > img')[0]?.src;
             setInitialValues({ ...values, banner: firstImg ? firstImg : values.banner });
-            // Array.from(listImg).forEach((el: any, index) => {
-            //     const name = uuid();
-            //     const storageRef = ref(storage, `Image/${auth.username}/${name}`) // path save in firebase
-            //     uploadString(storageRef, el.src, 'data_url').then((snapshot: any) => {
-            //         getDownloadURL(snapshot.ref).then((url) => {
-            //             console.log(url);
-            //         });
-            //     });
-            // });
 
-            Array.from(htmlSections.childNodes).forEach((el: any, index) => {
-                let imgEl: any = el.getElementsByTagName('img')[0];
-                if (imgEl) {
-                    const name = uuid();
-                    const storageRef = ref(storage, `Image/${auth.username}/${name}`) // path save in firebase
-                    uploadString(storageRef, imgEl.src, 'data_url').then((snapshot: any) => {
-                        getDownloadURL(snapshot.ref).then((url) => {
-                            imgEl.src = url;
-                            console.log(el);
+            const handlePost = async () => {
+                const newPost = Array.from(htmlSections.childNodes).map((el: any, index) => {
+                    let imgEl: any = el.getElementsByTagName('img')[0];
+                    if (imgEl) {
+                        const name = uuid();
+                        const storageRef = ref(storage, `Image/${auth.username}/${name}`) // path save in firebase
+                        uploadString(storageRef, imgEl.src, 'data_url').then((snapshot: any) => {
+                            getDownloadURL(snapshot.ref).then((url) => {
+                                imgEl.src = url;
+                            });
                         });
-                    });
-                    let convertToString = el.outerHTML;
-                    newContent += convertToString;
-                    return convertToString;
-                } else {
-                    let convertToString = el.outerHTML;
-                    newContent += convertToString;
-                    return convertToString;
-                }
-            });
 
-            console.log(newContent);
+                        let stringEl = el.outerHTML;
+                    }
+                    return el;
+                });
+
+                return Promise.all(newPost);
+            }
+
+            const imgEl = document.getElementById('img');
+            const divEl: any = document.getElementById('div');
+
+            console.log(divEl.outerHTML)
+
+            handlePost()
+                .then((result) => {
+                    console.log(result);
+                    let newContent = "";
+
+                    // divEl.append(result[0]);
+
+                    // console.log(divEl.outerHTML);
+
+
+                    result.map(el => {
+                        let stringEl = el.getElementsByTagName('img')[0]?.outerHTML;
+                        console.log('el', el)
+                        console.log('stringEl', stringEl);
+                    })
+                }, (err) => { console.log(err) })
+
+            // console.log(newContent);
         }
     };
 
-    console.log(initialValues);
-
     return (
         <section className="py-12 bg-color_14">
+            <div id="div">
+                <img id="img" src="https://firebasestorage.googleapis.com/v0/b/blog-image-3779d.appspot.com/o/Image%2Fkhanh123%2Fe25d8e6-4e3b-bf8a-3714-aa7a3cd504f?alt=media&token=8cbaddd0-6a4f-4301-b43d-0b54aaf2a26d" alt="" />
+            </div>
             <div className="container__responsive">
                 <div className="lg:w-2/5 mx-auto px-4">
                     <h2 className="lg:text-3xl text-lg font-bold">Tạo bài viết</h2>
