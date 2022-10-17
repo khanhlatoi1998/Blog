@@ -30,3 +30,13 @@ export interface AuthType {
     post?: object;
     permission?: string;
 };
+
+export interface ValuePost {
+    conscious: string;
+    category: string;
+    title: string;
+    content: any;
+    banner: string;
+    like: number;
+    share: number;
+}

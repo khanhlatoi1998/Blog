@@ -14,42 +14,19 @@ import { CATEGORY_OPTION, CONSCIOUS_OPTION } from '../../../common/Option';
 import { useDispatch, useSelector } from 'react-redux';
 import EditorFields from '../custom-fields/edittorFields';
 import { showModal } from '../../../config/store/sliderPopup';
-import { async } from '@firebase/util';
-
-interface Post {
-    conscious: string;
-    category: string;
-    title: string;
-    content: any;
-    banner: string;
-    like: number;
-    share: number;
-}
+import { changeValuePost } from '../../../config/store/sliderPost';
+import { ValuePost } from '../../../common/Type';
 
 const AddPost = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [post, setPost] = useState<any>([]);
-    const getAuth = useSelector((state: any) => state.auth);
-    const [initialValues, setInitialValues] = useState<Post>({
-        conscious: '',
-        category: '',
-        title: '',
-        content: '',
-        banner: 'https://firebasestorage.googleapis.com/v0/b/blog-image-3779d.appspot.com/o/Image%2Fdefault-banner%2Fdefault-banner.jpg?alt=media&token=abc3e029-918e-4f3c-8ead-d930a45d37a1',
-        like: 0,
-        share: 0
-    });
-
-    const refImage = useRef<any>(null);
-
+    const initialValuePost = useSelector((state: any) => state.post);
     const auth = useSelector((state: any) => state.auth);
     const checkLogin = useSelector((state: any) => state.checkLogin);
+    console.log(initialValuePost);
 
-    const handleChange = (value: any) => {
-    };
-
-    const addPost = async (values: Post) => {
+    const addPost = async (values: ValuePost) => {
         let id = uuid();
         let date = new Date();
         let createDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
@@ -82,75 +59,63 @@ const AddPost = () => {
         })
     }, []);
 
-    const setBanner = async (values: Post) => {
+    const setBanner = async (values: ValuePost) => {
         let HTML = values.content;
         const doc = new DOMParser().parseFromString(HTML, "text/html");
         const htmlSections: any = doc.querySelectorAll('body')[0];
         let listImg = htmlSections.querySelectorAll('p > img');
 
-
         if (listImg.length > 0) {
             let firstImg = htmlSections.querySelectorAll('p > img')[0]?.src;
-            setInitialValues({ ...values, banner: firstImg ? firstImg : values.banner });
+            dispatch(changeValuePost({ ...values, banner: firstImg ? firstImg : values.banner }));
 
             const handlePost = async () => {
-                const newPost = Array.from(htmlSections.childNodes).map((el: any, index) => {
-                    let imgEl: any = el.getElementsByTagName('img')[0];
-                    if (imgEl) {
+                const newPost: any = Array.from(htmlSections.childNodes).map(async (el: any, index) => {
+                    let imgEl: any = el.getElementsByTagName('img');
+                    if (imgEl.length > 0) {
                         const name = uuid();
                         const storageRef = ref(storage, `Image/${auth.username}/${name}`) // path save in firebase
-                        uploadString(storageRef, imgEl.src, 'data_url').then((snapshot: any) => {
-                            getDownloadURL(snapshot.ref).then((url) => {
-                                imgEl.src = url;
+                        let stringEl = await uploadString(storageRef, imgEl[0].src, 'data_url').then(async (snapshot: any) => {
+                            await getDownloadURL(snapshot.ref).then((url) => {
+                                imgEl[0].src = url;
                             });
+                            return el.outerHTML;
                         });
-
+                        return stringEl;
+                    } else {
                         let stringEl = el.outerHTML;
+                        return stringEl;
                     }
-                    return el;
                 });
 
                 return Promise.all(newPost);
             }
 
-            const imgEl = document.getElementById('img');
-            const divEl: any = document.getElementById('div');
-
-            console.log(divEl.outerHTML)
-
             handlePost()
                 .then((result) => {
-                    console.log(result);
+                    console.log('re', result);
                     let newContent = "";
 
                     // divEl.append(result[0]);
 
-                    // console.log(divEl.outerHTML);
-
-
                     result.map(el => {
-                        let stringEl = el.getElementsByTagName('img')[0]?.outerHTML;
-                        console.log('el', el)
-                        console.log('stringEl', stringEl);
+                        newContent += el;
                     })
-                }, (err) => { console.log(err) })
 
-            // console.log(newContent);
+                    console.log(newContent);
+                }, (err) => { console.log(err) })
         }
     };
 
     return (
         <section className="py-12 bg-color_14">
-            <div id="div">
-                <img id="img" src="https://firebasestorage.googleapis.com/v0/b/blog-image-3779d.appspot.com/o/Image%2Fkhanh123%2Fe25d8e6-4e3b-bf8a-3714-aa7a3cd504f?alt=media&token=8cbaddd0-6a4f-4301-b43d-0b54aaf2a26d" alt="" />
-            </div>
             <div className="container__responsive">
                 <div className="lg:w-2/5 mx-auto px-4">
                     <h2 className="lg:text-3xl text-lg font-bold">Tạo bài viết</h2>
                     <p className="mt-4 text-md opacity-70">Nội dung bài viết phải không gây ảnh hưởng đến cá nhân hoặc tập thể khác</p>
 
                     <Formik
-                        initialValues={initialValues}
+                        initialValues={initialValuePost}
                         validationSchema={validationSchema}
                         onSubmit={addPost}
                     >
