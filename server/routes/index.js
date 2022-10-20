@@ -17,7 +17,7 @@ router.post('/login', login);
 router.post('/post', createPost);
 router.put('/post/update', updatePost);
 router.post('/post/delete/:id', deletePost);
-router.get('/post/:id', getPost);
+router.get('/post/get/:id', getPost);
 router.get('/post/getAllPost', getAllPost);
 
 export default router;

@@ -12,7 +12,7 @@ const postApi = {
     },
 
     getId: (id: string | null | undefined) => {
-        let url = `/post/${id}`;
+        let url = `/post/get/${id}`;
         return axiosClient.get(url);
     },
 

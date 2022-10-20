@@ -24,26 +24,23 @@ const AddPost = () => {
     const initialValuePost = useSelector((state: any) => state.post);
     const auth = useSelector((state: any) => state.auth);
     const checkLogin = useSelector((state: any) => state.checkLogin);
-    console.log(initialValuePost);
 
     const addPost = async (values: ValuePost) => {
         let id = uuid();
         let date = new Date();
         let createDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
         let updateDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-
-        await setBanner(values);
+        console.log(values);
 
         if (checkLogin.auth === true) {
             postApi.createPost({
                 ...auth,
                 post: { ...values, id: id, createDate: createDate, updateDate: updateDate }
             });
-            // navigate(`/w/get/${id}`);
+            navigate(`/w/get/${id}`);
         } else {
             dispatch(showModal('showLogin'));
         }
-
     };
 
     const validationSchema = yup.object().shape({
@@ -54,63 +51,13 @@ const AddPost = () => {
     });
 
     useEffect(() => {
-        postApi.getAll().then((data) => {
-            setPost(data);
-        })
+
     }, []);
-
-    const setBanner = async (values: ValuePost) => {
-        let HTML = values.content;
-        const doc = new DOMParser().parseFromString(HTML, "text/html");
-        const htmlSections: any = doc.querySelectorAll('body')[0];
-        let listImg = htmlSections.querySelectorAll('p > img');
-
-        if (listImg.length > 0) {
-            let firstImg = htmlSections.querySelectorAll('p > img')[0]?.src;
-            dispatch(changeValuePost({ ...values, banner: firstImg ? firstImg : values.banner }));
-
-            const handlePost = async () => {
-                const newPost: any = Array.from(htmlSections.childNodes).map(async (el: any, index) => {
-                    let imgEl: any = el.getElementsByTagName('img');
-                    if (imgEl.length > 0) {
-                        const name = uuid();
-                        const storageRef = ref(storage, `Image/${auth.username}/${name}`) // path save in firebase
-                        let stringEl = await uploadString(storageRef, imgEl[0].src, 'data_url').then(async (snapshot: any) => {
-                            await getDownloadURL(snapshot.ref).then((url) => {
-                                imgEl[0].src = url;
-                            });
-                            return el.outerHTML;
-                        });
-                        return stringEl;
-                    } else {
-                        let stringEl = el.outerHTML;
-                        return stringEl;
-                    }
-                });
-
-                return Promise.all(newPost);
-            }
-
-            handlePost()
-                .then((result) => {
-                    console.log('re', result);
-                    let newContent = "";
-
-                    // divEl.append(result[0]);
-
-                    result.map(el => {
-                        newContent += el;
-                    })
-
-                    console.log(newContent);
-                }, (err) => { console.log(err) })
-        }
-    };
 
     return (
         <section className="py-12 bg-color_14">
             <div className="container__responsive">
-                <div className="lg:w-2/5 mx-auto px-4">
+                <div className="lg:w-3/5 mx-auto px-4">
                     <h2 className="lg:text-3xl text-lg font-bold">Tạo bài viết</h2>
                     <p className="mt-4 text-md opacity-70">Nội dung bài viết phải không gây ảnh hưởng đến cá nhân hoặc tập thể khác</p>
 
@@ -121,7 +68,7 @@ const AddPost = () => {
                     >
                         {formikProps => {
                             const { values, errors, touched, isSubmitting } = formikProps;
-                            // console.log(values);
+                            console.log(values);
 
                             return (
                                 <Form className="mt-10">
@@ -154,6 +101,7 @@ const AddPost = () => {
                                         type="text"
                                         className="bg-white w-full rounded-md px-4 py-2"
 
+                                        value={initialValuePost.title}
                                         placeholder="Tiêu đề"
                                         component={InputFiled}
                                     />
@@ -164,7 +112,7 @@ const AddPost = () => {
                                             label=""
                                             type="text"
                                             className=""
-
+                                            value={initialValuePost.content}
                                             placeholder="Nội dung"
                                             component={EditorFields}
                                         />

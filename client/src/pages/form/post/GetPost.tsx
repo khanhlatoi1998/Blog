@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { BsFillEyeFill } from "react-icons/bs";
-import { NavLink, useParams, useSearchParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import FadeLoader from "react-spinners/FadeLoader";
 import { date } from "yup";
@@ -12,6 +12,7 @@ import Sidebar from "../../../components/sidebar";
 
 
 const GetPost = () => {
+    const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(true);
     const [searchParams] = useSearchParams();
     const [post, setPost] = useState<any>({});
@@ -22,6 +23,7 @@ const GetPost = () => {
         postApi.deletePost(id).then((data) => {
             console.log(data);
         });
+        navigate('/');
     };
 
     useEffect(() => {

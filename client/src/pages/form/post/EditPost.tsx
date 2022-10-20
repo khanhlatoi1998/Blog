@@ -59,8 +59,6 @@ const EditPost = () => {
         } else {
             dispatch(showModal('showLogin'));
         }
-
-        
     };
 
     const validationSchema = yup.object().shape({

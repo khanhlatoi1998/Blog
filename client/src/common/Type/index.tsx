@@ -39,4 +39,14 @@ export interface ValuePost {
     banner: string;
     like: number;
     share: number;
+    view: number;
 }
+
+export interface RegisterType {
+    _id?: string;
+    username: number | string;
+    password: number | string;
+    passwordConfirmation?: number | string;
+    permission: string;
+    listPost: Array<any>;
+};

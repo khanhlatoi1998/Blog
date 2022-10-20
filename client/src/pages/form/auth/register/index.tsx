@@ -6,24 +6,16 @@ import { Form, Formik, FastField } from 'formik';
 import * as yup from 'yup';
 import BeatLoader from "react-spinners/BeatLoader";
 
-
 import { showModal } from "../../../../config/store/sliderPopup";
 import { checkLogin } from "../../../../config/store/sliderCheckLogin";
 import InputFiled from "../../custom-fields/inputFields";
 import authApi from '../../../../api/authApi';
 import { updateAuth } from "../../../../config/store/sliderAuth";
+import { RegisterType } from "../../../../common/Type";
 
 interface Props {
     redirect: string | undefined;
 }
-
-interface Register {
-    username: number | string;
-    password: number | string;
-    passwordConfirmation?: number | string;
-    permission: string;
-    listPost: Array<any>;
-};
 
 interface Message {
     auth: boolean;
@@ -37,7 +29,7 @@ const override: CSSProperties = {
     textAlign: 'center'
 };
 
-const initialValues: Register = {
+const initialValues: RegisterType = {
     username: '',
     password: '',
     passwordConfirmation: '',
@@ -70,17 +62,20 @@ const Register: React.FC<Props> = (props) => {
         passwordConfirmation: yup.string().required('vui lòng xác nhận mật khẩu').oneOf([yup.ref('password'), null], 'xác nhận mật khẩu không đúng'),
     });
 
-    const submitRegister = async (values: Register) => {
+    const submitRegister = async (values: RegisterType) => {
         setLoading(true);
+        let delteConfirmPassWord: RegisterType = {...values};
+        delete delteConfirmPassWord['passwordConfirmation'];
 
-        authApi.register(values).then((res: any) => {
+
+        authApi.register(delteConfirmPassWord).then((res: any) => {
             setLoading(false);
             setMessage(res);
             if (res.auth === true) {
                 dispath(showModal('closePopup'));
                 dispath(checkLogin({ auth: true }));
 
-                dispath(updateAuth(values));
+                dispath(updateAuth(delteConfirmPassWord));
             }
         }).catch((err) => { console.log(err); })
     };

@@ -58,4 +58,10 @@ $color-01: #ffbf35;
 .ql-editor {
 	background-color: transparent;
 	min-height: 400px;
+	padding-bottom: 50px !important;
+
+	p > img {
+		max-width: 75% !important;
+		margin: 10px auto 10px auto !important;
+	}
 }

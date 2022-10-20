@@ -7,6 +7,7 @@ import {
     Route,
 } from "react-router-dom";
 
+import Home from './pages/home/Home';
 import Banner from './components/banner/Banner';
 import Header from './components/header/Header';
 import Info from './pages/info/Info';
@@ -36,18 +37,7 @@ function App() {
                 <Routes>
                     <Route
                         path="/"
-                        element={
-                            <>
-                                <Info />
-                                <ListFavoriteLocation />
-                                <TopView />
-                                <ListHandBook />
-                                <ListEntertainment />
-                                <ListEat />
-                                <ListAccommodation />
-                                <ListBlogShare />
-                            </>
-                        }
+                        element={<Home />}
                     />
                     <Route path=":category" element={<Category />} />
                     <Route path="/detail" >

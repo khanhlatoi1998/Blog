@@ -4,11 +4,12 @@ import { ValuePost } from "../../common/Type";
 const initialState: ValuePost = {
     conscious: '',
     category: '',
-    title: '',
+    title: 'title',
     content: '',
     banner: 'https://firebasestorage.googleapis.com/v0/b/blog-image-3779d.appspot.com/o/Image%2Fdefault-banner%2Fdefault-banner.jpg?alt=media&token=abc3e029-918e-4f3c-8ead-d930a45d37a1',
     like: 0,
-    share: 0
+    share: 0,
+    view: 0,
 };
 
 const reducerPost = createSlice({

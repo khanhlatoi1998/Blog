@@ -4,7 +4,7 @@ const collection = db.collection('blog');
 
 export const getPost = async (req, res, next) => {
     try {
-        console.log(req.params.id);
+        // console.log(req.params.id);
 
         const a = collection.find({ listPost: { $elemMatch: { id: req.params.id } } }).toArray(async (err, result) => {
             if (!err) {
