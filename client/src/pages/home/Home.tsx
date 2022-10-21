@@ -11,28 +11,40 @@ import ListHandBook from "../handbook/ListHandBook";
 import Info from "../info/Info";
 import TopView from "../topview/TopView";
 import { RegisterType, ValuePost } from "../../common/Type";
-import { number } from "yup";
+
 
 const Home = () => {
 
     useEffect(() => {
         console.log('date');
         postApi.getAll()
-            .then((data: any) => {
-                const listConscious: Array<any> = [];
-                // const listConscious = data.filter((item: RegisterType, index: number) => {
-                //     return true;
-                // });
-                // console.log(listConscious);
-                data.map((item: RegisterType, index: number) => {
-                    // console.log(item.listPost);
+            .then(async (data: any) => {
+                const listPost: Array<ValuePost> = [];
+                const listConsious: Array<ValuePost> = [];
+
+                await data.map((item: RegisterType, index: number) => {
                     item.listPost.map((post: ValuePost) => {
-                        listConscious.push(post);
+                        listPost.push(post);
                     });
                 });
 
-                console.log(listConscious);
-            }).catch((err) => {})
+                const groupByConsious = Object.values(listPost.reduce((group: any, post: ValuePost) => {
+                    const { conscious } = post;
+                    group[conscious] = group[conscious] ?? [];
+                    group[conscious].push(post);
+                    return group;
+                }, {}));
+                
+                groupByConsious.forEach((group: any) => {
+                    let maxLike = Math.min(...group.map((o: ValuePost) => o.like));
+                    let consioutHaveMaxLike = group.find((el: ValuePost) => el.like === maxLike);
+                    listConsious.push(consioutHaveMaxLike);
+                })
+                
+                console.log(listConsious);
+
+
+            }).catch((err) => { })
     }, []);
 
     return (
