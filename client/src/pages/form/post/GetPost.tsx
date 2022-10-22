@@ -85,7 +85,7 @@ const GetPost = () => {
                                 </div>
                                 <div className="mt-8 flex justify-start items-center gap-4 ml-4">
                                     <div>
-                                        <NavLink to={`/w/edit/${id}`} className="inline-block overflow-hidden bg-white rounded-md shadow-around ">
+                                        <NavLink to={`/w/edit/${id}`} className="inline-block overflow-hidden bg-color_fb text-white rounded-md shadow-around ">
                                             <button type="button" className="font-medium py-2 px-4">
                                                 Sửa
                                             </button>
@@ -95,6 +95,13 @@ const GetPost = () => {
                                         <div onClick={deletePost} className="bg-color_fb text-white rounded-md inline-block overflow-hidden shadow-around ">
                                             <button type="button" className="font-medium py-2 px-4 ">Xoá</button>
                                         </div>
+                                    </div>
+                                    <div>
+                                        <NavLink to={`/w/create`} className="inline-block overflow-hidden bg-color_fb text-white rounded-md shadow-around ">
+                                            <button type="button" className="font-medium py-2 px-4">
+                                                Thêm bài viết
+                                            </button>
+                                        </NavLink>
                                     </div>
                                 </div>
                             </div>

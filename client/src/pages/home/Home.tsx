@@ -1,7 +1,7 @@
 import postApi from "../../api/postApi";
 
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ListAccommodation from "../accommodation/ListAccommodation";
 import ListBlogShare from "../blog-share/ListBlogShare";
 import ListEat from "../Eat/ListEat";
@@ -14,13 +14,14 @@ import { RegisterType, ValuePost } from "../../common/Type";
 
 
 const Home = () => {
+    const [stateListConsious, setStateListConsious] = useState<Array<ValuePost>>([]);
 
     useEffect(() => {
-        console.log('date');
         postApi.getAll()
             .then(async (data: any) => {
                 const listPost: Array<ValuePost> = [];
                 const listConsious: Array<ValuePost> = [];
+                const maxItemConsious = 8;
 
                 await data.map((item: RegisterType, index: number) => {
                     item.listPost.map((post: ValuePost) => {
@@ -40,9 +41,13 @@ const Home = () => {
                     let consioutHaveMaxLike = group.find((el: ValuePost) => el.like === maxLike);
                     listConsious.push(consioutHaveMaxLike);
                 })
-                
-                console.log(listConsious);
 
+                const sortListConsious = listConsious.sort((a: ValuePost, b: ValuePost) => {
+                    return b.like - a.like;
+                }).slice(0, maxItemConsious);
+
+                setStateListConsious(sortListConsious);
+                // console.log(sortListConsious);
 
             }).catch((err) => { })
     }, []);
@@ -50,7 +55,7 @@ const Home = () => {
     return (
         <section>
             <Info />
-            <ListFavoriteLocation />
+            <ListFavoriteLocation stateListConsious={stateListConsious}/>
             <TopView />
             <ListHandBook />
             <ListEntertainment />

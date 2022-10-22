@@ -25,6 +25,7 @@ export interface StyleSidebarType {
 };
 
 export interface AuthType {
+    nickname?: string;
     username: number | string;
     password: number | string;
     post?: object;
@@ -32,6 +33,8 @@ export interface AuthType {
 };
 
 export interface ValuePost {
+    id: string;
+    nickname: string;
     conscious: string;
     category: string;
     title: string;
@@ -44,6 +47,7 @@ export interface ValuePost {
 
 export interface RegisterType {
     _id?: string;
+    nickname: string;
     username: number | string;
     password: number | string;
     passwordConfirmation?: number | string;

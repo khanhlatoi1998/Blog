@@ -53,8 +53,10 @@ const EditorFields: React.FC<any> = (props) => {
         dispatch(changeValuePost({
             ...valuePost,
             content: value,
-            banner: firstImg ? firstImg : valuePost.banner
+            banner: (firstImg === null || firstImg === undefined) ? valuePost.banner : firstImg
         }));
+
+        console.log(valuePost);
 
         if (listImg.length > 0) {
             const handlePost = async () => {
@@ -64,7 +66,7 @@ const EditorFields: React.FC<any> = (props) => {
                         const name = uuid();
                         const storageRef = ref(storage, `Image/${name}`) // path save in firebase
                         let isSrcFireBase = imgEl[0].src.search("firebase"); // check src of firebase or string base64
-                        
+
                         if (isSrcFireBase < 0) {
                             let stringEl = await uploadString(storageRef, imgEl[0].src, 'data_url').then(async (snapshot: any) => {
                                 await getDownloadURL(snapshot.ref).then((url) => {
@@ -91,10 +93,10 @@ const EditorFields: React.FC<any> = (props) => {
                     result.map((el: string) => {
                         newContent += el;
                     })
-                    console.log(newContent);
                     dispatch(changeValuePost({
                         ...valuePost,
                         content: newContent,
+                        banner: (firstImg === null || firstImg === undefined) ? valuePost.banner : firstImg
                     }));
                     form.setFieldValue(name, newContent);
 

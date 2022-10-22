@@ -30,6 +30,7 @@ const override: CSSProperties = {
 };
 
 const initialValues: RegisterType = {
+    nickname: '',
     username: '',
     password: '',
     passwordConfirmation: '',
@@ -57,8 +58,9 @@ const Register: React.FC<Props> = (props) => {
     };
 
     const validationSchema = yup.object().shape({
-        username: yup.string().required('vui lòng nhập tài khoản').min(1, 'nhập ít nhất 6 ký tự'),
-        password: yup.string().required('vui lòng nhập mật khẩu').min(1, 'nhập ít nhất 6 ký tự'),
+        nickname: yup.string().required('vui lòng nhập tài khoản').min(3, 'nhập ít nhất 6 ký tự'),
+        username: yup.string().required('vui lòng nhập tài khoản').min(6, 'nhập ít nhất 6 ký tự'),
+        password: yup.string().required('vui lòng nhập mật khẩu').min(6, 'nhập ít nhất 6 ký tự'),
         passwordConfirmation: yup.string().required('vui lòng xác nhận mật khẩu').oneOf([yup.ref('password'), null], 'xác nhận mật khẩu không đúng'),
     });
 
@@ -103,8 +105,17 @@ const Register: React.FC<Props> = (props) => {
                         return (
                             <Form className="mt-10">
                                 <FastField
+                                    name="nickname"
+                                    label="Tên"
+                                    type="text"
+                                    placeholder=""
+                                    component={InputFiled}
+                                    className="w-full px-4 py-1 bg-transparent border-b border-solid border-color_06"
+                                />
+                                <FastField
                                     name="username"
                                     label="TÀI KHOẢN"
+                                    type="text"
                                     placeholder=""
                                     component={InputFiled}
                                     className="w-full px-4 py-1 bg-transparent border-b border-solid border-color_06"

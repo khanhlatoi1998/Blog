@@ -5,7 +5,7 @@ import 'swiper/css/bundle';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
 
-import { FavoriteLocationType } from "../../common/Type";
+import { FavoriteLocationType, ValuePost } from "../../common/Type";
 
 import FavoriteLocation from "./FavoriteLocation";
 
@@ -18,7 +18,16 @@ const listFavorite: FavoriteLocationType[] = [
     { id: 6, title: 'VŨNG TÀU', image: './Images/favorite/vung-tau.jpg', link: '' },
 ];
 
-const ListFavoriteLocation = () => {
+interface Props {
+    stateListConsious: Array<ValuePost>;
+}
+
+const ListFavoriteLocation: React.FC<Props> = (props) => {
+    const { stateListConsious } = props;
+
+    console.log(stateListConsious);
+
+
     return (
         <section className="pb-4">
             <div className="container__responsive lg:px-12 px-4">
@@ -44,26 +53,26 @@ const ListFavoriteLocation = () => {
                                 spaceBetween: 30,
                                 slidesPerGroup: 3,
                                 pagination: {
-                                  enabled: true
+                                    enabled: true
                                 }
-                              },
-                            1024: {
-                              slidesPerView: 4,
-                              spaceBetween: 30,
-                              slidesPerGroup: 4,
-                              pagination: {
-                                enabled: true
-                              }
                             },
-                          }}
+                            1024: {
+                                slidesPerView: 4,
+                                spaceBetween: 30,
+                                slidesPerGroup: 4,
+                                pagination: {
+                                    enabled: true
+                                }
+                            },
+                        }}
                         modules={[Pagination, Navigation, Autoplay]}
                         className="mySwiper"
                     >
                         {
-                            listFavorite.map((favoriteLocation) => {
-                                return(
-                                    <SwiperSlide key={favoriteLocation.id}>
-                                        <FavoriteLocation  favoriteLocation={favoriteLocation}/>
+                            stateListConsious.map((stateConsious) => {
+                                return (
+                                    <SwiperSlide key={stateConsious.id}>
+                                        <FavoriteLocation stateConsious={stateConsious} />
                                     </SwiperSlide>
                                 )
                             })

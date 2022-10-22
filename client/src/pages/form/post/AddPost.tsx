@@ -14,7 +14,7 @@ import { CATEGORY_OPTION, CONSCIOUS_OPTION } from '../../../common/Option';
 import { useDispatch, useSelector } from 'react-redux';
 import EditorFields from '../custom-fields/edittorFields';
 import { showModal } from '../../../config/store/sliderPopup';
-import { changeValuePost } from '../../../config/store/sliderPost';
+import { changeValuePost, clearValue } from '../../../config/store/sliderPost';
 import { ValuePost } from '../../../common/Type';
 
 const AddPost = () => {
@@ -24,6 +24,8 @@ const AddPost = () => {
     const initialValuePost = useSelector((state: any) => state.post);
     const auth = useSelector((state: any) => state.auth);
     const checkLogin = useSelector((state: any) => state.checkLogin);
+
+    console.log(auth);
 
     const addPost = async (values: ValuePost) => {
         let id = uuid();
@@ -37,17 +39,21 @@ const AddPost = () => {
                 ...auth,
                 post: { ...values, id: id, createDate: createDate, updateDate: updateDate }
             });
-            navigate(`/w/get/${id}`);
+            // navigate(`/w/get/${id}`);
         } else {
             dispatch(showModal('showLogin'));
         }
     };
 
+    const onClickClearValue = () => {
+        dispatch(clearValue());
+    };
+
     const validationSchema = yup.object().shape({
-        title: yup.string(), //.required('vui lòng nhập tiêu đề').min(3, 'tiêu đề ít nhất 5 ký tự'),
-        conscious: yup.string(), //.required('vui lòng nhập tỉnh thành'),
-        category: yup.string(), //.required('vui lòng nhập thể loại'),
-        content: yup.string() //.required('vui lòng nhập nội dung').min(3, 'nội dung ít nhất 30 ký tự'),
+        title: yup.string().required('vui lòng nhập tiêu đề').min(5, 'tiêu đề ít nhất 5 ký tự'),
+        conscious: yup.string().required('vui lòng nhập tỉnh thành'),
+        category: yup.string().required('vui lòng nhập thể loại'),
+        content: yup.string().required('vui lòng nhập nội dung').min(30, 'nội dung ít nhất 30 ký tự'),
     });
 
     useEffect(() => {
@@ -68,7 +74,7 @@ const AddPost = () => {
                     >
                         {formikProps => {
                             const { values, errors, touched, isSubmitting } = formikProps;
-                            console.log(values);
+                            // console.log(values);
 
                             return (
                                 <Form className="mt-10">
@@ -121,7 +127,7 @@ const AddPost = () => {
                                     <div className="mt-8 flex justify-end items-center gap-4 mr-4">
                                         <div>
                                             <div className="inline-block overflow-hidden bg-white rounded-md">
-                                                <button type="button" className="font-medium py-2 px-6">Huỷ</button>
+                                                <button type="button" onClick={onClickClearValue} className="font-medium py-2 px-6">Huỷ</button>
                                             </div>
                                         </div>
                                         <div>

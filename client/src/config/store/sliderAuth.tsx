@@ -3,6 +3,7 @@ import { AuthType } from "../../common/Type";
 
 
 const initialStateModalPopup: AuthType = {
+    nickname: '',
     username: '',
     password: '',
     post: {}

@@ -5,8 +5,9 @@ const collection = db.collection('blog');
 export const login = async (req, res, next) => {
     try {
         let data = req.body.data;
+        console.log(data);
 
-        const findAuth = collection.find(data).toArray((err, result) => {
+        const findAuth = collection.find({ username: data.username, password: data.password}).toArray((err, result) => {
             if (result.length > 0) {
                 res.json({
                     auth: true,

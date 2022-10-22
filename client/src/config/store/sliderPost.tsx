@@ -2,14 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 import { ValuePost } from "../../common/Type";
 
 const initialState: ValuePost = {
+    id: '',
+    nickname: '',
     conscious: '',
     category: '',
-    title: 'title',
+    title: '',
     content: '',
     banner: 'https://firebasestorage.googleapis.com/v0/b/blog-image-3779d.appspot.com/o/Image%2Fdefault-banner%2Fdefault-banner.jpg?alt=media&token=abc3e029-918e-4f3c-8ead-d930a45d37a1',
-    like: 0,
-    share: 0,
-    view: 0,
+    like: 10,
+    share: 2,
+    view: 100,
 };
 
 const reducerPost = createSlice({
@@ -18,11 +20,15 @@ const reducerPost = createSlice({
     reducers: {
         changeValuePost: (state, action: any) => {
             return state = action.payload;
+        },
+
+        clearValue: (state) => {
+            return state;
         }
     },
 });
 
 const { reducer, actions } = reducerPost;
-export const { changeValuePost } = actions;
+export const { changeValuePost, clearValue } = actions;
 export default reducer;
 
