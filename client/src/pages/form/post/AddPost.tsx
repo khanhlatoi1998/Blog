@@ -20,24 +20,40 @@ import { ValuePost } from '../../../common/Type';
 const AddPost = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const scrollToHere = useRef<any>(null);
     const [post, setPost] = useState<any>([]);
     const initialValuePost = useSelector((state: any) => state.post);
     const auth = useSelector((state: any) => state.auth);
     const checkLogin = useSelector((state: any) => state.checkLogin);
-
-    console.log(auth);
 
     const addPost = async (values: ValuePost) => {
         let id = uuid();
         let date = new Date();
         let createDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
         let updateDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+        values['nickname'] = auth.nickname;
+
         console.log(values);
+        console.log(auth);
+        console.log('all', {
+            ...auth,
+            post: { 
+                ...values, 
+                id: id,
+                createDate: createDate, 
+                updateDate: updateDate 
+            }
+        });
 
         if (checkLogin.auth === true) {
             postApi.createPost({
                 ...auth,
-                post: { ...values, id: id, createDate: createDate, updateDate: updateDate }
+                post: { 
+                    ...values, 
+                    id: id,
+                    createDate: createDate, 
+                    updateDate: updateDate 
+                }
             });
             // navigate(`/w/get/${id}`);
         } else {
@@ -49,6 +65,8 @@ const AddPost = () => {
         dispatch(clearValue());
     };
 
+    console.log(auth);    
+
     const validationSchema = yup.object().shape({
         title: yup.string().required('vui lòng nhập tiêu đề').min(5, 'tiêu đề ít nhất 5 ký tự'),
         conscious: yup.string().required('vui lòng nhập tỉnh thành'),
@@ -57,14 +75,14 @@ const AddPost = () => {
     });
 
     useEffect(() => {
-
+        scrollToHere.current.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
     }, []);
 
     return (
         <section className="py-12 bg-color_14">
             <div className="container__responsive">
                 <div className="lg:w-3/5 mx-auto px-4">
-                    <h2 className="lg:text-3xl text-lg font-bold">Tạo bài viết</h2>
+                    <h2 className="lg:text-3xl text-lg font-bold " ref={scrollToHere}>Tạo bài viết</h2>
                     <p className="mt-4 text-md opacity-70">Nội dung bài viết phải không gây ảnh hưởng đến cá nhân hoặc tập thể khác</p>
 
                     <Formik

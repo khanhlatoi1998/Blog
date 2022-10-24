@@ -10,6 +10,9 @@ export const login = async (req, res, next) => {
         const findAuth = collection.find({ username: data.username, password: data.password}).toArray((err, result) => {
             if (result.length > 0) {
                 res.json({
+                    nickname: result[0].nickname,
+                    listPost: result[0].listPost,
+                    permission: result[0].permission,
                     auth: true,
                     message: 'đăng nhập thành công'
                 });

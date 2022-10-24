@@ -23,7 +23,7 @@ const reducerPost = createSlice({
         },
 
         clearValue: (state) => {
-            return state;
+            return state = initialState;
         }
     },
 });

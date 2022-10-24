@@ -73,11 +73,12 @@ const Register: React.FC<Props> = (props) => {
         authApi.register(delteConfirmPassWord).then((res: any) => {
             setLoading(false);
             setMessage(res);
+            
             if (res.auth === true) {
                 dispath(showModal('closePopup'));
                 dispath(checkLogin({ auth: true }));
 
-                dispath(updateAuth(delteConfirmPassWord));
+                dispath(updateAuth(res));
             }
         }).catch((err) => { console.log(err); })
     };

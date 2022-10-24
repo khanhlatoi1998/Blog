@@ -69,7 +69,7 @@ const Login: React.FC<Props> = (props) => {
             if (res.auth === true) {
                 dispath(showModal('closePopup'));
                 dispath(checkLogin({auth: true}));
-                dispath(updateAuth(values));
+                dispath(updateAuth(res));
             }
 
             if(redirect) {
