@@ -53,10 +53,7 @@ const EditorFields: React.FC<any> = (props) => {
         dispatch(changeValuePost({
             ...valuePost,
             content: value,
-            banner: (firstImg === null || firstImg === undefined) ? valuePost.banner : firstImg
         }));
-
-        console.log(valuePost);
 
         if (listImg.length > 0) {
             const handlePost = async () => {
@@ -93,10 +90,15 @@ const EditorFields: React.FC<any> = (props) => {
                     result.map((el: string) => {
                         newContent += el;
                     })
+                    const doc_2 = new DOMParser().parseFromString(newContent, "text/html");
+                    const htmlSections_2: any = doc.querySelectorAll('body')[0];
+                    let newFirstImg = htmlSections.querySelectorAll('p > img')[0]?.src;
+
+                    console.log(newFirstImg);
                     dispatch(changeValuePost({
                         ...valuePost,
                         content: newContent,
-                        banner: (firstImg === null || firstImg === undefined) ? valuePost.banner : firstImg
+                        banner: (firstImg === null || firstImg === undefined) ? valuePost.banner : newFirstImg
                     }));
                     form.setFieldValue(name, newContent);
 

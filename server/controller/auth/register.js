@@ -10,8 +10,7 @@ export const register = async (req, res, next) => {
             if (result.length <= 0) {
                 const insertAuth = collection.insertOne(data);
                 res.json({
-                    nickname: data.nickname,
-                    permission: data.permission,
+                    ...data,
                     auth: true,
                     message: 'đăng ký thành công',
                     listPost: data.listPost

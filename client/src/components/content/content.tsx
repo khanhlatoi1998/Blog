@@ -11,13 +11,16 @@ interface Props {
         category: string;
         like: number;
         share: number;
-        view: number
+        view: number;
+        nickname: string;
+        createDate: string;
     };
 }
 
 const Content: React.FC<Props> = (props) => {
     const { post } = props;
-    console.log(post.content);
+    const { nickname, createDate, view } = post;
+    console.log(post);
 
     return (
         <div className="w-full lg:w-2/3 bg-color_01 shadow-around rounded py-6 lg:px-6 px-4">
@@ -30,16 +33,16 @@ const Content: React.FC<Props> = (props) => {
                 <h1 className="font-bold text-xl lg:text-3xl mt-1">{post.title}</h1>
                 <div className="mt-4 text-sm cursor-pointer">
                     Bởi
-                    <span className="ml-1"> Nam134 </span>
+                    <span className="ml-1">{nickname}</span>
                     -
-                    <span> 06/23/2022</span>
+                    <span>{createDate}</span>
                     <span className="ml-4"><BsFillEyeFill className="text-blue-300 inline-block mb-[2px]" /> <span>
-                    </span> 101</span>
+                    </span>{view}</span>
                 </div>
-                <div>
+                {/* <div>
                     <p className="pt-8 text-md">Hè đến rồi, mau mau” set up “ một buổi hẹn hò tụ tập bạn bè sau những ngày dài lê thê trên trường, công ty thôi. Nếu bạn không có bồ thì bạn đã có bè. Người yêu có thể không có nhưng nhất định phải có nhóm bạn để cùng nhau du hí mọi nơi. Cuối tuần, lại phải đau đầu chọn địa điểm gặp nhau, thật khó để quyết định. Giờ đây, bạn không phải lo nữa vì đã có Wecheckin gánh rồi, dưới đây sẽ là list các địa điểm lí tưởng tụ tập dành cho bạn.</p>
-                </div>
-                <div className="mt-8">
+                </div> */}
+                {/* <div className="mt-8">
                     <div className="px-4 py-4 rounded-sm border border-solid border-color_05_border inline-block">
                         <div>
                             <h3 className="font-bold text-lg">Nội dung chính của bài</h3>
@@ -122,9 +125,9 @@ const Content: React.FC<Props> = (props) => {
                     <p className="mt-4">Đây là địa điểm đầu tiên bạn bắt gặp khi đặt chân đến chùa Tam Chúc. Bên trông nhà khách được bày trí rất trang nghiêm, xung quanh có rất nhiều bức tranh về đèn led giới thiệu về ngôi chùa.</p>
                     <p className="mt-4">Đây là địa điểm đầu tiên bạn bắt gặp khi đặt chân đến chùa Tam Chúc. Bên trông nhà khách được bày trí rất trang nghiêm, xung quanh có rất nhiều bức tranh về đèn led giới thiệu về ngôi chùa.</p>
                     <p className="mt-4">Đây là địa điểm đầu tiên bạn bắt gặp khi đặt chân đến chùa Tam Chúc. Bên trông nhà khách được bày trí rất trang nghiêm, xung quanh có rất nhiều bức tranh về đèn led giới thiệu về ngôi chùa.</p>
-                </div>
+                </div> */}
 
-                {/* <div className="text-md mt-10" dangerouslySetInnerHTML={{ __html: post.content }} /> */}
+                <div className="text-md mt-10" dangerouslySetInnerHTML={{ __html: post.content }} />
 
             </div>
 
@@ -149,7 +152,7 @@ const Content: React.FC<Props> = (props) => {
                 <Social />
             </div>
 
-            <Writer />
+            <Writer nickname={nickname} />
             <Comment />
         </div>
     );

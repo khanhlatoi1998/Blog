@@ -32,18 +32,7 @@ const AddPost = () => {
         let createDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
         let updateDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
         values['nickname'] = auth.nickname;
-
-        console.log(values);
-        console.log(auth);
-        console.log('all', {
-            ...auth,
-            post: { 
-                ...values, 
-                id: id,
-                createDate: createDate, 
-                updateDate: updateDate 
-            }
-        });
+        values['banner'] = initialValuePost.banner;
 
         if (checkLogin.auth === true) {
             postApi.createPost({
@@ -64,8 +53,6 @@ const AddPost = () => {
     const onClickClearValue = () => {
         dispatch(clearValue());
     };
-
-    console.log(auth);    
 
     const validationSchema = yup.object().shape({
         title: yup.string().required('vui lòng nhập tiêu đề').min(5, 'tiêu đề ít nhất 5 ký tự'),

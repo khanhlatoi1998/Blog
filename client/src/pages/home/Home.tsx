@@ -1,6 +1,5 @@
 import postApi from "../../api/postApi";
 
-
 import { useEffect, useState } from "react";
 import ListAccommodation from "../accommodation/ListAccommodation";
 import ListBlogShare from "../blog-share/ListBlogShare";
@@ -16,12 +15,38 @@ import { RegisterType, ValuePost } from "../../common/Type";
 const Home = () => {
     const [stateListConsious, setStateListConsious] = useState<Array<ValuePost>>([]);
 
+    const handleListConsious = (listPost: Array<ValuePost>) => {
+        const listConsious: Array<ValuePost> = [];
+        const maxItemConsious = 6;
+
+        const groupByConsious = Object.values(listPost.reduce((group: any, post: ValuePost) => {
+            const { conscious } = post;
+            group[conscious] = group[conscious] ?? [];
+            group[conscious].push(post);
+            return group;
+        }, {}));
+
+        groupByConsious.forEach((group: any) => {
+            let maxLike = Math.min(...group.map((o: ValuePost) => o.like));
+            let consioutHaveMaxLike = group.find((el: ValuePost) => el.like === maxLike);
+            listConsious.push(consioutHaveMaxLike);
+        })
+
+        const sortListConsious = listConsious.sort((a: ValuePost, b: ValuePost) => {
+            return b.like - a.like;
+        }).slice(0, maxItemConsious);
+
+        setStateListConsious(sortListConsious);
+    };
+
+    const handleTopView = (listPost: Array<ValuePost>) => {
+
+    };
+
     useEffect(() => {
         postApi.getAll()
             .then(async (data: any) => {
                 const listPost: Array<ValuePost> = [];
-                const listConsious: Array<ValuePost> = [];
-                const maxItemConsious = 8;
 
                 await data.map((item: RegisterType, index: number) => {
                     item.listPost.map((post: ValuePost) => {
@@ -29,25 +54,8 @@ const Home = () => {
                     });
                 });
 
-                const groupByConsious = Object.values(listPost.reduce((group: any, post: ValuePost) => {
-                    const { conscious } = post;
-                    group[conscious] = group[conscious] ?? [];
-                    group[conscious].push(post);
-                    return group;
-                }, {}));
-                
-                groupByConsious.forEach((group: any) => {
-                    let maxLike = Math.min(...group.map((o: ValuePost) => o.like));
-                    let consioutHaveMaxLike = group.find((el: ValuePost) => el.like === maxLike);
-                    listConsious.push(consioutHaveMaxLike);
-                })
-
-                const sortListConsious = listConsious.sort((a: ValuePost, b: ValuePost) => {
-                    return b.like - a.like;
-                }).slice(0, maxItemConsious);
-
-                setStateListConsious(sortListConsious);
-                // console.log(sortListConsious);
+                handleListConsious(listPost);
+                handleTopView(listPost);
 
             }).catch((err) => { })
     }, []);
@@ -55,7 +63,7 @@ const Home = () => {
     return (
         <section>
             <Info />
-            <ListFavoriteLocation stateListConsious={stateListConsious}/>
+            <ListFavoriteLocation stateListConsious={stateListConsious} />
             <TopView />
             <ListHandBook />
             <ListEntertainment />

@@ -7,7 +7,7 @@ const postApi = {
     },
 
     createPost: (data: Object) => {
-        let url = '/post';
+        let url = '/post/create';
         return axiosClient.post(url, { data });
     },
 
