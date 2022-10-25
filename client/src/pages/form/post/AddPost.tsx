@@ -29,8 +29,8 @@ const AddPost = () => {
     const addPost = async (values: ValuePost) => {
         let id = uuid();
         let date = new Date();
-        let createDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-        let updateDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+        let createDate = (date.getMonth() + 1) + "/" + date.getFullYear();
+        let updateDate = (date.getMonth() + 1) + "/" + date.getFullYear();
         values['nickname'] = auth.nickname;
         values['banner'] = initialValuePost.banner;
 

@@ -151,7 +151,7 @@ const Sidebar = () => {
                         <div className="pt-4 pb-6 items-post border-dotted">
                             <p className="text-md font-medium">Kiếm tìm cảm hứng làm việc bên trong những quán cà phê yên tĩnh...</p>
                             <div className="mt-2 text-xs text-color_11">
-                                <span className="px-2 bg-color_13 text-color_01 mr-2">Khanh</span>
+                                <span className="px-2 bg-color_13 text-color_01 mr-2">Name</span>
                                 <span>Name </span>
                                 <span> - </span>
                                 <span> 05/2022</span>
@@ -160,7 +160,7 @@ const Sidebar = () => {
                         <div className="pt-4 pb-6 items-post border-dotted">
                             <p className="text-md font-medium">Kiếm tìm cảm hứng làm việc bên trong những quán cà phê yên tĩnh...</p>
                             <div className="mt-2 text-xs text-color_11">
-                                <span className="px-2 bg-color_13 text-color_01 mr-2">Khanh</span>
+                                <span className="px-2 bg-color_13 text-color_01 mr-2">Name</span>
                                 <span>Name </span>
                                 <span> - </span>
                                 <span> 05/2022</span>
@@ -169,7 +169,7 @@ const Sidebar = () => {
                         <div className="pt-4 pb-6 items-post border-dotted">
                             <p className="text-md font-medium">Kiếm tìm cảm hứng làm việc bên trong những quán cà phê yên tĩnh...</p>
                             <div className="mt-2 text-xs text-color_11">
-                                <span className="px-2 bg-color_13 text-color_01 mr-2">Khanh</span>
+                                <span className="px-2 bg-color_13 text-color_01 mr-2">Name</span>
                                 <span>Name </span>
                                 <span> - </span>
                                 <span> 05/2022</span>
@@ -178,7 +178,7 @@ const Sidebar = () => {
                         <div className="pt-4 pb-6 items-post border-dotted">
                             <p className="text-md font-medium">Kiếm tìm cảm hứng làm việc bên trong những quán cà phê yên tĩnh...</p>
                             <div className="mt-2 text-xs text-color_11">
-                                <span className="px-2 bg-color_13 text-color_01 mr-2">Khanh</span>
+                                <span className="px-2 bg-color_13 text-color_01 mr-2">Name</span>
                                 <span>Name </span>
                                 <span> - </span>
                                 <span> 05/2022</span>
@@ -187,7 +187,7 @@ const Sidebar = () => {
                         <div className="pt-4 pb-6 items-post border-dotted">
                             <p className="text-md font-medium">Kiếm tìm cảm hứng làm việc bên trong những quán cà phê yên tĩnh...</p>
                             <div className="mt-2 text-xs text-color_11">
-                                <span className="px-2 bg-color_13 text-color_01 mr-2">Khanh</span>
+                                <span className="px-2 bg-color_13 text-color_01 mr-2">Name</span>
                                 <span>Name </span>
                                 <span> - </span>
                                 <span> 05/2022</span>

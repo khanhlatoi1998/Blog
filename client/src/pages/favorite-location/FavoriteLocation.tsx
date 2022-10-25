@@ -9,14 +9,11 @@ import { NavLink } from "react-router-dom";
 
 interface Props {
     stateConsious: ValuePost,
-
 }
 
 const FavoriteLocation: React.FC<Props> = (props) => {
     const {stateConsious} = props;
     const { title, banner, conscious, id } = stateConsious;
-
-    console.log(id);
 
     return (
         <NavLink to={`/detail/${id}`} className="block relative cursor-pointer pt-[100%]">

@@ -25,9 +25,6 @@ interface Props {
 const ListFavoriteLocation: React.FC<Props> = (props) => {
     const { stateListConsious } = props;
 
-    console.log(stateListConsious);
-
-
     return (
         <section className="pb-4">
             <div className="container__responsive lg:px-12 px-4">

@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import ReactPaginate from 'react-paginate';
-
+import { ValuePost } from '../../common/Type';
 
 import HandBook from "./HandBook";
 
+interface Props {
+    stateListHandBook: Array<ValuePost>;
+}
 
-const ListHandBook = () => {
+
+const ListHandBook: React.FC<Props> = (props) => {
+    const { stateListHandBook } = props;
+    console.log(stateListHandBook);
+
     return (
         <section className="sm:py-6">
             <div className="container__responsive lg:px-12 px-4">
@@ -16,10 +23,13 @@ const ListHandBook = () => {
                 <div className="flex flex-row">
                     <div className="lg:w-2/3 py-8">
                         <div>
-                            <HandBook />
-                            <HandBook />
-                            <HandBook />
-                            <HandBook />
+                            {
+                                stateListHandBook.slice(0, 4).map((post: ValuePost) => {
+                                    return (
+                                        <HandBook key={post.id} post={post}/>
+                                    )
+                                })
+                            }
                         </div>
                         <div>
                             <ReactPaginate

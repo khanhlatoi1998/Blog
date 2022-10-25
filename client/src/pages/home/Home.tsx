@@ -14,6 +14,8 @@ import { RegisterType, ValuePost } from "../../common/Type";
 
 const Home = () => {
     const [stateListConsious, setStateListConsious] = useState<Array<ValuePost>>([]);
+    const [stateListTopView, setStateListTopView] = useState<Array<ValuePost>>([]);
+    const [stateListHandBook, setStateListHandBook] = useState<Array<ValuePost>>([]);
 
     const handleListConsious = (listPost: Array<ValuePost>) => {
         const listConsious: Array<ValuePost> = [];
@@ -40,7 +42,15 @@ const Home = () => {
     };
 
     const handleTopView = (listPost: Array<ValuePost>) => {
+        const sortListPost = listPost.sort((a: ValuePost, b: ValuePost) => {
+            return b.like - a.like;
+        });
+        setStateListTopView(sortListPost);
+    };
 
+    const handleHandBook = (listPost: Array<ValuePost>) => {
+        const listHandBook = listPost.filter(o => o.category === 'CẨM NANG')
+        setStateListHandBook(listHandBook);
     };
 
     useEffect(() => {
@@ -56,6 +66,7 @@ const Home = () => {
 
                 handleListConsious(listPost);
                 handleTopView(listPost);
+                handleHandBook(listPost);
 
             }).catch((err) => { })
     }, []);
@@ -64,8 +75,8 @@ const Home = () => {
         <section>
             <Info />
             <ListFavoriteLocation stateListConsious={stateListConsious} />
-            <TopView />
-            <ListHandBook />
+            <TopView stateListTopView={stateListTopView}/>
+            <ListHandBook stateListHandBook={stateListHandBook}/>
             <ListEntertainment />
             <ListEat />
             <ListAccommodation />

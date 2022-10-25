@@ -43,6 +43,7 @@ export interface ValuePost {
     like: number;
     share: number;
     view: number;
+    createDate: string;
 }
 
 export interface RegisterType {
