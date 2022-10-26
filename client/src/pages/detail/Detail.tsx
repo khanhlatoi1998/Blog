@@ -11,6 +11,11 @@ const Detail = () => {
     const { id } = useParams();
 
     useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+        
         postApi.getId(id)
             .then((data) => {
                 setPost(data);

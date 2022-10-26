@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import ReactPaginate from 'react-paginate';
+import { number } from 'yup';
 import { ValuePost } from '../../common/Type';
 
 import HandBook from "./HandBook";
@@ -12,7 +13,16 @@ interface Props {
 
 const ListHandBook: React.FC<Props> = (props) => {
     const { stateListHandBook } = props;
-    console.log(stateListHandBook);
+    const showItems = 4;
+    const pageCount = Math.ceil(stateListHandBook.length / showItems);
+    const [selectedPage, setSelectedPage] = useState<number>(0);
+
+
+    const handlePageClick = (data: any) => {
+        const selected = data.selected;
+        setSelectedPage(selected * showItems);
+    };
+
 
     return (
         <section className="sm:py-6">
@@ -21,10 +31,10 @@ const ListHandBook: React.FC<Props> = (props) => {
                     <h1 className="heading__main">CẨM NANG DU LỊCH</h1>
                 </div>
                 <div className="flex flex-row">
-                    <div className="lg:w-2/3 py-8">
+                    <div className="lg:w-2/3 w-full py-8">
                         <div>
                             {
-                                stateListHandBook.slice(0, 4).map((post: ValuePost) => {
+                                stateListHandBook.slice(selectedPage, selectedPage + showItems).map((post: ValuePost) => {
                                     return (
                                         <HandBook key={post.id} post={post}/>
                                     )
@@ -38,12 +48,13 @@ const ListHandBook: React.FC<Props> = (props) => {
                                 previousLabel="<"
                                 className="flex lg:justify-center justify-end gap-1 mx-auto text-sm mt-2"
                                 pageLinkClassName="px-2 py-[2px] rounded-sm"
-                                activeLinkClassName="bg-color_04"
+                                activeLinkClassName="bg-color_04 text-white"
                                 previousLinkClassName="px-2 py-1"
                                 nextLinkClassName="px-2 py-1"
                                 pageRangeDisplayed={3}
                                 marginPagesDisplayed={2}
-                                pageCount={40}
+                                pageCount={pageCount}
+                                onPageChange={handlePageClick}
                             />
                         </div>
                     </div>

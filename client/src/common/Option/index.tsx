@@ -67,4 +67,13 @@ export const CATEGORY_OPTION = [
     { value: 'ẨM THỰC', label: 'ẨM THỰC'},
     { value: 'HOMETAY', label: 'HOMESTAY'},
     { value: 'CẨM NANG', label: 'CẨM NANG'},
-]
+    { value: 'TRẢI NGHIỆM', label: 'TRẢI NGHIỆM'},
+];
+
+export const CATEGORY_CHECK = {
+    eat: 'ẨM THỰC',
+    entertainment: 'ĐỊA ĐIỂM',
+    homstay: 'HOMETAY',
+    handbook: 'CẨM NANG',
+    experience: 'TRẢI NGHIỆM'
+}

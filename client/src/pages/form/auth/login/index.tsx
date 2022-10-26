@@ -110,6 +110,7 @@ const Login: React.FC<Props> = (props) => {
                                 <FastField
                                     name="password"
                                     label="MẬT KHẨU"
+                                    type="password"
                                     placeholder=""
                                     className="w-full px-4 py-1 bg-transparent border-b border-solid border-color_06"
                                     component={InputFiled}

@@ -1,13 +1,16 @@
 import { NavLink } from "react-router-dom";
 import { ValuePost } from "../../common/Type";
 
+
+
 interface Props {
     key: number | string;
     post: ValuePost;
 }
 
 
-const Entertainment: React.FC<Props> = (props) => {
+
+const Homestay:React.FC<Props> = (props) => {
     const { post } = props;
     const { banner, title, nickname, createDate, content, id } = post;
 
@@ -25,14 +28,16 @@ const Entertainment: React.FC<Props> = (props) => {
                 </NavLink>
                 <div className="">
                     <div className="">
-                        <h3 className="content__ellipsis--title lg:min-h-[63px] mt-2 font-medium sm:text-xl text-md pb-1 relative before:absolute before:content-[''] before:w-[40px] before:h-[2px] before:bg-color_05_border before:bottom-0 before:left-0">{title}</h3>
-                        <p className="mt-2 content__ellipsis--3 text-md sm:text-lg">{contenIntro}</p>
+                        <h3 className="content__ellipsis--title mt-2 font-medium sm:text-xl text-md pb-1 relative before:absolute before:content-[''] before:w-[40px] before:h-[2px] before:bg-color_05_border before:bottom-0 before:left-0">
+                            {title}
+                        </h3>
+                        <p className="mt-2 content__ellipsis--3 sm:text-xl text-md">{contenIntro}</p>
                         <p className="mt-2 text-xs text-color_02 opacity-70">{nickname} - {createDate}</p>
                     </div>
                 </div>
             </div>
         </div>
     );
-}
+};
 
-export default Entertainment;
+export default Homestay;

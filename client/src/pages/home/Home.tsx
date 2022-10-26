@@ -1,7 +1,7 @@
 import postApi from "../../api/postApi";
 
 import { useEffect, useState } from "react";
-import ListAccommodation from "../accommodation/ListAccommodation";
+import ListAccommodation from "../homestay/ListHomestay";
 import ListBlogShare from "../blog-share/ListBlogShare";
 import ListEat from "../Eat/ListEat";
 import ListEntertainment from "../entertainment/ListEntertainment";
@@ -10,12 +10,22 @@ import ListHandBook from "../handbook/ListHandBook";
 import Info from "../info/Info";
 import TopView from "../topview/TopView";
 import { RegisterType, ValuePost } from "../../common/Type";
+import { CATEGORY_CHECK } from "../../common/Option";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllDataListPost } from "../../config/store/sliderDataListPost";
 
 
 const Home = () => {
     const [stateListConsious, setStateListConsious] = useState<Array<ValuePost>>([]);
     const [stateListTopView, setStateListTopView] = useState<Array<ValuePost>>([]);
     const [stateListHandBook, setStateListHandBook] = useState<Array<ValuePost>>([]);
+    const [stateListEntertainment, setStateListEntertainment] = useState<Array<ValuePost>>([]);
+    const [stateListEat, setStateListEat] = useState<Array<ValuePost>>([]);
+    const [stateListHomestay, setStateListHomestay] = useState<Array<ValuePost>>([]);
+    const [stateListBlogShare, setStateListBlogShare] = useState<Array<ValuePost>>([]);
+
+    const dispatch = useDispatch();
+    const dataListPost = useSelector((state: any) => state.dataListPost);
 
     const handleListConsious = (listPost: Array<ValuePost>) => {
         const listConsious: Array<ValuePost> = [];
@@ -43,31 +53,59 @@ const Home = () => {
 
     const handleTopView = (listPost: Array<ValuePost>) => {
         const sortListPost = listPost.sort((a: ValuePost, b: ValuePost) => {
-            return b.like - a.like;
+            return b.view - a.view;
         });
         setStateListTopView(sortListPost);
     };
-
     const handleHandBook = (listPost: Array<ValuePost>) => {
-        const listHandBook = listPost.filter(o => o.category === 'CẨM NANG')
+        const listHandBook = listPost.filter(o => o.category === CATEGORY_CHECK.handbook)
         setStateListHandBook(listHandBook);
+    };
+    const handleEntertainment = (listPost: Array<ValuePost>) => {
+        const listEntertainment = listPost.filter(o => o.category === CATEGORY_CHECK.entertainment)
+        setStateListEntertainment(listEntertainment);
+    };
+    const handleEat = (listPost: Array<ValuePost>) => {
+        const listEat = listPost.filter(o => o.category === CATEGORY_CHECK.eat)
+        setStateListEat(listEat);
+    };
+    const handleHomestay = (listPost: Array<ValuePost>) => {
+        const listHomestay = listPost.filter(o => o.category === CATEGORY_CHECK.homstay)
+        setStateListHomestay(listHomestay);
+    };
+    const handleBlogShare = (listPost: Array<ValuePost>) => {
+        const ListBlogShare = listPost.reverse();
+        setStateListBlogShare(ListBlogShare);
     };
 
     useEffect(() => {
         postApi.getAll()
             .then(async (data: any) => {
                 const listPost: Array<ValuePost> = [];
+                const listPostUser: Array<ValuePost> = [];
 
                 await data.map((item: RegisterType, index: number) => {
-                    item.listPost.map((post: ValuePost) => {
-                        listPost.push(post);
-                    });
+                    if (item.permission === 'user') {
+                        item.listPost.map((post: ValuePost) => {
+                            listPost.push(post);
+                        });
+                    } 
+                    if (item.permission === 'user') {
+                        item.listPost.map((post: ValuePost) => {
+                            listPostUser.push(post);
+                        });
+                    }
                 });
 
                 handleListConsious(listPost);
                 handleTopView(listPost);
                 handleHandBook(listPost);
+                handleEntertainment(listPost);
+                handleEat(listPost);
+                handleHomestay(listPost);
+                handleBlogShare(listPostUser);
 
+                dispatch(getAllDataListPost(listPost));
             }).catch((err) => { })
     }, []);
 
@@ -77,10 +115,10 @@ const Home = () => {
             <ListFavoriteLocation stateListConsious={stateListConsious} />
             <TopView stateListTopView={stateListTopView}/>
             <ListHandBook stateListHandBook={stateListHandBook}/>
-            <ListEntertainment />
-            <ListEat />
-            <ListAccommodation />
-            <ListBlogShare />
+            <ListEntertainment stateListEntertainment={stateListEntertainment}/>
+            <ListEat stateListEat={stateListEat}/>
+            <ListAccommodation stateListHomestay={stateListHomestay}/>
+            <ListBlogShare stateListBlogShare={stateListBlogShare}/>
         </section>
     );
 };

@@ -127,7 +127,7 @@ const Content: React.FC<Props> = (props) => {
                     <p className="mt-4">Đây là địa điểm đầu tiên bạn bắt gặp khi đặt chân đến chùa Tam Chúc. Bên trông nhà khách được bày trí rất trang nghiêm, xung quanh có rất nhiều bức tranh về đèn led giới thiệu về ngôi chùa.</p>
                 </div> */}
 
-                <div className="text-md mt-10" dangerouslySetInnerHTML={{ __html: post.content }} />
+                <div className="text-md mt-10 post__description" dangerouslySetInnerHTML={{ __html: post.content }} />
 
             </div>
 

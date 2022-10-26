@@ -1,131 +1,91 @@
 import { FaFacebookF, FaInstagram, FaYoutube } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { CATEGORY_CHECK } from '../../common/Option';
+import { ValuePost } from '../../common/Type';
 
 
 const Footer = () => {
+    const dispatch = useDispatch();
+    const dataListPost = useSelector((state: any) => state.dataListPost);
+    const listHandBook = dataListPost.filter((o: ValuePost) => o.category === CATEGORY_CHECK.handbook);
+    const listEntertainment = dataListPost.filter((o: ValuePost) => o.category === CATEGORY_CHECK.entertainment);
+    const listEat = dataListPost.filter((o: ValuePost) => o.category === CATEGORY_CHECK.eat);
+    const listHomestay = dataListPost.filter((o: ValuePost) => o.category === CATEGORY_CHECK.homstay);
+    const listExperience = dataListPost.filter((o: ValuePost) => o.category === CATEGORY_CHECK.experience);
+
     return (
         <footer className="bg-color_09 mt--8">
             <div className="container__responsive lg:px-12 px-4">
                 <div className="py-12 lg:block hidden">
                     <div className="grid grid-cols-3">
                         <div className="px-2">
-                            <div className="flex py-4 cursor-pointer">
-                                <div className="w-[100px] h-[67px] relative">
-                                    <picture>
-                                        <img className="h-full w-full object-cover" src="../Images/favorite/dat-lat.jpg" alt="" />
-                                    </picture>
-                                </div>
-                                <div className="flex-1 flex flex-col justify-center">
-                                    <div className="pl-4">
-                                        <h3 className="font-medium text-[16px] pb-1 relative text-color_11 hover:text-color_04">Top 10 Quán ăn ngon ở Nha Trang đã sưu tầm rất lâu rồi</h3>
-                                        <p className=" text-[14px] text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">Name</span> 09/14/2022</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="flex py-4 cursor-pointer">
-                                <div className="w-[100px] h-[67px] relative">
-                                    <picture>
-                                        <img className="h-full w-full object-cover" src="../Images/favorite/dat-lat.jpg" alt="" />
-                                    </picture>
-                                </div>
-                                <div className="flex-1 flex flex-col justify-center">
-                                    <div className="pl-4">
-                                        <h3 className="font-medium text-[16px] pb-1 relative text-color_11 hover:text-color_04">Top 10 Quán ăn ngon ở Nha Trang đã sưu tầm rất lâu rồi</h3>
-                                        <p className=" text-[14px]  text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">Name</span> 09/14/2022</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="flex py-4 cursor-pointer">
-                                <div className="w-[100px] h-[67px] relative">
-                                    <picture>
-                                        <img className="h-full w-full object-cover" src="../Images/favorite/dat-lat.jpg" alt="" />
-                                    </picture>
-                                </div>
-                                <div className="flex-1 flex flex-col justify-center">
-                                    <div className="pl-4">
-                                        <h3 className="font-medium text-[16px] pb-1 relative text-color_11 hover:text-color_04">Top 10 Quán ăn ngon ở Nha Trang đã sưu tầm rất lâu rồi</h3>
-                                        <p className=" text-[14px]  text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">Name</span> 09/14/2022</p>
-                                    </div>
-                                </div>
-                            </div>
+                            {
+                                dataListPost.slice(0, 3).map((post: ValuePost) => {
+                                    return (
+                                        <div key={post.id} className="flex py-4 cursor-pointer">
+                                            <NavLink to={`/detail/${post.id}`} className="w-[100px] h-[67px] relative">
+                                                <picture>
+                                                    <img className="h-full w-full object-cover" src={post.banner} alt="" />
+                                                </picture>
+                                            </NavLink>
+                                            <div className="flex-1 ">
+                                                <div className="pl-4 flex flex-col justify-between h-full">
+                                                    <h3 className="content__ellipsis--title min-h-[52px] font-medium text-[16px] pb-1 relative text-color_11 hover:text-color_04">{post.title}</h3>
+                                                    <p className=" text-[14px] text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">{post.nickname}</span> {post.createDate}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
                         <div className="px-2 border-x border-solid border-color_10">
-                            <div className="flex py-4 cursor-pointer">
-                                <div className="w-[100px] h-[67px] relative">
-                                    <picture>
-                                        <img className="h-full w-full object-cover" src="../Images/favorite/dat-lat.jpg" alt="" />
-                                    </picture>
-                                </div>
-                                <div className="flex-1 flex flex-col justify-center">
-                                    <div className="pl-4">
-                                        <h3 className="font-medium text-[16px] pb-1 relative text-color_11 hover:text-color_04">Top 10 Quán ăn ngon ở Nha Trang đã sưu tầm rất lâu rồi</h3>
-                                        <p className=" text-[14px]  text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">Name</span> 09/14/2022</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="flex py-4 cursor-pointer">
-                                <div className="w-[100px] h-[67px] relative">
-                                    <picture>
-                                        <img className="h-full w-full object-cover" src="../Images/favorite/dat-lat.jpg" alt="" />
-                                    </picture>
-                                </div>
-                                <div className="flex-1 flex flex-col justify-center">
-                                    <div className="pl-4">
-                                        <h3 className="font-medium text-[16px] pb-1 relative text-color_11 hover:text-color_04">Top 10 Quán ăn ngon ở Nha Trang đã sưu tầm rất lâu rồi</h3>
-                                        <p className=" text-[14px]  text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">Name</span> 09/14/2022</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="flex py-4 cursor-pointer">
-                                <div className="w-[100px] h-[67px] relative">
-                                    <picture>
-                                        <img className="h-full w-full object-cover" src="../Images/favorite/dat-lat.jpg" alt="" />
-                                    </picture>
-                                </div>
-                                <div className="flex-1 flex flex-col justify-center">
-                                    <div className="pl-4">
-                                        <h3 className="font-medium text-[16px] pb-1 relative text-color_11 hover:text-color_04">Top 10 Quán ăn ngon ở Nha Trang đã sưu tầm rất lâu rồi</h3>
-                                        <p className=" text-[14px]  text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">Name</span> 09/14/2022</p>
-                                    </div>
-                                </div>
-                            </div>
+                            {
+                                dataListPost.slice(3, 6).map((post: ValuePost) => {
+                                    return (
+                                        <div key={post.id} className="flex py-4 cursor-pointer">
+                                            <NavLink to={`/detail/${post.id}`} className="w-[100px] h-[67px] relative">
+                                                <picture>
+                                                    <img className="h-full w-full object-cover" src={post.banner} alt="" />
+                                                </picture>
+                                            </NavLink>
+                                            <div className="flex-1 ">
+                                                <div className="pl-4 flex flex-col justify-between h-full">
+                                                    <h3 className="content__ellipsis--title min-h-[52px] font-medium text-[16px] pb-1 relative text-color_11 hover:text-color_04">{post.title}</h3>
+                                                    <p className=" text-[14px] text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">{post.nickname}</span> {post.createDate}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
                         <div className="px-2 py-3 text-[16px] font-medium">
                             <ul className=" text-color_11 flex flex-col gap-y-2">
                                 <li className="flex justify-between hover:text-color_04 ">
-                                    <a href="#">Hà Nội</a>
-                                    <p>12</p>
+                                    <a href="#">Địa Điểm Vui Chơi</a>
+                                    <p>{listEntertainment.length}</p>
                                 </li>
                                 <li className="flex justify-between hover:text-color_04 ">
-                                    <a href="#">Sài Gòn</a>
-                                    <p>12</p>
-                                </li>
-                                <li className="flex justify-between hover:text-color_04 ">
-                                    <a href="#">Du Lịch Trong Nước</a>
-                                    <p>12</p>
-                                </li>
-                                <li className="flex justify-between hover:text-color_04 ">
-                                    <a href="#">Cẩm Nang</a>
-                                    <p>12</p>
-                                </li>
-                                <li className="flex justify-between hover:text-color_04 ">
-                                    <a href="#">Trải Nghiệm</a>
-                                    <p>12</p>
+                                    <a href="#">Ăn Uống</a>
+                                    <p>{listEat.length}</p>
                                 </li>
                                 <li className="flex justify-between hover:text-color_04 ">
                                     <a href="#">Homestay</a>
-                                    <p>12</p>
+                                    <p>{listHomestay.length}</p>
                                 </li>
                                 <li className="flex justify-between hover:text-color_04 ">
-                                    <a href="#">Ẩm thực</a>
-                                    <p>12</p>
+                                    <a href="#">Cẩm Nang</a>
+                                    <p>{listHandBook.length}</p>
                                 </li>
                                 <li className="flex justify-between hover:text-color_04 ">
-                                    <a href="#">Quán Cà Phê</a>
-                                    <p>12</p>
+                                    <a href="#">Trải Nghiệm</a>
+                                    <p>{listExperience.length}</p>
                                 </li>
                                 <li className="flex justify-between hover:text-color_04 ">
-                                    <a href="#">Du lịch tự túc</a>
-                                    <p>12</p>
+                                    <a href="#">Xem Nhiều Nhất</a>
+                                    <p>10</p>
                                 </li>
                             </ul>
                         </div>

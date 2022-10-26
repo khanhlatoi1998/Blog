@@ -16,7 +16,7 @@ import ListFavoriteLocation from './pages/favorite-location/ListFavoriteLocation
 import ListHandBook from './pages/handbook/ListHandBook';
 import ListEntertainment from './pages/entertainment/ListEntertainment';
 import ListEat from './pages/Eat/ListEat';
-import ListAccommodation from './pages/accommodation/ListAccommodation';
+import ListAccommodation from './pages/homestay/ListHomestay';
 import ListBlogShare from './pages/blog-share/ListBlogShare';
 import Footer from './components/footer';
 import NotFound from './components/NotFound';
