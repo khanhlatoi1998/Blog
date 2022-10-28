@@ -12,19 +12,18 @@ import TopView from "../topview/TopView";
 import { RegisterType, ValuePost } from "../../common/Type";
 import { CATEGORY_CHECK } from "../../common/Option";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllDataListPost } from "../../config/store/sliderDataListPost";
+import { getListHandBook, getAllDataListPost, getListConsious, getListEntertainment, getListTopView, getListEat, getListHomestay, getListBlogShare } from "../../config/store/sliderDataListPost";
 
 
 const Home = () => {
-    const [stateListConsious, setStateListConsious] = useState<Array<ValuePost>>([]);
-    const [stateListTopView, setStateListTopView] = useState<Array<ValuePost>>([]);
-    const [stateListHandBook, setStateListHandBook] = useState<Array<ValuePost>>([]);
-    const [stateListEntertainment, setStateListEntertainment] = useState<Array<ValuePost>>([]);
-    const [stateListEat, setStateListEat] = useState<Array<ValuePost>>([]);
-    const [stateListHomestay, setStateListHomestay] = useState<Array<ValuePost>>([]);
-    const [stateListBlogShare, setStateListBlogShare] = useState<Array<ValuePost>>([]);
-
     const dispatch = useDispatch();
+    const stateListHandBook = useSelector((state: any) => state.listHandBook);
+    const stateListConsious = useSelector((state: any) => state.listConsious);
+    const stateListEntertainment = useSelector((state: any) => state.listEntertainment);
+    const stateListTopView = useSelector((state: any) => state.listTopView);
+    const stateListEat = useSelector((state: any) => state.listEat);
+    const stateListHomestay = useSelector((state: any) => state.listHomestay);
+    const stateListBlogShare = useSelector((state: any) => state.listBlogShare);
     const dataListPost = useSelector((state: any) => state.dataListPost);
 
     const handleListConsious = (listPost: Array<ValuePost>) => {
@@ -48,34 +47,34 @@ const Home = () => {
             return b.like - a.like;
         }).slice(0, maxItemConsious);
 
-        setStateListConsious(sortListConsious);
+        dispatch(getListConsious(sortListConsious));
     };
 
     const handleTopView = (listPost: Array<ValuePost>) => {
         const sortListPost = listPost.sort((a: ValuePost, b: ValuePost) => {
             return b.view - a.view;
         });
-        setStateListTopView(sortListPost);
+        dispatch(getListTopView(sortListPost));
     };
     const handleHandBook = (listPost: Array<ValuePost>) => {
-        const listHandBook = listPost.filter(o => o.category === CATEGORY_CHECK.handbook)
-        setStateListHandBook(listHandBook);
+        const listHandBook = listPost.filter(o => o.category === CATEGORY_CHECK.handbook);
+        dispatch(getListHandBook(listHandBook));
     };
     const handleEntertainment = (listPost: Array<ValuePost>) => {
-        const listEntertainment = listPost.filter(o => o.category === CATEGORY_CHECK.entertainment)
-        setStateListEntertainment(listEntertainment);
+        const listEntertainment = listPost.filter(o => o.category === CATEGORY_CHECK.entertainment);
+        dispatch(getListEntertainment(listEntertainment));
     };
     const handleEat = (listPost: Array<ValuePost>) => {
-        const listEat = listPost.filter(o => o.category === CATEGORY_CHECK.eat)
-        setStateListEat(listEat);
+        const listEat = listPost.filter(o => o.category === CATEGORY_CHECK.eat);
+        dispatch(getListEat(listEat))
     };
     const handleHomestay = (listPost: Array<ValuePost>) => {
-        const listHomestay = listPost.filter(o => o.category === CATEGORY_CHECK.homstay)
-        setStateListHomestay(listHomestay);
+        const listHomestay = listPost.filter(o => o.category === CATEGORY_CHECK.homstay);
+        dispatch(getListHomestay(listHomestay));
     };
     const handleBlogShare = (listPost: Array<ValuePost>) => {
-        const ListBlogShare = listPost.reverse();
-        setStateListBlogShare(ListBlogShare);
+        const listBlogShare = listPost.reverse();
+        dispatch(getListBlogShare(listBlogShare));
     };
 
     useEffect(() => {
@@ -104,11 +103,11 @@ const Home = () => {
                 handleEat(listPost);
                 handleHomestay(listPost);
                 handleBlogShare(listPostUser);
-
+                
                 dispatch(getAllDataListPost(listPost));
             }).catch((err) => { })
-    }, []);
-
+        }, []);
+        
     return (
         <section>
             <Info />

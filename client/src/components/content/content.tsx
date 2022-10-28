@@ -20,7 +20,6 @@ interface Props {
 const Content: React.FC<Props> = (props) => {
     const { post } = props;
     const { nickname, createDate, view } = post;
-    console.log(post);
 
     return (
         <div className="w-full lg:w-2/3 bg-color_01 shadow-around rounded py-6 lg:px-6 px-4">

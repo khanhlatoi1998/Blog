@@ -165,6 +165,14 @@ table {
 		@extend %ellipsis;
 	}
 
+	.content__ellipsis--1 {
+		-webkit-line-clamp: 1;
+		@extend %ellipsis;
+
+		@media only screen and (max-width: 640px) {
+			display: none;
+		}
+	}
 	.content__ellipsis--3 {
 		-webkit-line-clamp: 3;
 		@extend %ellipsis;

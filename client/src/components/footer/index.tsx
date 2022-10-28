@@ -1,18 +1,120 @@
+import { useEffect } from 'react';
 import { FaFacebookF, FaInstagram, FaYoutube } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import postApi from '../../api/postApi';
 import { CATEGORY_CHECK } from '../../common/Option';
-import { ValuePost } from '../../common/Type';
+import { RegisterType, ValuePost } from '../../common/Type';
+import { getAllDataListPost, getListBlogShare, getListConsious, getListEat, getListEntertainment, getListHandBook, getListHomestay, getListTopView } from '../../config/store/sliderDataListPost';
 
 
 const Footer = () => {
+    // const dispatch = useDispatch();
+    // const dataListPost = useSelector((state: any) => state.dataListPost);
+    // const listHandBook = useSelector((state: any) => state.listHandBook);
+    // const listEntertainment = useSelector((state: any) => state.listEntertainment);
+    // const listEat = useSelector((state: any) => state.listEat);
+    // const listHomestay = useSelector((state: any) => state.listHomestay);
+    // const listExperience = useSelector((state: any) => state.listEntertainment);
+
     const dispatch = useDispatch();
+    const stateListHandBook = useSelector((state: any) => state.listHandBook);
+    const stateListConsious = useSelector((state: any) => state.listConsious);
+    const stateListEntertainment = useSelector((state: any) => state.listEntertainment);
+    const stateListTopView = useSelector((state: any) => state.listTopView);
+    const stateListEat = useSelector((state: any) => state.listEat);
+    const stateListHomestay = useSelector((state: any) => state.listHomestay);
+    const stateListBlogShare = useSelector((state: any) => state.listBlogShare);
     const dataListPost = useSelector((state: any) => state.dataListPost);
-    const listHandBook = dataListPost.filter((o: ValuePost) => o.category === CATEGORY_CHECK.handbook);
-    const listEntertainment = dataListPost.filter((o: ValuePost) => o.category === CATEGORY_CHECK.entertainment);
-    const listEat = dataListPost.filter((o: ValuePost) => o.category === CATEGORY_CHECK.eat);
-    const listHomestay = dataListPost.filter((o: ValuePost) => o.category === CATEGORY_CHECK.homstay);
-    const listExperience = dataListPost.filter((o: ValuePost) => o.category === CATEGORY_CHECK.experience);
+
+    const clickScrollTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    };
+
+    const handleListConsious = (listPost: Array<ValuePost>) => {
+        const listConsious: Array<ValuePost> = [];
+        const maxItemConsious = 6;
+
+        const groupByConsious = Object.values(listPost.reduce((group: any, post: ValuePost) => {
+            const { conscious } = post;
+            group[conscious] = group[conscious] ?? [];
+            group[conscious].push(post);
+            return group;
+        }, {}));
+
+        groupByConsious.forEach((group: any) => {
+            let maxLike = Math.min(...group.map((o: ValuePost) => o.like));
+            let consioutHaveMaxLike = group.find((el: ValuePost) => el.like === maxLike);
+            listConsious.push(consioutHaveMaxLike);
+        })
+
+        const sortListConsious = listConsious.sort((a: ValuePost, b: ValuePost) => {
+            return b.like - a.like;
+        }).slice(0, maxItemConsious);
+
+        dispatch(getListConsious(sortListConsious));
+    };
+
+    const handleTopView = (listPost: Array<ValuePost>) => {
+        const sortListPost = listPost.sort((a: ValuePost, b: ValuePost) => {
+            return b.view - a.view;
+        });
+        dispatch(getListTopView(sortListPost));
+    };
+    const handleHandBook = (listPost: Array<ValuePost>) => {
+        const listHandBook = listPost.filter(o => o.category === CATEGORY_CHECK.handbook);
+        dispatch(getListHandBook(listHandBook));
+    };
+    const handleEntertainment = (listPost: Array<ValuePost>) => {
+        const listEntertainment = listPost.filter(o => o.category === CATEGORY_CHECK.entertainment);
+        dispatch(getListEntertainment(listEntertainment));
+    };
+    const handleEat = (listPost: Array<ValuePost>) => {
+        const listEat = listPost.filter(o => o.category === CATEGORY_CHECK.eat);
+        dispatch(getListEat(listEat))
+    };
+    const handleHomestay = (listPost: Array<ValuePost>) => {
+        const listHomestay = listPost.filter(o => o.category === CATEGORY_CHECK.homstay);
+        dispatch(getListHomestay(listHomestay));
+    };
+    const handleBlogShare = (listPost: Array<ValuePost>) => {
+        const listBlogShare = listPost.reverse();
+        dispatch(getListBlogShare(listBlogShare));
+    };
+
+    useEffect(() => {
+        postApi.getAll()
+            .then(async (data: any) => {
+                const listPost: Array<ValuePost> = [];
+                const listPostUser: Array<ValuePost> = [];
+
+                await data.map((item: RegisterType, index: number) => {
+                    if (item.permission === 'user') {
+                        item.listPost.map((post: ValuePost) => {
+                            listPost.push(post);
+                        });
+                    }
+                    if (item.permission === 'user') {
+                        item.listPost.map((post: ValuePost) => {
+                            listPostUser.push(post);
+                        });
+                    }
+                });
+
+                handleListConsious(listPost);
+                handleTopView(listPost);
+                handleHandBook(listPost);
+                handleEntertainment(listPost);
+                handleEat(listPost);
+                handleHomestay(listPost);
+                handleBlogShare(listPostUser);
+
+                dispatch(getAllDataListPost(listPost));
+            }).catch((err) => { })
+    }, []);
 
     return (
         <footer className="bg-color_09 mt--8">
@@ -24,14 +126,16 @@ const Footer = () => {
                                 dataListPost.slice(0, 3).map((post: ValuePost) => {
                                     return (
                                         <div key={post.id} className="flex py-4 cursor-pointer">
-                                            <NavLink to={`/detail/${post.id}`} className="w-[100px] h-[67px] relative">
+                                            <NavLink onClick={clickScrollTop} to={`/detail/${post.id}`} className="w-[100px] h-[67px] relative">
                                                 <picture>
                                                     <img className="h-full w-full object-cover" src={post.banner} alt="" />
                                                 </picture>
                                             </NavLink>
                                             <div className="flex-1 ">
                                                 <div className="pl-4 flex flex-col justify-between h-full">
-                                                    <h3 className="content__ellipsis--title min-h-[52px] font-medium text-[16px] pb-1 relative text-color_11 hover:text-color_04">{post.title}</h3>
+                                                    <NavLink onClick={clickScrollTop} to={`/detail/${post.id}`} className="content__ellipsis--title min-h-[52px] font-medium text-[16px] pb-1 relative text-color_11 hover:text-color_04">
+                                                        {post.title}
+                                                    </NavLink>
                                                     <p className=" text-[14px] text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">{post.nickname}</span> {post.createDate}</p>
                                                 </div>
                                             </div>
@@ -45,14 +149,16 @@ const Footer = () => {
                                 dataListPost.slice(3, 6).map((post: ValuePost) => {
                                     return (
                                         <div key={post.id} className="flex py-4 cursor-pointer">
-                                            <NavLink to={`/detail/${post.id}`} className="w-[100px] h-[67px] relative">
+                                            <NavLink onClick={clickScrollTop} to={`/detail/${post.id}`} className="w-[100px] h-[67px] relative">
                                                 <picture>
                                                     <img className="h-full w-full object-cover" src={post.banner} alt="" />
                                                 </picture>
                                             </NavLink>
                                             <div className="flex-1 ">
                                                 <div className="pl-4 flex flex-col justify-between h-full">
-                                                    <h3 className="content__ellipsis--title min-h-[52px] font-medium text-[16px] pb-1 relative text-color_11 hover:text-color_04">{post.title}</h3>
+                                                    <NavLink onClick={clickScrollTop} to={`/detail/${post.id}`} className="content__ellipsis--title min-h-[52px] font-medium text-[16px] pb-1 relative text-color_11 hover:text-color_04">
+                                                        {post.title}
+                                                    </NavLink>
                                                     <p className=" text-[14px] text-color_11"><span className="px-2 bg-color_13 text-color_01 mr-2">{post.nickname}</span> {post.createDate}</p>
                                                 </div>
                                             </div>
@@ -65,23 +171,23 @@ const Footer = () => {
                             <ul className=" text-color_11 flex flex-col gap-y-2">
                                 <li className="flex justify-between hover:text-color_04 ">
                                     <a href="#">Địa Điểm Vui Chơi</a>
-                                    <p>{listEntertainment.length}</p>
+                                    <p>{stateListEntertainment.length}</p>
                                 </li>
                                 <li className="flex justify-between hover:text-color_04 ">
                                     <a href="#">Ăn Uống</a>
-                                    <p>{listEat.length}</p>
+                                    <p>{stateListEat.length}</p>
                                 </li>
                                 <li className="flex justify-between hover:text-color_04 ">
                                     <a href="#">Homestay</a>
-                                    <p>{listHomestay.length}</p>
+                                    <p>{stateListHomestay.length}</p>
                                 </li>
                                 <li className="flex justify-between hover:text-color_04 ">
                                     <a href="#">Cẩm Nang</a>
-                                    <p>{listHandBook.length}</p>
+                                    <p>{stateListHandBook.length}</p>
                                 </li>
                                 <li className="flex justify-between hover:text-color_04 ">
                                     <a href="#">Trải Nghiệm</a>
-                                    <p>{listExperience.length}</p>
+                                    <p>{stateListBlogShare.length}</p>
                                 </li>
                                 <li className="flex justify-between hover:text-color_04 ">
                                     <a href="#">Xem Nhiều Nhất</a>

@@ -1,11 +1,29 @@
 import ReactPaginate from "react-paginate";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { StyleSidebarType } from "../../common/Type";
+import { StyleSidebarType, ValuePost } from "../../common/Type";
+import { useDispatch, useSelector } from "react-redux";
+import { async } from "@firebase/util";
+import { NavLink } from "react-router-dom";
 
-const Sidebar = () => {
+interface Props {
+    // stateListPost: Array<ValuePost>;
+}
+
+
+const Sidebar: React.FC<Props> = (props) => {
+
     const refContainer = useRef<any>();
     const refElement = useRef<any>();
+    const dispatch = useDispatch();
+    const dataListPost = useSelector((state: any) => state.dataListPost);
+    const stateListHandBook = useSelector((state: any) => state.listHandBook);
+    const stateListConsious = useSelector((state: any) => state.listConsious);
+    const stateListEntertainment = useSelector((state: any) => state.listEntertainment);
+    const stateListTopView = useSelector((state: any) => state.listTopView);
+    const stateListEat = useSelector((state: any) => state.listEat);
+    const stateListHomestay = useSelector((state: any) => state.listHomestay);
+    const stateListBlogShare = useSelector((state: any) => state.listBlogShare);
 
     let style: Object = {
         position: 'static',
@@ -15,13 +33,23 @@ const Sidebar = () => {
     };
 
     let prevScrollPos: number = window.pageYOffset;
-
     let checkScrollBtContainer = 0;
     let checkFixedTop = 0;
     let checkFixedBottom = 0;
     let checkAbsolute = 0;
     let checkStatic = 1;
     let topWhenFixedTop = 0;
+
+    const showItems = 5;
+    const pageCount = Math.ceil(stateListTopView.length / showItems);
+    const [selectedPage, setSelectedPage] = useState<number>(0);
+
+    console.log(stateListTopView)
+
+    const handlePageClick = (data: any) => {
+        const selected = data.selected;
+        setSelectedPage(selected * showItems);
+    };
 
     const styleSidebarOnScroll = (position: string, getTopPos: number | string, bottom: string | number, width: any) => {
         let newStyle: StyleSidebarType = {
@@ -140,6 +168,11 @@ const Sidebar = () => {
 
     useEffect(() => {
         window.addEventListener('scroll', onScrollStyleFixed);
+
+        const listTopView = [...dataListPost].sort((a: ValuePost, b: ValuePost) => {
+            return b.view - a.view;
+        });
+
     }, []);
 
     return (
@@ -148,51 +181,22 @@ const Sidebar = () => {
                 <div className="p-4 shadow-around rounded bg-color_01">
                     <h3 className="font-bold pb-2 border-b-[2px] border-solid border-color_15">BÀI VIẾT XEM NHIỀU</h3>
                     <div className="mt-2 flex flex-col">
-                        <div className="pt-4 pb-6 items-post border-dotted">
-                            <p className="text-md font-medium">Kiếm tìm cảm hứng làm việc bên trong những quán cà phê yên tĩnh...</p>
-                            <div className="mt-2 text-xs text-color_11">
-                                <span className="px-2 bg-color_13 text-color_01 mr-2">Name</span>
-                                <span>Name </span>
-                                <span> - </span>
-                                <span> 05/2022</span>
-                            </div>
-                        </div>
-                        <div className="pt-4 pb-6 items-post border-dotted">
-                            <p className="text-md font-medium">Kiếm tìm cảm hứng làm việc bên trong những quán cà phê yên tĩnh...</p>
-                            <div className="mt-2 text-xs text-color_11">
-                                <span className="px-2 bg-color_13 text-color_01 mr-2">Name</span>
-                                <span>Name </span>
-                                <span> - </span>
-                                <span> 05/2022</span>
-                            </div>
-                        </div>
-                        <div className="pt-4 pb-6 items-post border-dotted">
-                            <p className="text-md font-medium">Kiếm tìm cảm hứng làm việc bên trong những quán cà phê yên tĩnh...</p>
-                            <div className="mt-2 text-xs text-color_11">
-                                <span className="px-2 bg-color_13 text-color_01 mr-2">Name</span>
-                                <span>Name </span>
-                                <span> - </span>
-                                <span> 05/2022</span>
-                            </div>
-                        </div>
-                        <div className="pt-4 pb-6 items-post border-dotted">
-                            <p className="text-md font-medium">Kiếm tìm cảm hứng làm việc bên trong những quán cà phê yên tĩnh...</p>
-                            <div className="mt-2 text-xs text-color_11">
-                                <span className="px-2 bg-color_13 text-color_01 mr-2">Name</span>
-                                <span>Name </span>
-                                <span> - </span>
-                                <span> 05/2022</span>
-                            </div>
-                        </div>
-                        <div className="pt-4 pb-6 items-post border-dotted">
-                            <p className="text-md font-medium">Kiếm tìm cảm hứng làm việc bên trong những quán cà phê yên tĩnh...</p>
-                            <div className="mt-2 text-xs text-color_11">
-                                <span className="px-2 bg-color_13 text-color_01 mr-2">Name</span>
-                                <span>Name </span>
-                                <span> - </span>
-                                <span> 05/2022</span>
-                            </div>
-                        </div>
+                        {
+                            stateListTopView.slice(selectedPage, selectedPage + showItems).map((post: ValuePost) => {
+                                return (
+                                    <div key={post.id} className="pt-4 pb-6 items-post border-dotted">
+                                        <NavLink to={`/detail/${post.id}`} className="content__ellipsis--1 text-md font-medium">{post.title}</NavLink>
+                                        <div className="mt-2 text-xs text-color_11">
+                                            <span className="px-2 bg-color_13 text-color_01 mr-2">{post.category}</span>
+                                            <span>{post.nickname}</span>
+                                            <span> - </span>
+                                            <span> {post.createDate}</span>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+
                     </div>
                     <div className="pb-2">
                         <ReactPaginate
@@ -204,9 +208,10 @@ const Sidebar = () => {
                             activeLinkClassName="bg-color_04"
                             previousLinkClassName="px-2 py-1"
                             nextLinkClassName="px-2 py-1"
-                            pageRangeDisplayed={1}
+                            pageRangeDisplayed={2}
                             marginPagesDisplayed={0}
-                            pageCount={40}
+                            pageCount={pageCount}
+                            onPageChange={handlePageClick}
                         />
                     </div>
                 </div>
@@ -217,26 +222,32 @@ const Sidebar = () => {
                         <ul>
                             <li className="py-2  items-category">
                                 <a href="" className="flex justify-between">
-                                    <span>Ha Noi</span>
-                                    <span>2</span>
+                                    <span>Địa Điểm Vui Chơi</span>
+                                    <span>{stateListEntertainment.length}</span>
                                 </a>
                             </li>
                             <li className="py-2  items-category">
                                 <a href="" className="flex justify-between">
-                                    <span>Ha Noi</span>
-                                    <span>2</span>
+                                    <span>Ăn Uống</span>
+                                    <span>{stateListEat.length}</span>
                                 </a>
                             </li>
                             <li className="py-2  items-category">
                                 <a href="" className="flex justify-between">
-                                    <span>Ha Noi</span>
-                                    <span>2</span>
+                                    <span>Homestay</span>
+                                    <span>{stateListHomestay.length}</span>
                                 </a>
                             </li>
                             <li className="py-2  items-category">
                                 <a href="" className="flex justify-between">
-                                    <span>Ha Noi</span>
-                                    <span>2</span>
+                                    <span>Cẩm Nang</span>
+                                    <span>{stateListHandBook.length}</span>
+                                </a>
+                            </li>
+                            <li className="py-2  items-category">
+                                <a href="" className="flex justify-between">
+                                    <span>Trải Nghiệm</span>
+                                    <span>{stateListBlogShare.length}</span>
                                 </a>
                             </li>
                         </ul>
