@@ -7,7 +7,6 @@ import { CATEGORY_CHECK } from '../../common/Option';
 import { RegisterType, ValuePost } from '../../common/Type';
 import { getAllDataListPost, getListBlogShare, getListConsious, getListEat, getListEntertainment, getListHandBook, getListHomestay, getListTopView } from '../../config/store/sliderDataListPost';
 
-
 const Footer = () => {
     // const dispatch = useDispatch();
     // const dataListPost = useSelector((state: any) => state.dataListPost);
@@ -39,9 +38,9 @@ const Footer = () => {
         const maxItemConsious = 6;
 
         const groupByConsious = Object.values(listPost.reduce((group: any, post: ValuePost) => {
-            const { conscious } = post;
-            group[conscious] = group[conscious] ?? [];
-            group[conscious].push(post);
+            const { province } = post;
+            group[province] = group[province] ?? [];
+            group[province].push(post);
             return group;
         }, {}));
 
@@ -77,7 +76,7 @@ const Footer = () => {
         dispatch(getListEat(listEat))
     };
     const handleHomestay = (listPost: Array<ValuePost>) => {
-        const listHomestay = listPost.filter(o => o.category === CATEGORY_CHECK.homstay);
+        const listHomestay = listPost.filter(o => o.category === CATEGORY_CHECK.homestay);
         dispatch(getListHomestay(listHomestay));
     };
     const handleBlogShare = (listPost: Array<ValuePost>) => {

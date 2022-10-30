@@ -44,8 +44,6 @@ const Sidebar: React.FC<Props> = (props) => {
     const pageCount = Math.ceil(stateListTopView.length / showItems);
     const [selectedPage, setSelectedPage] = useState<number>(0);
 
-    console.log(stateListTopView)
-
     const handlePageClick = (data: any) => {
         const selected = data.selected;
         setSelectedPage(selected * showItems);

@@ -1,4 +1,5 @@
 import { BsFillEyeFill } from "react-icons/bs";
+import { CATEGORY_CHECK, CATEGORY_OPTION, PROVINCE_OPTION } from "../../common/Option";
 import Comment from "../comment";
 import Social from "../social";
 import Writer from "../writer/writer";
@@ -7,7 +8,7 @@ interface Props {
     post: {
         content: string;
         title: string;
-        conscious: string;
+        province: string;
         category: string;
         like: number;
         share: number;
@@ -20,6 +21,20 @@ interface Props {
 const Content: React.FC<Props> = (props) => {
     const { post } = props;
     const { nickname, createDate, view } = post;
+    let newProvince = '';
+    let newCategory = '';
+
+    for (let i of CATEGORY_OPTION) {
+        if (i.value === post.category) {  
+            newCategory = i.label;
+        }
+    }
+
+    for (let i of PROVINCE_OPTION) {
+        if (i.value === post.province) {
+            newProvince = i.label;
+        }
+    }
 
     return (
         <div className="w-full lg:w-2/3 bg-color_01 shadow-around rounded py-6 lg:px-6 px-4">
@@ -28,7 +43,7 @@ const Content: React.FC<Props> = (props) => {
             </div>
 
             <div>
-                <p className="mt-6 text-sm font-medium opacity-70 uppercase">DU LỊCH {post.conscious}, {post.category} {post.conscious}</p>
+                <p className="mt-6 text-sm font-medium opacity-70 uppercase">DU LỊCH {newProvince}, {newCategory} {newProvince}</p>
                 <h1 className="font-bold text-xl lg:text-3xl mt-1">{post.title}</h1>
                 <div className="mt-4 text-sm cursor-pointer">
                     Bởi

@@ -7,6 +7,7 @@ export const getPost = async (req, res, next) => {
         // console.log(req.params.id);
 
         const a = collection.find({ listPost: { $elemMatch: { id: req.params.id } } }).toArray(async (err, result) => {
+            console.log(result);
             if (!err) {
                 const post = await result[0]?.listPost.filter((p) => {
                     return p.id === req.params.id;

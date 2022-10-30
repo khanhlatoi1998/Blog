@@ -10,7 +10,7 @@ import { ref, getDownloadURL, uploadBytesResumable, uploadString } from "firebas
 import postApi from '../../../api/postApi';
 import InputFiled from '../custom-fields/inputFields';
 import SelectField from '../custom-fields/SelectField';
-import { CATEGORY_OPTION, CONSCIOUS_OPTION } from '../../../common/Option';
+import { CATEGORY_OPTION, PROVINCE_OPTION } from '../../../common/Option';
 import { useDispatch, useSelector } from 'react-redux';
 import EditorFields from '../custom-fields/edittorFields';
 import { showModal } from '../../../config/store/sliderPopup';
@@ -56,7 +56,7 @@ const AddPost = () => {
 
     const validationSchema = yup.object().shape({
         title: yup.string().required('vui lòng nhập tiêu đề').min(5, 'tiêu đề ít nhất 5 ký tự'),
-        conscious: yup.string().required('vui lòng nhập tỉnh thành'),
+        province: yup.string().required('vui lòng nhập tỉnh thành'),
         category: yup.string().required('vui lòng nhập thể loại'),
         content: yup.string().required('vui lòng nhập nội dung').min(30, 'nội dung ít nhất 30 ký tự'),
     });
@@ -86,14 +86,14 @@ const AddPost = () => {
                                     <div className="flex gap-4">
 
                                         <FastField
-                                            name="conscious"
+                                            name="province"
                                             className="min-w-[150px]"
 
                                             defaultNameTouchSelect="3"
                                             label=""
                                             placeholder="Tỉnh"
                                             component={SelectField}
-                                            options={CONSCIOUS_OPTION}
+                                            options={PROVINCE_OPTION}
                                         />
                                         <FastField
                                             name="category"

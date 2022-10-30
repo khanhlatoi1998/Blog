@@ -9,7 +9,7 @@ import * as yup from 'yup';
 import postApi from '../../../api/postApi';
 import InputFiled from '../custom-fields/inputFields';
 import SelectField from '../custom-fields/SelectField';
-import { CATEGORY_OPTION, CONSCIOUS_OPTION } from '../../../common/Option';
+import { CATEGORY_OPTION, PROVINCE_OPTION } from '../../../common/Option';
 import { useDispatch, useSelector } from 'react-redux';
 import EditorFields from '../custom-fields/edittorFields';
 import { showModal } from '../../../config/store/sliderPopup';
@@ -17,7 +17,7 @@ import FadeLoader from 'react-spinners/FadeLoader';
 
 interface Post {
     id: string;
-    conscious: string;
+    province: string;
     category: string;
     title: string;
     content: any;
@@ -31,7 +31,7 @@ const EditPost = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [initialValues, setInitialValues] = useState<Post>({
         id: '',
-        conscious: '',
+        province: '',
         category: '',
         title: '',
         content: '',
@@ -63,7 +63,7 @@ const EditPost = () => {
 
     const validationSchema = yup.object().shape({
         title: yup.string(), //.required('vui lòng nhập tiêu đề').min(3, 'tiêu đề ít nhất 5 ký tự'),
-        conscious: yup.string(), //.required('vui lòng nhập tỉnh thành'),
+        province: yup.string(), //.required('vui lòng nhập tỉnh thành'),
         category: yup.string(), //.required('vui lòng nhập thể loại'),
         content: yup.string() //.required('vui lòng nhập nội dung').min(3, 'nội dung ít nhất 30 ký tự'),
     });
@@ -102,14 +102,14 @@ const EditPost = () => {
                                         <Form className="mt-10">
                                             <div className="flex gap-4">
                                                 <FastField
-                                                    name="conscious"
+                                                    name="province"
                                                     className="min-w-[150px]"
 
                                                     defaultNameTouchSelect="3"
                                                     label=""
                                                     placeholder="Tỉnh"
                                                     component={SelectField}
-                                                    options={CONSCIOUS_OPTION}
+                                                    options={PROVINCE_OPTION}
                                                 />
                                                 <FastField
                                                     name="category"

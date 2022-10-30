@@ -14,17 +14,24 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Login from "../../pages/form/auth/login";
 import Register from "../../pages/form/auth/register";
 import { BsPencilSquare } from "react-icons/bs";
+import { PROVINCE_OPTION } from "../../common/Option";
 
 
 const defaultIconSize = '0.8rem';
 
 const items = [
     { link: '/', label: 'TRANG CHỦ', icon: <i></i>, active: true },
-    { link: '/dia-diem', label: 'ĐỊA ĐIỂM', icon: <AiOutlineDown size={defaultIconSize} />, active: true },
-    { link: '/am-thuc', label: 'ẨM THỰC', icon: <AiOutlineDown size={defaultIconSize} />, active: true },
-    { link: '/cam-nang', label: 'CẨM NANG', icon: <AiOutlineDown size={defaultIconSize} />, active: true },
-    { link: '/homestay', label: 'HOMESTAY', icon: <AiOutlineDown size={defaultIconSize} />, active: true },
-    { link: '/tinh', label: 'TỈNH THÀNH', icon: <AiOutlineDown size={defaultIconSize} />, active: true },
+    { link: '/category/dia-diem', label: 'ĐỊA ĐIỂM',  icon: <AiOutlineDown size={defaultIconSize} />, active: true },
+    { link: '/category/am-thuc', label: 'ẨM THỰC',  icon: <AiOutlineDown size={defaultIconSize} />, active: true },
+    { link: '/category/cam-nang', label: 'CẨM NANG',  icon: <AiOutlineDown size={defaultIconSize} />, active: true },
+    { link: '/category/homestay', label: 'HOMESTAY',  icon: <AiOutlineDown size={defaultIconSize} />, active: true },
+    {
+        link: '/category/tinh',
+        label: 'TỈNH THÀNH',
+        dropdownData: PROVINCE_OPTION,
+        icon: <AiOutlineDown size={defaultIconSize} />,
+        active: true
+    },
 ]
 
 
@@ -102,22 +109,22 @@ const Header = () => {
                                     <button
                                         type="button"
                                         className="lg:flex-auto flex-1 lg:font-normal font-medium px-4 py-1 border-r border-solid lg:border-color_05_border border-color_01 hover:text-color_04"
-                                        onClick={() => {clickShowPoppup('showLogin'); setRedirect('/w/create')}}
+                                        onClick={() => { clickShowPoppup('showLogin'); setRedirect('/w/create') }}
                                     >
-                                         <BsPencilSquare className="mx-auto" />
+                                        <BsPencilSquare className="mx-auto" />
                                     </button>
                                     <Popup open={modalPopup !== 'showLogin' ? false : true} closeOnDocumentClick onClose={modalPopup === 'showLogin' ? () => clickClosePopup() : () => { }}>
-                                        <Login redirect={redirect}/>
+                                        <Login redirect={redirect} />
                                     </Popup>
 
                                     <button
                                         className="lg:flex-auto flex-1 lg:font-normal font-medium px-4 py-1 hover:text-color_04"
                                         onClick={() => clickShowPoppup('showRegister')}
                                     >
-                                        <AiOutlineUser className={`mx-auto check ${checkLogin.auth ? 'text-color_04' : ''}`}/>
+                                        <AiOutlineUser className={`mx-auto check ${checkLogin.auth ? 'text-color_04' : ''}`} />
                                     </button>
                                     <Popup open={modalPopup !== 'showRegister' ? false : true} closeOnDocumentClick onClose={modalPopup === 'showRegister' ? () => clickClosePopup() : () => { }}>
-                                        <Register redirect={redirect}/>
+                                        <Register redirect={redirect} />
                                     </Popup>
                                 </div>
                             </div>

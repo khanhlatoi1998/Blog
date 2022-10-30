@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { AiOutlineDown, AiOutlineRight } from "react-icons/ai";
+import { useSelector } from "react-redux";
 import { NavLink, useParams, useSearchParams } from "react-router-dom";
+import postApi from "../../api/postApi";
+import { CATEGORY_CHECK, CATEGORY_OPTION, PROVINCE_OPTION } from "../../common/Option";
 
 import Sidebar from "../../components/sidebar";
 import ListPostCategory from "./ListPostCategory";
@@ -9,19 +12,91 @@ import ListTopPostCategory from "./ListTopPostCategory";
 
 const Category = () => {
     const [open, setOpen] = useState<boolean>(false);
+    const dataListPost = useSelector((state: any) => state.dataListPost);
 
     const { category } = useParams();
-    console.log('cate',category);
     const [searchParams] = useSearchParams();
-    console.log(searchParams.get('tinh'));
+    let newCategory = '';
 
+    if (category === 'tinh') {
+        if (searchParams.get('t')) {
+            for (let i of PROVINCE_OPTION) {
+                if (i.value === searchParams.get('t')) {
+                    newCategory = i.label;
+                }
+            }
+        } else {
+            newCategory = 'Tỉnh Thành'
+        }
+    } else {
+        switch (category) {
+            case CATEGORY_CHECK.eat:
+                newCategory = 'Ăn Uống';
+                break;
+            case CATEGORY_CHECK.entertainment:
+                newCategory = 'Địa điểm';
+                break;
+            case CATEGORY_CHECK.experience:
+                newCategory = 'Trải nghiệm';
+                break;
+            case CATEGORY_CHECK.handbook:
+                newCategory = 'Cẩm nang';
+                break;
+            case CATEGORY_CHECK.homestay:
+                newCategory = 'Homestay';
+                break;
+            case CATEGORY_CHECK.consious:
+                newCategory = 'Tỉnh thành';
+                break;
+            default: { }
+        }
+    }
+
+
+    const removeVietnameseTones = (str: string) => {
+        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+        str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+        str = str.replace(/đ/g, "d");
+        str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+        str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+        str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
+        str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+        str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+        str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+        str = str.replace(/Đ/g, "D");
+        str = str.toLocaleLowerCase();
+        // Some system encode vietnamese combining accent as individual utf-8 characters
+        // Một vài bộ encode coi các dấu mũ, dấu chữ như một kí tự riêng biệt nên thêm hai dòng này
+        str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // ̀ ́ ̃ ̉ ̣  huyền, sắc, ngã, hỏi, nặng
+        str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // ˆ ̆ ̛  Â, Ê, Ă, Ơ, Ư
+        // Remove extra spaces
+        // Bỏ các khoảng trắng liền nhau
+        str = str.replace(/ + /g, " ");
+        str = str.trim();
+        // Remove punctuations
+        // Bỏ dấu câu, kí tự đặc biệt
+        str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, " ");
+        str = str.replace(' ', '-');
+        return str;
+    }
+
+    useEffect(() => {
+        let params = category;
+        postApi.getCategory(category).then((data) => {
+            console.log(data);
+        }).catch(() => { })
+    }, [category, searchParams]);
 
     return (
         <section className="pt-8 lg:pb-12 lg:bg-color_14">
             <div className="container__responsive lg:px-12">
                 <div className="pb-8 lg:text-left text-center text-sm">
-                    <div ><NavLink to="/" className="text-color_13">Trang chủ </NavLink> <span className="opacity-50"> <AiOutlineRight className="inline" /> Cẩm nang</span></div>
-                    <h1 className="font-bold lg:text-3xl text-lg mt-1"> <NavLink to="?tinh=1" >CẨM NANG</NavLink></h1>
+                    <div ><NavLink to="/" className="text-color_13">Trang chủ </NavLink> <span className="opacity-50"> <AiOutlineRight className="inline" /> {searchParams.get('t') === 'tinh' ? 'Tỉnh thành' : newCategory}</span></div>
+                    <h1 className="font-bold lg:text-3xl text-lg mt-1 uppercase"> <NavLink to="?tinh=1" >{newCategory}</NavLink></h1>
                 </div>
                 <div>
                     <p className="text-color_16 italic lg:px-0 px-4">Tổng hợp những homestay đẹp giá rẻ ở Việt Nam, tìm kiếm review đánh giá về homestay khách quan và đầy đủ nhất. Book phòng homestay online đơn giản dễ dàng nhất, được tư vấn miễn phí khi đặt phòng homestay trên travelblog.com</p>
@@ -34,16 +109,24 @@ const Category = () => {
                             <AiOutlineDown className="ml-4" />
                         </div>
                     </div>
-                    <ul  onMouseOver={() => setOpen(true)} onMouseOut={() => setOpen(false)} className={`${open ? 'block' : 'hidden'} flex flex-col gap-1 absolute top-[100%] lg:left-0 left-[20px] max-h-[500px] overflow-y-auto w-auto z-50 py-1 px-2 border border-solid border-color_02 bg-color_01`}>
-                        <li className="hover:text-color_04">
-                            <NavLink to="?tinh=an-giang">tinh dasd</NavLink>
-                        </li>
-                        <li className="hover:text-color_04">
-                            <NavLink to="?tinh=an-giang">tinh  </NavLink>
-                        </li>
-                        <li className="hover:text-color_04">
-                            <NavLink to="?tinh=an-giang">tinh dasd sdasds </NavLink>
-                        </li>
+                    <ul onMouseOver={() => setOpen(true)} onMouseOut={() => setOpen(false)} className={`${open ? 'block' : 'hidden'} flex flex-col gap-1 absolute top-[100%] lg:left-0 left-[20px] max-h-[500px] overflow-y-auto w-auto z-50 py-1 px-2 border border-solid border-color_02 bg-color_01`}>
+                        {
+                            category !== 'tinh'
+                                ? PROVINCE_OPTION.map((o, index) => {
+                                    return (
+                                        <li key={index} className="hover:text-color_04">
+                                            <NavLink to={`?t=${o.value}`}>{o.label}</NavLink>
+                                        </li>
+                                    )
+                                })
+                                : CATEGORY_OPTION.map((o, index) => {
+                                    return (
+                                        <li key={index} className="hover:text-color_04">
+                                            <NavLink to={`?t=${searchParams.get('t')}&&c=${o.value}`}>{o.label}</NavLink>
+                                        </li>
+                                    )
+                                })
+                        }
                     </ul>
                 </div>
                 <div>

@@ -3,6 +3,7 @@ export interface Item {
     label: string;
     icon: JSX.Element;
     active?: boolean;
+    dropdownData?: any;
 }
 
 export interface ModalPopup {
@@ -35,7 +36,7 @@ export interface AuthType {
 export interface ValuePost {
     id: string;
     nickname: string;
-    conscious: string;
+    province: string;
     category: string;
     title: string;
     content: any;

@@ -13,7 +13,7 @@ export const updatePost = async (req, res, next) => {
             {
                 $set: {
                     'listPost.$.id': post.id,
-                    'listPost.$.conscious': post.conscious,
+                    'listPost.$.province': post.province,
                     'listPost.$.category': post.category,
                     'listPost.$.title': post.title,
                     'listPost.$.content': post.content,

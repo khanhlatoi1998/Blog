@@ -6,14 +6,14 @@ const postApi = {
         return axiosClient.get(url, { params });
     },
 
-    createPost: (data: Object) => {
-        let url = '/post/create';
-        return axiosClient.post(url, { data });
-    },
-
     getId: (id: string | null | undefined) => {
         let url = `/post/get/${id}`;
         return axiosClient.get(url);
+    },
+
+    createPost: (data: Object) => {
+        let url = '/post/create';
+        return axiosClient.post(url, { data });
     },
 
     updatePost: (data: Object) => {
@@ -26,6 +26,10 @@ const postApi = {
         return axiosClient.post(url);
     },
 
+    getCategory: (category: string | null | undefined) => {
+        let url = `/category/${category}`;
+        return axiosClient.get(url);
+    },
 };
 
 export default postApi;
