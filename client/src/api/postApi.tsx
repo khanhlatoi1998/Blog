@@ -21,14 +21,14 @@ const postApi = {
         return axiosClient.put(url, { data });
     },
 
-    deletePost: (id: string | null | undefined) => {
-        let url = `/post/delete/${id}`;
-        return axiosClient.post(url);
+    deletePost: (data?: any) => {
+        let url = `/post/delete`;
+        return axiosClient.post(url, { data });
     },
 
-    getCategory: (category: string | null | undefined) => {
-        let url = `/category/${category}`;
-        return axiosClient.get(url);
+    getCategory: (params?: any) => {
+        let url = `/category`;
+        return axiosClient.get(url, { params });
     },
 };
 

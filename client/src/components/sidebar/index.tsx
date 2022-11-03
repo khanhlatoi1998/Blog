@@ -5,6 +5,7 @@ import { StyleSidebarType, ValuePost } from "../../common/Type";
 import { useDispatch, useSelector } from "react-redux";
 import { async } from "@firebase/util";
 import { NavLink } from "react-router-dom";
+import { CATEGORY_OPTION } from "../../common/Option";
 
 interface Props {
     // stateListPost: Array<ValuePost>;
@@ -181,11 +182,17 @@ const Sidebar: React.FC<Props> = (props) => {
                     <div className="mt-2 flex flex-col">
                         {
                             stateListTopView.slice(selectedPage, selectedPage + showItems).map((post: ValuePost) => {
+                                let newCategory = '';
+                                for (let i of CATEGORY_OPTION) {
+                                    if (i.value === post.category) {
+                                        newCategory = i.label;
+                                    }
+                                }
                                 return (
                                     <div key={post.id} className="pt-4 pb-6 items-post border-dotted">
                                         <NavLink to={`/detail/${post.id}`} className="content__ellipsis--1 text-md font-medium">{post.title}</NavLink>
                                         <div className="mt-2 text-xs text-color_11">
-                                            <span className="px-2 bg-color_13 text-color_01 mr-2">{post.category}</span>
+                                            <span className="px-2 bg-color_13 text-color_01 mr-2">{newCategory}</span>
                                             <span>{post.nickname}</span>
                                             <span> - </span>
                                             <span> {post.createDate}</span>

@@ -1,10 +1,12 @@
+import { connectStorageEmulator } from "firebase/storage";
 import { useEffect, useState } from "react";
 
 import { AiOutlineDown, AiOutlineRight } from "react-icons/ai";
 import { useSelector } from "react-redux";
-import { NavLink, useParams, useSearchParams } from "react-router-dom";
+import { NavLink, useLocation, useParams, useSearchParams } from "react-router-dom";
 import postApi from "../../api/postApi";
 import { CATEGORY_CHECK, CATEGORY_OPTION, PROVINCE_OPTION } from "../../common/Option";
+import { ValuePost } from "../../common/Type";
 
 import Sidebar from "../../components/sidebar";
 import ListPostCategory from "./ListPostCategory";
@@ -12,46 +14,26 @@ import ListTopPostCategory from "./ListTopPostCategory";
 
 const Category = () => {
     const [open, setOpen] = useState<boolean>(false);
+    const [listPost, setListPost] = useState<Array<ValuePost>>([]);
     const dataListPost = useSelector((state: any) => state.dataListPost);
 
     const { category } = useParams();
     const [searchParams] = useSearchParams();
-    let newCategory = '';
+    const location = useLocation();
+    let newProvince: any = '';
+    let newCategory: any = '';
 
-    if (category === 'tinh') {
-        if (searchParams.get('t')) {
-            for (let i of PROVINCE_OPTION) {
-                if (i.value === searchParams.get('t')) {
-                    newCategory = i.label;
-                }
-            }
-        } else {
-            newCategory = 'Tỉnh Thành'
-        }
-    } else {
-        switch (category) {
-            case CATEGORY_CHECK.eat:
-                newCategory = 'Ăn Uống';
-                break;
-            case CATEGORY_CHECK.entertainment:
-                newCategory = 'Địa điểm';
-                break;
-            case CATEGORY_CHECK.experience:
-                newCategory = 'Trải nghiệm';
-                break;
-            case CATEGORY_CHECK.handbook:
-                newCategory = 'Cẩm nang';
-                break;
-            case CATEGORY_CHECK.homestay:
-                newCategory = 'Homestay';
-                break;
-            case CATEGORY_CHECK.consious:
-                newCategory = 'Tỉnh thành';
-                break;
-            default: { }
+    for (let i of PROVINCE_OPTION) {
+        if (i.value === searchParams.get('p')) {
+            newProvince = i.label + ' ';
         }
     }
 
+    for (let i of CATEGORY_OPTION) {
+        if (i.value === searchParams.get('c')) {
+            newCategory = i.label + ' ';
+        }
+    }
 
     const removeVietnameseTones = (str: string) => {
         str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
@@ -83,23 +65,62 @@ const Category = () => {
         str = str.replace(' ', '-');
         return str;
     }
-
+    
     useEffect(() => {
-        let params = category;
-        postApi.getCategory(category).then((data) => {
-            console.log(data);
+        const params = Object.fromEntries(new URLSearchParams(location.search));
+        postApi.getCategory(params).then((data: any) => {
+            setListPost(data);
         }).catch(() => { })
-    }, [category, searchParams]);
+    }, [window.location.href]);
 
     return (
         <section className="pt-8 lg:pb-12 lg:bg-color_14">
             <div className="container__responsive lg:px-12">
                 <div className="pb-8 lg:text-left text-center text-sm">
-                    <div ><NavLink to="/" className="text-color_13">Trang chủ </NavLink> <span className="opacity-50"> <AiOutlineRight className="inline" /> {searchParams.get('t') === 'tinh' ? 'Tỉnh thành' : newCategory}</span></div>
-                    <h1 className="font-bold lg:text-3xl text-lg mt-1 uppercase"> <NavLink to="?tinh=1" >{newCategory}</NavLink></h1>
+                    <div >
+                        <NavLink to="/" className="text-color_13">Trang chủ </NavLink>
+                        {
+                            searchParams.get('p')
+                                ? <span className="opacity-50">
+                                    {
+                                        searchParams.get('p') === 'all'
+                                            ? <span> <AiOutlineRight className="inline mr-1 " />Tỉnh thành </span>
+                                            : <NavLink to={`?c=all&p=${searchParams.get('p')}`} className="inliline"><AiOutlineRight className="inline mr-1" /> {newProvince}</NavLink>
+                                    }
+                                </span>
+                                : <span className="opacity-50"><AiOutlineRight className="inline mr-1" />Tỉnh thành </span>
+                        }
+                        {
+                            searchParams.get('c')
+                                ? <span className="opacity-50">
+                                    {
+                                        searchParams.get('c') === 'all'
+                                            ? <></>
+                                            : <NavLink to={`?p=all&c=${searchParams.get('c')}`}><AiOutlineRight className="inline mr-1" />{newCategory}</NavLink>
+                                    }
+                                </span>
+                                : <span className="opacity-50"></span>
+                        }
+                    </div>
+                    <h1 className="font-bold lg:text-3xl text-lg mt-1 mr-1">
+                        <NavLink to="?p=all" >
+                            {
+                                searchParams.get('p') === 'all'
+                                    ? <span>TỈNH THÀNH</span>
+                                    : <span>
+                                        {
+                                            searchParams.get('p')
+                                                ? <>{newProvince}</>
+                                                : <>{newCategory}</>
+                                        }
+                                    </span>
+
+                            }
+                        </NavLink>
+                    </h1>
                 </div>
                 <div>
-                    <p className="text-color_16 italic lg:px-0 px-4">Tổng hợp những homestay đẹp giá rẻ ở Việt Nam, tìm kiếm review đánh giá về homestay khách quan và đầy đủ nhất. Book phòng homestay online đơn giản dễ dàng nhất, được tư vấn miễn phí khi đặt phòng homestay trên travelblog.com</p>
+                    <p className="text-color_16 italic lg:px-0 px-4">Tổng hợp những {newCategory} đẹp giá rẻ ở Việt Nam, tìm kiếm review đánh giá về {newCategory} khách quan và đầy đủ nhất. Book phòng homestay online đơn giản dễ dàng nhất, được tư vấn miễn phí khi đặt phòng homestay trên travelblog.com</p>
                 </div>
 
                 <div className="text-sm mt-8 relative lg:px-0 px-4">
@@ -111,29 +132,29 @@ const Category = () => {
                     </div>
                     <ul onMouseOver={() => setOpen(true)} onMouseOut={() => setOpen(false)} className={`${open ? 'block' : 'hidden'} flex flex-col gap-1 absolute top-[100%] lg:left-0 left-[20px] max-h-[500px] overflow-y-auto w-auto z-50 py-1 px-2 border border-solid border-color_02 bg-color_01`}>
                         {
-                            category !== 'tinh'
-                                ? PROVINCE_OPTION.map((o, index) => {
+                            searchParams.get('p') !== 'all' && searchParams.get('p')
+                                ? CATEGORY_OPTION.map((c, index) => {
                                     return (
                                         <li key={index} className="hover:text-color_04">
-                                            <NavLink to={`?t=${o.value}`}>{o.label}</NavLink>
+                                            <NavLink to={`?p=${searchParams.get('p')}&c=${c.value}`}>{c.label}</NavLink>
                                         </li>
                                     )
                                 })
-                                : CATEGORY_OPTION.map((o, index) => {
+                                : PROVINCE_OPTION.map((p, index) => {
                                     return (
                                         <li key={index} className="hover:text-color_04">
-                                            <NavLink to={`?t=${searchParams.get('t')}&&c=${o.value}`}>{o.label}</NavLink>
+                                            <NavLink to={`?c=${searchParams.get('c') ?? 'all'}&p=${p.value}`}>{p.label}</NavLink>
                                         </li>
                                     )
                                 })
                         }
                     </ul>
                 </div>
-                <div>
-                    <ListTopPostCategory />
+                <div className="lg:block hidden">
+                    <ListTopPostCategory listPost={listPost}/>
                 </div>
                 <div className="mt-8 flex flex-row flex-wrap">
-                    <ListPostCategory />
+                    <ListPostCategory listPost={listPost}/>
 
                     <Sidebar />
                 </div>

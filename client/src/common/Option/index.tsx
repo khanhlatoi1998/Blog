@@ -129,11 +129,11 @@ export const PROVINCE_OPTION = [
 ];
 
 export const CATEGORY_OPTION = [
-    { value: 'dia-diem', label: 'ĐỊA ĐIỂM'},
-    { value: 'am-thuc', label: 'ẨM THỰC'},
-    { value: 'homestay', label: 'HOMESTAY'},
-    { value: 'cam-nang', label: 'CẨM NANG'},
-    { value: 'trai-nghiem', label: 'TRẢI NGHIỆM'},
+    { value: 'dia-diem', label: 'Địa Điểm'},
+    { value: 'am-thuc', label: 'Ẩm Thực'},
+    { value: 'homestay', label: 'Hometay'},
+    { value: 'cam-nang', label: 'Cẩm Nang'},
+    { value: 'trai-nghiem', label: 'Trải Nghiệm'},
 ];
 
 export const CATEGORY_CHECK = {

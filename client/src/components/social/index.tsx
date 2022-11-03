@@ -1,7 +1,13 @@
 import { AiOutlineComment, AiTwotoneLike } from "react-icons/ai";
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
 
-const Social = () => {
+interface Props {
+    like: number | string;
+}
+
+const Social: React.FC<Props> = (props) => {
+    const { like } = props;
+
     return (
         <div className="flex flex-wrap text-sm gap-4 text-color_01">
             <div className="flex gap-4">
@@ -22,7 +28,7 @@ const Social = () => {
                     <div className="cursor-pointer bg-color_17 py-1 px-2 rounded-md flex items-center justify-between">
                         <span className=" pr-2"><AiTwotoneLike /></span>
                         <span className="mr-2 text-xs">Thích</span>
-                        <span>0</span>
+                        <span>{like}</span>
                     </div>
                 </div>
                 <div className="flex items-center">

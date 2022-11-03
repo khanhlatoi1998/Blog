@@ -21,12 +21,12 @@ const defaultIconSize = '0.8rem';
 
 const items = [
     { link: '/', label: 'TRANG CHỦ', icon: <i></i>, active: true },
-    { link: '/category/dia-diem', label: 'ĐỊA ĐIỂM',  icon: <AiOutlineDown size={defaultIconSize} />, active: true },
-    { link: '/category/am-thuc', label: 'ẨM THỰC',  icon: <AiOutlineDown size={defaultIconSize} />, active: true },
-    { link: '/category/cam-nang', label: 'CẨM NANG',  icon: <AiOutlineDown size={defaultIconSize} />, active: true },
-    { link: '/category/homestay', label: 'HOMESTAY',  icon: <AiOutlineDown size={defaultIconSize} />, active: true },
+    { link: '/category?c=dia-diem&p=all', label: 'ĐỊA ĐIỂM',  icon: <AiOutlineDown size={defaultIconSize} />, active: true },
+    { link: '/category?c=am-thuc&p=all', label: 'ẨM THỰC',  icon: <AiOutlineDown size={defaultIconSize} />, active: true },
+    { link: '/category?c=cam-nang&p=all', label: 'CẨM NANG',  icon: <AiOutlineDown size={defaultIconSize} />, active: true },
+    { link: '/category?c=homestay&p=all', label: 'HOMESTAY',  icon: <AiOutlineDown size={defaultIconSize} />, active: true },
     {
-        link: '/category/tinh',
+        link: '/category?p=all&c=all',
         label: 'TỈNH THÀNH',
         dropdownData: PROVINCE_OPTION,
         icon: <AiOutlineDown size={defaultIconSize} />,

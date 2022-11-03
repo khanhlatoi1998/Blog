@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { BsFillEyeFill } from "react-icons/bs";
+import { useSelector } from "react-redux";
 import { NavLink, useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import FadeLoader from "react-spinners/FadeLoader";
@@ -14,16 +15,18 @@ import Sidebar from "../../../components/sidebar";
 const GetPost = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(true);
+    const auth = useSelector((state: any) => state.auth);
+    console.log(auth);
     const [searchParams] = useSearchParams();
     const [post, setPost] = useState<any>({});
     const { id } = useParams();
 
     const deletePost = () => {
         console.log(id);
-        postApi.deletePost(id).then((data) => {
+        postApi.deletePost({username: auth.username, id: id}).then((data) => {
             console.log(data);
         });
-        navigate('/');
+        // navigate('/');
     };
 
     useEffect(() => {

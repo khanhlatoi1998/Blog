@@ -17,8 +17,6 @@ const FavoriteLocation: React.FC<Props> = (props) => {
     const { title, banner, province, id } = stateConsious;
     let newProvince = '';
 
-    console.log(province)
-
     for (let i of PROVINCE_OPTION) {
         if (i.value === province) {
             newProvince = i.label;

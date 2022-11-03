@@ -5,15 +5,15 @@ const collection = db.collection('blog');
 export const deletePost = async (req, res, next) => {
     try {
         const data = req.body.data;
-        const params = req.params.id;
-        console.log(req.params.id);
+        console.log(data.id);
+        console.log(data.username);
         const addPost = collection.updateOne(
-            {username: data.username},
+            { username: data.username },
             {
-                $push: {'listPost': {name: '2'}}
+                $pull: { 'listPost': { id: data.id } }
             }
         )
-        res.send(params);
+        res.send(id);
         res.status(200);
     } catch (error) {
 

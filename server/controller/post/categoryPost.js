@@ -4,50 +4,43 @@ const collection = db.collection('blog');
 
 export const getCategory = async (req, res, next) => {
     try {
-        const category = req.params.category
-        console.log(req.params.category);
+        const category = req.params.category;
+        const query = req.query;
 
-        if (category === 'tinh') {
-            const a = collection.find({ listPost: { $elemMatch: { province: category } } }).toArray(async (err, result) => {
-                console.log(result)
-                if (!err) {
-                    const listPost = [];
-    
-                    result.map((item_1) => {
-                        item_1.listPost.map(item_2 => {
-                            if (item_2.category === category) {
-                                listPost.push(item_2);
+        // truy van null roi
+        const a = collection.find({ listPost: { $elemMatch: { $or: [{ province: query.p }, { category: query.c }, { province: 'all' }, { category: 'all' }] } } }).toArray(async (err, result) => {
+            if (!err) {
+                const listPost = [];
+                console.log(query)
+                result.map((item) => {
+                    item.listPost.map(post => {
+                        if (query.p === 'all' && query.c !== 'all') {
+                            if (post.category === query.c) {
+                                listPost.push(post);
                             }
-                        })
-                    });
-    
-                    res.json(listPost);
-                    res.status(200);
-                } else {
-                    console.log(err);
-                }
-            });
-        } else  {
-            const a = collection.find({ listPost: { $elemMatch: { category: category } } }).toArray(async (err, result) => {
-                if (!err) {
-                    const listPost = [];
-    
-                    result.map((item_1) => {
-                        item_1.listPost.map(item_2 => {
-                            if (item_2.category === category) {
-                                listPost.push(item_2);
+                        }
+                        if (query.p === 'all' && query.c === 'all') {
+                            listPost.push(post)
+                        } else {
+                            if (query.c === 'all') {
+                                if (post.province === query.p) {
+                                    listPost.push(post);
+                                }
+                            } else {
+                                if (post.category === query.c && post.province === query.p) {
+                                    listPost.push(post);
+                                }
                             }
-                        })
-                    });
-    
-                    res.json(listPost);
-                    res.status(200);
-                } else {
-                    console.log(err);
-                }
-            });
-        }
-
+                        }
+                    })
+                });
+                console.log(listPost)
+                res.json(listPost);
+                res.status(200);
+            } else {
+                console.log(err);
+            }
+        });
     } catch (error) {
 
     }

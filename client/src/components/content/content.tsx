@@ -20,12 +20,12 @@ interface Props {
 
 const Content: React.FC<Props> = (props) => {
     const { post } = props;
-    const { nickname, createDate, view } = post;
+    const { nickname, createDate, view, like } = post;
     let newProvince = '';
     let newCategory = '';
 
     for (let i of CATEGORY_OPTION) {
-        if (i.value === post.category) {  
+        if (i.value === post.category) {
             newCategory = i.label;
         }
     }
@@ -39,7 +39,7 @@ const Content: React.FC<Props> = (props) => {
     return (
         <div className="w-full lg:w-2/3 bg-color_01 shadow-around rounded py-6 lg:px-6 px-4">
             <div>
-                <Social />
+                <Social like={like} />
             </div>
 
             <div>
@@ -47,9 +47,9 @@ const Content: React.FC<Props> = (props) => {
                 <h1 className="font-bold text-xl lg:text-3xl mt-1">{post.title}</h1>
                 <div className="mt-4 text-sm cursor-pointer">
                     Bởi
-                    <span className="ml-1">{nickname}</span>
+                    <span className="ml-1">{nickname} </span>
                     -
-                    <span>{createDate}</span>
+                    <span> {createDate}</span>
                     <span className="ml-4"><BsFillEyeFill className="text-blue-300 inline-block mb-[2px]" /> <span>
                     </span>{view}</span>
                 </div>
@@ -163,7 +163,7 @@ const Content: React.FC<Props> = (props) => {
             <div className="mt-8">
                 <p className="mb-4 text-gray-600">SHARE</p>
 
-                <Social />
+                <Social like={like} />
             </div>
 
             <Writer nickname={nickname} />

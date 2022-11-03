@@ -26,7 +26,7 @@ const Navitems: React.FC<Props> = (props) => {
                     {
                         dropdownData.map((item: any, index: number) => {
                             return (
-                                <NavLink to={`/category/tinh?t=${item.value}`} className="block hover:text-color_04" key={index}>{item.label}</NavLink>
+                                <NavLink to={`/category?p=${item.value}&c=all`} className="block hover:text-color_04" key={index}>{item.label}</NavLink>
                             )
                         })
                     }

@@ -17,10 +17,10 @@ router.post('/login', login);
 
 router.post('/post/create', createPost);
 router.put('/post/update', updatePost);
-router.post('/post/delete/:id', deletePost);
+router.post('/post/delete', deletePost);
 router.get('/post/get/:id', getPost);
 router.get('/post/getAllPost', getAllPost);
 
-router.get('/category/:category', getCategory);
+router.get('/category', getCategory);
 
 export default router;

@@ -44,7 +44,7 @@ const AddPost = () => {
                     updateDate: updateDate 
                 }
             });
-            // navigate(`/w/get/${id}`);
+            navigate(`/w/get/${id}`);
         } else {
             dispatch(showModal('showLogin'));
         }
