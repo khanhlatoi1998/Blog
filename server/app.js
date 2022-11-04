@@ -16,10 +16,8 @@ app.use(cors());
 app.use('/api', indexRouter);
 app.get('/', (req, res) => {
     app.use(express.static(path.resolve(__dirname, 'client', 'build')));
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    res.send('server start')
 });
-
-
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
