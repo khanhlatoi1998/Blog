@@ -15,7 +15,6 @@ app.use(cors());
 
 app.use('/api', indexRouter);
 app.get('/', (req, res) => {
-    app.use(express.static(path.resolve(__dirname, 'client', 'build')));
     res.send('server start')
 });
 
