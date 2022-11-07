@@ -13,6 +13,7 @@ export const createPost = async (req, res, next) => {
                 $push: {'listPost': data.post}
             }
         )
+        res.send('success')
         res.status(200);
     } catch (error) {
         

@@ -13,7 +13,7 @@ export const deletePost = async (req, res, next) => {
                 $pull: { 'listPost': { id: data.id } }
             }
         )
-        res.send(id);
+        res.send('delete success');
         res.status(200);
     } catch (error) {
 

@@ -7,8 +7,11 @@ export const getCategory = async (req, res, next) => {
         const category = req.params.category;
         const query = req.query;
 
-        // truy van null roi
-        const a = collection.find({ listPost: { $elemMatch: { $or: [{ province: query.p }, { category: query.c }, { province: 'all' }, { category: 'all' }] } } }).toArray(async (err, result) => {
+        const a = collection.find(
+            query.p === 'all' && query.c === 'all'
+                ? {}
+                : { listPost: { $elemMatch: { $or: [{ province: query.p }, { category: query.c }, { province: 'all' }, { category: 'all' }] } } }
+        ).toArray(async (err, result) => {
             if (!err) {
                 const listPost = [];
                 console.log(query)
